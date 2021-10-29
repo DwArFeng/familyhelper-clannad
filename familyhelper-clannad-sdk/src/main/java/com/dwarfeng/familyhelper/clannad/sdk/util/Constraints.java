@@ -43,6 +43,11 @@ public final class Constraints {
      */
     public static final int LENGTH_LABEL = 50;
 
+    /**
+     * 主键的长度约束。
+     */
+    public static final int LENGTH_ID = 50;
+
     private Constraints() {
         throw new IllegalStateException("禁止实例化");
     }

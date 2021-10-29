@@ -1,7 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.stack.service;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.GenderTypeIndicator;
-import com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.service.BatchCrudService;
 import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 
@@ -11,6 +11,6 @@ import com.dwarfeng.subgrade.stack.service.EntireLookupService;
  * @author DwArFeng
  * @since 1.0.0
  */
-public interface GenderTypeIndicatorMaintainService extends BatchCrudService<IntegerIdKey, GenderTypeIndicator>,
+public interface GenderTypeIndicatorMaintainService extends BatchCrudService<StringIdKey, GenderTypeIndicator>,
         EntireLookupService<GenderTypeIndicator> {
 }

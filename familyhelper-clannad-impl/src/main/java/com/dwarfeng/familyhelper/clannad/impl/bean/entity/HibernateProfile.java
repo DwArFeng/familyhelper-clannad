@@ -12,7 +12,7 @@ import java.util.Optional;
 @Table(name = "tbl_profile")
 public class HibernateProfile implements Bean {
 
-    private static final long serialVersionUID = 3010079495155901344L;
+    private static final long serialVersionUID = 3286792702207556803L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -33,7 +33,7 @@ public class HibernateProfile implements Bean {
     private String birthday;
 
     @Column(name = "gender")
-    private Integer gender;
+    private String gender;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
@@ -91,11 +91,11 @@ public class HibernateProfile implements Bean {
         this.birthday = birthday;
     }
 
-    public Integer getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

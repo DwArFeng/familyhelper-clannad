@@ -6,7 +6,7 @@ import com.dwarfeng.familyhelper.clannad.stack.cache.GenderTypeIndicatorCache;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
-import com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,11 +16,11 @@ import java.util.List;
 @Repository
 public class GenderTypeIndicatorCacheImpl implements GenderTypeIndicatorCache {
 
-    private final RedisBatchBaseCache<IntegerIdKey, GenderTypeIndicator, FastJsonGenderTypeIndicator>
+    private final RedisBatchBaseCache<StringIdKey, GenderTypeIndicator, FastJsonGenderTypeIndicator>
             genderTypeIndicatorBatchBaseDelegate;
 
     public GenderTypeIndicatorCacheImpl(
-            RedisBatchBaseCache<IntegerIdKey, GenderTypeIndicator, FastJsonGenderTypeIndicator>
+            RedisBatchBaseCache<StringIdKey, GenderTypeIndicator, FastJsonGenderTypeIndicator>
                     genderTypeIndicatorBatchBaseDelegate
     ) {
         this.genderTypeIndicatorBatchBaseDelegate = genderTypeIndicatorBatchBaseDelegate;
@@ -29,14 +29,14 @@ public class GenderTypeIndicatorCacheImpl implements GenderTypeIndicatorCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean exists(IntegerIdKey key) throws CacheException {
+    public boolean exists(StringIdKey key) throws CacheException {
         return genderTypeIndicatorBatchBaseDelegate.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public GenderTypeIndicator get(IntegerIdKey key) throws CacheException {
+    public GenderTypeIndicator get(StringIdKey key) throws CacheException {
         return genderTypeIndicatorBatchBaseDelegate.get(key);
     }
 
@@ -50,7 +50,7 @@ public class GenderTypeIndicatorCacheImpl implements GenderTypeIndicatorCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void delete(IntegerIdKey key) throws CacheException {
+    public void delete(StringIdKey key) throws CacheException {
         genderTypeIndicatorBatchBaseDelegate.delete(key);
     }
 
@@ -64,14 +64,14 @@ public class GenderTypeIndicatorCacheImpl implements GenderTypeIndicatorCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(@SkipRecord List<IntegerIdKey> keys) throws CacheException {
+    public boolean allExists(@SkipRecord List<StringIdKey> keys) throws CacheException {
         return genderTypeIndicatorBatchBaseDelegate.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean nonExists(@SkipRecord List<IntegerIdKey> keys) throws CacheException {
+    public boolean nonExists(@SkipRecord List<StringIdKey> keys) throws CacheException {
         return genderTypeIndicatorBatchBaseDelegate.nonExists(keys);
     }
 
@@ -79,7 +79,7 @@ public class GenderTypeIndicatorCacheImpl implements GenderTypeIndicatorCache {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<GenderTypeIndicator> batchGet(@SkipRecord List<IntegerIdKey> keys) throws CacheException {
+    public List<GenderTypeIndicator> batchGet(@SkipRecord List<StringIdKey> keys) throws CacheException {
         return genderTypeIndicatorBatchBaseDelegate.batchGet(keys);
     }
 
@@ -93,7 +93,7 @@ public class GenderTypeIndicatorCacheImpl implements GenderTypeIndicatorCache {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDelete(@SkipRecord List<IntegerIdKey> keys) throws CacheException {
+    public void batchDelete(@SkipRecord List<StringIdKey> keys) throws CacheException {
         genderTypeIndicatorBatchBaseDelegate.batchDelete(keys);
     }
 }

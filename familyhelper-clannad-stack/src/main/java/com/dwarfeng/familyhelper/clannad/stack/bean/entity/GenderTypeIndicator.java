@@ -1,7 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.stack.bean.entity;
 
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
-import com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
 /**
  * 性别类型指示器。
@@ -9,30 +9,30 @@ import com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey;
  * @author DwArFeng
  * @since 1.0.0
  */
-public class GenderTypeIndicator implements Entity<IntegerIdKey> {
+public class GenderTypeIndicator implements Entity<StringIdKey> {
 
-    private static final long serialVersionUID = -2717320542685933430L;
+    private static final long serialVersionUID = -8801823212175670019L;
 
-    private IntegerIdKey key;
+    private StringIdKey key;
     private String label;
     private String remark;
 
     public GenderTypeIndicator() {
     }
 
-    public GenderTypeIndicator(IntegerIdKey key, String label, String remark) {
+    public GenderTypeIndicator(StringIdKey key, String label, String remark) {
         this.key = key;
         this.label = label;
         this.remark = remark;
     }
 
     @Override
-    public IntegerIdKey getKey() {
+    public StringIdKey getKey() {
         return key;
     }
 
     @Override
-    public void setKey(IntegerIdKey key) {
+    public void setKey(StringIdKey key) {
         this.key = key;
     }
 

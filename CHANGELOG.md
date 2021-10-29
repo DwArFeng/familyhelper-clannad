@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 将 GenderTypeIndicator 的主键类型改为字符串。
 
 #### Bug修复
 

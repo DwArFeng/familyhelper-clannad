@@ -10,7 +10,6 @@ import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
-import com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -66,7 +65,7 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public GeneralBatchCrudService<IntegerIdKey, GenderTypeIndicator> genderTypeIndicatorGeneralBatchCrudService() {
+    public GeneralBatchCrudService<StringIdKey, GenderTypeIndicator> genderTypeIndicatorGeneralBatchCrudService() {
         return new GeneralBatchCrudService<>(
                 genderTypeIndicatorDao,
                 genderTypeIndicatorCache,

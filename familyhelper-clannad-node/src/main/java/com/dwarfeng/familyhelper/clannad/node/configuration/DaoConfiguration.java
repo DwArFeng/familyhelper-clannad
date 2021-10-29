@@ -7,10 +7,8 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateIntegerIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletionMod;
-import com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,11 +44,11 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<IntegerIdKey, HibernateIntegerIdKey, GenderTypeIndicator,
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, GenderTypeIndicator,
             HibernateGenderTypeIndicator> genderTypeIndicatorHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 template,
-                new DozerBeanTransformer<>(IntegerIdKey.class, HibernateIntegerIdKey.class, mapper),
+                new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
                 new DozerBeanTransformer<>(
                         GenderTypeIndicator.class, HibernateGenderTypeIndicator.class, mapper
                 ),

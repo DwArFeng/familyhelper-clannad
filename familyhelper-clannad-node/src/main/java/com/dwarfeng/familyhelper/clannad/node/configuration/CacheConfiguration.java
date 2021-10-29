@@ -6,9 +6,7 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.entity.GenderTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
-import com.dwarfeng.subgrade.sdk.redis.formatter.IntegerIdStringKeyFormatter;
 import com.dwarfeng.subgrade.sdk.redis.formatter.StringIdStringKeyFormatter;
-import com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,11 +42,11 @@ public class CacheConfiguration {
 
     @Bean
     @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<IntegerIdKey, GenderTypeIndicator, FastJsonGenderTypeIndicator>
+    public RedisBatchBaseCache<StringIdKey, GenderTypeIndicator, FastJsonGenderTypeIndicator>
     genderTypeIndicatorRedisBatchBaseCache() {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonGenderTypeIndicator>) template,
-                new IntegerIdStringKeyFormatter(genderTypeIndicatorPrefix),
+                new StringIdStringKeyFormatter(genderTypeIndicatorPrefix),
                 new DozerBeanTransformer<>(GenderTypeIndicator.class, FastJsonGenderTypeIndicator.class, mapper)
         );
     }

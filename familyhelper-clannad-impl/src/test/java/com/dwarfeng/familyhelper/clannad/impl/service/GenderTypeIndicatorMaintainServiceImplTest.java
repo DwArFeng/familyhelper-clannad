@@ -2,7 +2,7 @@ package com.dwarfeng.familyhelper.clannad.impl.service;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.GenderTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.stack.service.GenderTypeIndicatorMaintainService;
-import com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.apache.commons.beanutils.BeanUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -31,7 +31,7 @@ public class GenderTypeIndicatorMaintainServiceImplTest {
         genderTypeIndicators = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             GenderTypeIndicator genderTypeIndicator = new GenderTypeIndicator(
-                    new IntegerIdKey(i),
+                    new StringIdKey("test.gti." + i),
                     "label",
                     "remark"
             );

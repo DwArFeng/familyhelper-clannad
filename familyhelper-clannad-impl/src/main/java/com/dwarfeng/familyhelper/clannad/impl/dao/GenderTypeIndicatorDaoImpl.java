@@ -5,11 +5,11 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.entity.GenderTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.stack.dao.GenderTypeIndicatorDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
-import com.dwarfeng.subgrade.sdk.bean.key.HibernateIntegerIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
-import com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.DaoException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +19,12 @@ import java.util.List;
 @Repository
 public class GenderTypeIndicatorDaoImpl implements GenderTypeIndicatorDao {
 
-    private final HibernateBatchBaseDao<IntegerIdKey, HibernateIntegerIdKey, GenderTypeIndicator,
+    private final HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, GenderTypeIndicator,
             HibernateGenderTypeIndicator> batchBaseDao;
     private final HibernateEntireLookupDao<GenderTypeIndicator, HibernateGenderTypeIndicator> entireLookupDao;
 
     public GenderTypeIndicatorDaoImpl(
-            HibernateBatchBaseDao<IntegerIdKey, HibernateIntegerIdKey, GenderTypeIndicator,
+            HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, GenderTypeIndicator,
                     HibernateGenderTypeIndicator> batchBaseDao,
             HibernateEntireLookupDao<GenderTypeIndicator, HibernateGenderTypeIndicator> entireLookupDao
     ) {
@@ -35,7 +35,7 @@ public class GenderTypeIndicatorDaoImpl implements GenderTypeIndicatorDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public IntegerIdKey insert(GenderTypeIndicator element) throws DaoException {
+    public StringIdKey insert(GenderTypeIndicator element) throws DaoException {
         return batchBaseDao.insert(element);
     }
 
@@ -49,21 +49,21 @@ public class GenderTypeIndicatorDaoImpl implements GenderTypeIndicatorDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void delete(IntegerIdKey key) throws DaoException {
+    public void delete(StringIdKey key) throws DaoException {
         batchBaseDao.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean exists(IntegerIdKey key) throws DaoException {
+    public boolean exists(StringIdKey key) throws DaoException {
         return batchBaseDao.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public GenderTypeIndicator get(IntegerIdKey key) throws DaoException {
+    public GenderTypeIndicator get(StringIdKey key) throws DaoException {
         return batchBaseDao.get(key);
     }
 
@@ -71,7 +71,7 @@ public class GenderTypeIndicatorDaoImpl implements GenderTypeIndicatorDao {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<IntegerIdKey> batchInsert(@SkipRecord List<GenderTypeIndicator> elements) throws DaoException {
+    public List<StringIdKey> batchInsert(@SkipRecord List<GenderTypeIndicator> elements) throws DaoException {
         return batchBaseDao.batchInsert(elements);
     }
 
@@ -85,21 +85,21 @@ public class GenderTypeIndicatorDaoImpl implements GenderTypeIndicatorDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDelete(@SkipRecord List<IntegerIdKey> keys) throws DaoException {
+    public void batchDelete(@SkipRecord List<StringIdKey> keys) throws DaoException {
         batchBaseDao.batchDelete(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(@SkipRecord List<IntegerIdKey> keys) throws DaoException {
+    public boolean allExists(@SkipRecord List<StringIdKey> keys) throws DaoException {
         return batchBaseDao.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean nonExists(@SkipRecord List<IntegerIdKey> keys) throws DaoException {
+    public boolean nonExists(@SkipRecord List<StringIdKey> keys) throws DaoException {
         return batchBaseDao.nonExists(keys);
     }
 
@@ -107,7 +107,7 @@ public class GenderTypeIndicatorDaoImpl implements GenderTypeIndicatorDao {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<GenderTypeIndicator> batchGet(@SkipRecord List<IntegerIdKey> keys) throws DaoException {
+    public List<GenderTypeIndicator> batchGet(@SkipRecord List<StringIdKey> keys) throws DaoException {
         return batchBaseDao.batchGet(keys);
     }
 

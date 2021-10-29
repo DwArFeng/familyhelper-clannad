@@ -3,7 +3,7 @@ package com.dwarfeng.familyhelper.clannad.sdk.bean.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.familyhelper.clannad.sdk.util.Constraints;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.GenderTypeIndicator;
-import com.dwarfeng.subgrade.sdk.bean.key.WebInputIntegerIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.WebInputStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 import org.hibernate.validator.constraints.Length;
 
@@ -15,18 +15,18 @@ import org.hibernate.validator.constraints.Length;
  */
 public class WebInputGenderTypeIndicator implements Bean {
 
-    private static final long serialVersionUID = 5980133911446373787L;
+    private static final long serialVersionUID = 2032494518061107180L;
 
     public static GenderTypeIndicator toStackBean(WebInputGenderTypeIndicator webInputGenderTypeIndicator) {
         return new GenderTypeIndicator(
-                WebInputIntegerIdKey.toStackBean(webInputGenderTypeIndicator.getKey()),
+                WebInputStringIdKey.toStackBean(webInputGenderTypeIndicator.getKey()),
                 webInputGenderTypeIndicator.getLabel(),
                 webInputGenderTypeIndicator.getRemark()
         );
     }
 
     @JSONField(name = "key")
-    private WebInputIntegerIdKey key;
+    private WebInputStringIdKey key;
 
     @JSONField(name = "label")
     @Length(max = Constraints.LENGTH_LABEL)
@@ -39,11 +39,11 @@ public class WebInputGenderTypeIndicator implements Bean {
     public WebInputGenderTypeIndicator() {
     }
 
-    public WebInputIntegerIdKey getKey() {
+    public WebInputStringIdKey getKey() {
         return key;
     }
 
-    public void setKey(WebInputIntegerIdKey key) {
+    public void setKey(WebInputStringIdKey key) {
         this.key = key;
     }
 

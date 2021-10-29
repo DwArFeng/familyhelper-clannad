@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
 import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
-import com.dwarfeng.subgrade.stack.bean.key.IntegerIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +18,11 @@ import java.util.List;
 @Service
 public class GenderTypeIndicatorMaintainServiceImpl implements GenderTypeIndicatorMaintainService {
 
-    private final GeneralBatchCrudService<IntegerIdKey, GenderTypeIndicator> crudService;
+    private final GeneralBatchCrudService<StringIdKey, GenderTypeIndicator> crudService;
     private final DaoOnlyEntireLookupService<GenderTypeIndicator> entireLookupService;
 
     public GenderTypeIndicatorMaintainServiceImpl(
-            GeneralBatchCrudService<IntegerIdKey, GenderTypeIndicator> crudService,
+            GeneralBatchCrudService<StringIdKey, GenderTypeIndicator> crudService,
             DaoOnlyEntireLookupService<GenderTypeIndicator> entireLookupService
     ) {
         this.crudService = crudService;
@@ -32,21 +32,21 @@ public class GenderTypeIndicatorMaintainServiceImpl implements GenderTypeIndicat
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean exists(IntegerIdKey key) throws ServiceException {
+    public boolean exists(StringIdKey key) throws ServiceException {
         return crudService.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public GenderTypeIndicator get(IntegerIdKey key) throws ServiceException {
+    public GenderTypeIndicator get(StringIdKey key) throws ServiceException {
         return crudService.get(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public IntegerIdKey insert(GenderTypeIndicator element) throws ServiceException {
+    public StringIdKey insert(GenderTypeIndicator element) throws ServiceException {
         return crudService.insert(element);
     }
 
@@ -60,21 +60,21 @@ public class GenderTypeIndicatorMaintainServiceImpl implements GenderTypeIndicat
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void delete(IntegerIdKey key) throws ServiceException {
+    public void delete(StringIdKey key) throws ServiceException {
         crudService.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public GenderTypeIndicator getIfExists(IntegerIdKey key) throws ServiceException {
+    public GenderTypeIndicator getIfExists(StringIdKey key) throws ServiceException {
         return crudService.getIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public IntegerIdKey insertIfNotExists(GenderTypeIndicator element) throws ServiceException {
+    public StringIdKey insertIfNotExists(GenderTypeIndicator element) throws ServiceException {
         return crudService.insertIfNotExists(element);
     }
 
@@ -88,28 +88,28 @@ public class GenderTypeIndicatorMaintainServiceImpl implements GenderTypeIndicat
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void deleteIfExists(IntegerIdKey key) throws ServiceException {
+    public void deleteIfExists(StringIdKey key) throws ServiceException {
         crudService.deleteIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public IntegerIdKey insertOrUpdate(GenderTypeIndicator element) throws ServiceException {
+    public StringIdKey insertOrUpdate(GenderTypeIndicator element) throws ServiceException {
         return crudService.insertOrUpdate(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(@SkipRecord List<IntegerIdKey> keys) throws ServiceException {
+    public boolean allExists(@SkipRecord List<StringIdKey> keys) throws ServiceException {
         return crudService.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean nonExists(@SkipRecord List<IntegerIdKey> keys) throws ServiceException {
+    public boolean nonExists(@SkipRecord List<StringIdKey> keys) throws ServiceException {
         return crudService.nonExists(keys);
     }
 
@@ -117,7 +117,7 @@ public class GenderTypeIndicatorMaintainServiceImpl implements GenderTypeIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<GenderTypeIndicator> batchGet(@SkipRecord List<IntegerIdKey> keys) throws ServiceException {
+    public List<GenderTypeIndicator> batchGet(@SkipRecord List<StringIdKey> keys) throws ServiceException {
         return crudService.batchGet(keys);
     }
 
@@ -125,7 +125,7 @@ public class GenderTypeIndicatorMaintainServiceImpl implements GenderTypeIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<IntegerIdKey> batchInsert(@SkipRecord List<GenderTypeIndicator> elements) throws ServiceException {
+    public List<StringIdKey> batchInsert(@SkipRecord List<GenderTypeIndicator> elements) throws ServiceException {
         return crudService.batchInsert(elements);
     }
 
@@ -139,7 +139,7 @@ public class GenderTypeIndicatorMaintainServiceImpl implements GenderTypeIndicat
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDelete(@SkipRecord List<IntegerIdKey> keys) throws ServiceException {
+    public void batchDelete(@SkipRecord List<StringIdKey> keys) throws ServiceException {
         crudService.batchDelete(keys);
     }
 
@@ -147,7 +147,7 @@ public class GenderTypeIndicatorMaintainServiceImpl implements GenderTypeIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<GenderTypeIndicator> batchGetIfExists(@SkipRecord List<IntegerIdKey> keys) throws ServiceException {
+    public List<GenderTypeIndicator> batchGetIfExists(@SkipRecord List<StringIdKey> keys) throws ServiceException {
         return crudService.batchGetIfExists(keys);
     }
 
@@ -155,7 +155,7 @@ public class GenderTypeIndicatorMaintainServiceImpl implements GenderTypeIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<IntegerIdKey> batchInsertIfExists(@SkipRecord List<GenderTypeIndicator> elements) throws ServiceException {
+    public List<StringIdKey> batchInsertIfExists(@SkipRecord List<GenderTypeIndicator> elements) throws ServiceException {
         return crudService.batchInsertIfExists(elements);
     }
 
@@ -169,7 +169,7 @@ public class GenderTypeIndicatorMaintainServiceImpl implements GenderTypeIndicat
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDeleteIfExists(@SkipRecord List<IntegerIdKey> keys) throws ServiceException {
+    public void batchDeleteIfExists(@SkipRecord List<StringIdKey> keys) throws ServiceException {
         crudService.batchDeleteIfExists(keys);
     }
 
@@ -177,7 +177,7 @@ public class GenderTypeIndicatorMaintainServiceImpl implements GenderTypeIndicat
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<IntegerIdKey> batchInsertOrUpdate(@SkipRecord List<GenderTypeIndicator> elements) throws ServiceException {
+    public List<StringIdKey> batchInsertOrUpdate(@SkipRecord List<GenderTypeIndicator> elements) throws ServiceException {
         return crudService.batchInsertOrUpdate(elements);
     }
 

@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class FastJsonProfile implements Dto {
 
-    private static final long serialVersionUID = -4539158247313379966L;
+    private static final long serialVersionUID = 8270363567926179781L;
 
     public static FastJsonProfile of(Profile profile) {
         if (Objects.isNull(profile)) {
@@ -44,7 +44,7 @@ public class FastJsonProfile implements Dto {
     private String birthday;
 
     @JSONField(name = "gender", ordinal = 6)
-    private Integer gender;
+    private String gender;
 
     @JSONField(name = "remark", ordinal = 7)
     private String remark;
@@ -53,7 +53,7 @@ public class FastJsonProfile implements Dto {
     }
 
     public FastJsonProfile(
-            FastJsonStringIdKey key, String name, String idNumber, String motd, String birthday, Integer gender,
+            FastJsonStringIdKey key, String name, String idNumber, String motd, String birthday, String gender,
             String remark
     ) {
         this.key = key;
@@ -105,11 +105,11 @@ public class FastJsonProfile implements Dto {
         this.birthday = birthday;
     }
 
-    public Integer getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

@@ -11,21 +11,21 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
  */
 public class Profile implements Entity<StringIdKey> {
 
-    private static final long serialVersionUID = -6391377530437004779L;
+    private static final long serialVersionUID = 5034705068636847209L;
 
     private StringIdKey key;
     private String name;
     private String idNumber;
     private String motd;
     private String birthday;
-    private Integer gender;
+    private String gender;
     private String remark;
 
     public Profile() {
     }
 
     public Profile(
-            StringIdKey key, String name, String idNumber, String motd, String birthday, Integer gender, String remark
+            StringIdKey key, String name, String idNumber, String motd, String birthday, String gender, String remark
     ) {
         this.key = key;
         this.name = name;
@@ -78,11 +78,11 @@ public class Profile implements Entity<StringIdKey> {
         this.birthday = birthday;
     }
 
-    public Integer getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

@@ -2,7 +2,7 @@ package com.dwarfeng.familyhelper.clannad.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.GenderTypeIndicator;
-import com.dwarfeng.subgrade.sdk.bean.key.FastJsonIntegerIdKey;
+import com.dwarfeng.subgrade.sdk.bean.key.FastJsonStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import java.util.Objects;
@@ -15,14 +15,14 @@ import java.util.Objects;
  */
 public class FastJsonGenderTypeIndicator implements Bean {
 
-    private static final long serialVersionUID = 7715487949116853172L;
+    private static final long serialVersionUID = -8284306358360589507L;
 
     public static FastJsonGenderTypeIndicator of(GenderTypeIndicator genderTypeIndicator) {
         if (Objects.isNull(genderTypeIndicator)) {
             return null;
         } else {
             return new FastJsonGenderTypeIndicator(
-                    FastJsonIntegerIdKey.of(genderTypeIndicator.getKey()),
+                    FastJsonStringIdKey.of(genderTypeIndicator.getKey()),
                     genderTypeIndicator.getLabel(),
                     genderTypeIndicator.getRemark()
             );
@@ -30,7 +30,7 @@ public class FastJsonGenderTypeIndicator implements Bean {
     }
 
     @JSONField(name = "key", ordinal = 1)
-    private FastJsonIntegerIdKey key;
+    private FastJsonStringIdKey key;
 
     @JSONField(name = "label", ordinal = 2)
     private String label;
@@ -41,17 +41,17 @@ public class FastJsonGenderTypeIndicator implements Bean {
     public FastJsonGenderTypeIndicator() {
     }
 
-    public FastJsonGenderTypeIndicator(FastJsonIntegerIdKey key, String label, String remark) {
+    public FastJsonGenderTypeIndicator(FastJsonStringIdKey key, String label, String remark) {
         this.key = key;
         this.label = label;
         this.remark = remark;
     }
 
-    public FastJsonIntegerIdKey getKey() {
+    public FastJsonStringIdKey getKey() {
         return key;
     }
 
-    public void setKey(FastJsonIntegerIdKey key) {
+    public void setKey(FastJsonStringIdKey key) {
         this.key = key;
     }
 

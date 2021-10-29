@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class WebInputProfile implements Dto {
 
-    private static final long serialVersionUID = 1367904127740306517L;
+    private static final long serialVersionUID = 8576905205925105149L;
 
     public static Profile toStackBean(WebInputProfile webInputProfile) {
         if (Objects.isNull(webInputProfile)) {
@@ -59,7 +59,7 @@ public class WebInputProfile implements Dto {
     private String birthday;
 
     @JSONField(name = "gender")
-    private Integer gender;
+    private String gender;
 
     @JSONField(name = "remark")
     @Length(max = Constraints.LENGTH_REMARK)
@@ -108,11 +108,11 @@ public class WebInputProfile implements Dto {
         this.birthday = birthday;
     }
 
-    public Integer getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
