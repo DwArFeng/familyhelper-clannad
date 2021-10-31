@@ -1,8 +1,13 @@
 package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
+import com.dwarfeng.familyhelper.clannad.stack.cache.PoprCache;
 import com.dwarfeng.familyhelper.clannad.stack.cache.UserCache;
+import com.dwarfeng.familyhelper.clannad.stack.dao.PoprDao;
 import com.dwarfeng.familyhelper.clannad.stack.dao.UserDao;
+import com.dwarfeng.familyhelper.clannad.stack.service.PoprMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -11,20 +16,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> {
 
     private final UserDao userDao;
+    private final PoprDao poprDao;
 
     private final UserCache userCache;
+    private final PoprCache poprCache;
 
     @Value("${cache.timeout.entity.user}")
     private long userTimeout;
 
-    public UserCrudOperation(UserDao userDao, UserCache userCache) {
+    public UserCrudOperation(UserDao userDao, PoprDao poprDao, UserCache userCache, PoprCache poprCache) {
         this.userDao = userDao;
+        this.poprDao = poprDao;
         this.userCache = userCache;
+        this.poprCache = poprCache;
     }
 
     @Override
@@ -60,6 +70,12 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
 
     @Override
     public void delete(StringIdKey key) throws Exception {
+        // 删除与账本相关的账本权限。
+        List<PoprKey> poprKeys = poprDao.lookup(PoprMaintainService.CHILD_FOR_USER, new Object[]{key})
+                .stream().map(Popr::getKey).collect(Collectors.toList());
+        poprCache.batchDelete(poprKeys);
+        poprDao.batchDelete(poprKeys);
+
         // 删除账本实体自身。
         userDao.delete(key);
         userCache.delete(key);

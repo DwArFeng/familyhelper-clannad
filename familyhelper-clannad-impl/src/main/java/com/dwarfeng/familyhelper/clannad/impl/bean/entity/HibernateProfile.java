@@ -5,7 +5,9 @@ import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @IdClass(HibernateStringIdKey.class)
@@ -79,6 +81,10 @@ public class HibernateProfile implements Bean {
 
     @Column(name = "remark")
     private String remark;
+
+    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePopr.class, mappedBy = "profile")
+    private Set<HibernatePopr> poprs = new HashSet<>();
 
     public HibernateProfile() {
     }
@@ -259,6 +265,14 @@ public class HibernateProfile implements Bean {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Set<HibernatePopr> getPoprs() {
+        return poprs;
+    }
+
+    public void setPoprs(Set<HibernatePopr> poprs) {
+        this.poprs = poprs;
     }
 
     @Override

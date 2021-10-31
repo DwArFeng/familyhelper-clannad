@@ -7,6 +7,7 @@
 - 新增实体。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.User。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.ProfileTypeIndicator。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr。
 
 - 修改实体字段。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile。

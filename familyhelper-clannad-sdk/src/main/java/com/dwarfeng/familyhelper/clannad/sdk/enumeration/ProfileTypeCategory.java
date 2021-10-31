@@ -13,7 +13,6 @@ public enum ProfileTypeCategory {
     BLOOD_TYPE("blood_type"),
     NATIONALITY("nationality"),
     JOB_POSITION("job_position"),
-    JOB_TITLE("job_title"),
     EDUCATIONAL_LEVEL("educational_level"),
     EDUCATIONAL_BACKGROUND("educational_background"),
     POLITICAL_STATUS("political_status"),

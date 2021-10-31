@@ -1,12 +1,16 @@
 package com.dwarfeng.familyhelper.clannad.impl.configuration;
 
+import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonPopr;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonProfile;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonProfileTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonUser;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.PoprStringKeyFormatter;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.ProfileTypeIndicatorStringKeyFormatter;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.ProfileTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
@@ -30,6 +34,8 @@ public class CacheConfiguration {
     private String userPrefix;
     @Value("${cache.prefix.entity.profile_type_indicator}")
     private String profileTypeIndicatorPrefix;
+    @Value("${cache.prefix.entity.popr}")
+    private String poprPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -64,6 +70,16 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonProfileTypeIndicator>) template,
                 new ProfileTypeIndicatorStringKeyFormatter(profileTypeIndicatorPrefix),
                 new DozerBeanTransformer<>(ProfileTypeIndicator.class, FastJsonProfileTypeIndicator.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<PoprKey, Popr, FastJsonPopr> poprRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonPopr>) template,
+                new PoprStringKeyFormatter(poprPrefix),
+                new DozerBeanTransformer<>(Popr.class, FastJsonPopr.class, mapper)
         );
     }
 }

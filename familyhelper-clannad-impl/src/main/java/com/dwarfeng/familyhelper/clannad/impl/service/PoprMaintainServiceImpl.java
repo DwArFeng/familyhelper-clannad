@@ -1,11 +1,15 @@
 package com.dwarfeng.familyhelper.clannad.impl.service;
 
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
-import com.dwarfeng.familyhelper.clannad.stack.service.ProfileMaintainService;
-import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
+import com.dwarfeng.familyhelper.clannad.stack.service.PoprMaintainService;
+import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
+import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
+import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
-import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
+import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
+import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,97 +17,103 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class ProfileMaintainServiceImpl implements ProfileMaintainService {
+public class PoprMaintainServiceImpl implements PoprMaintainService {
 
-    private final CustomBatchCrudService<StringIdKey, Profile> crudService;
+    private final GeneralBatchCrudService<PoprKey, Popr> crudService;
+    private final DaoOnlyEntireLookupService<Popr> entireLookupService;
+    private final DaoOnlyPresetLookupService<Popr> presetLookupService;
 
-    public ProfileMaintainServiceImpl(
-            CustomBatchCrudService<StringIdKey, Profile> crudService
+    public PoprMaintainServiceImpl(
+            GeneralBatchCrudService<PoprKey, Popr> crudService,
+            DaoOnlyEntireLookupService<Popr> entireLookupService,
+            DaoOnlyPresetLookupService<Popr> presetLookupService
     ) {
         this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
+        this.presetLookupService = presetLookupService;
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean exists(StringIdKey key) throws ServiceException {
+    public boolean exists(PoprKey key) throws ServiceException {
         return crudService.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public Profile get(StringIdKey key) throws ServiceException {
+    public Popr get(PoprKey key) throws ServiceException {
         return crudService.get(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public StringIdKey insert(Profile element) throws ServiceException {
+    public PoprKey insert(Popr element) throws ServiceException {
         return crudService.insert(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void update(Profile element) throws ServiceException {
+    public void update(Popr element) throws ServiceException {
         crudService.update(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void delete(StringIdKey key) throws ServiceException {
+    public void delete(PoprKey key) throws ServiceException {
         crudService.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public Profile getIfExists(StringIdKey key) throws ServiceException {
+    public Popr getIfExists(PoprKey key) throws ServiceException {
         return crudService.getIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public StringIdKey insertIfNotExists(Profile element) throws ServiceException {
+    public PoprKey insertIfNotExists(Popr element) throws ServiceException {
         return crudService.insertIfNotExists(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void updateIfExists(Profile element) throws ServiceException {
+    public void updateIfExists(Popr element) throws ServiceException {
         crudService.updateIfExists(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void deleteIfExists(StringIdKey key) throws ServiceException {
+    public void deleteIfExists(PoprKey key) throws ServiceException {
         crudService.deleteIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public StringIdKey insertOrUpdate(Profile element) throws ServiceException {
+    public PoprKey insertOrUpdate(Popr element) throws ServiceException {
         return crudService.insertOrUpdate(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(@SkipRecord List<StringIdKey> keys) throws ServiceException {
+    public boolean allExists(@SkipRecord List<PoprKey> keys) throws ServiceException {
         return crudService.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean nonExists(@SkipRecord List<StringIdKey> keys) throws ServiceException {
+    public boolean nonExists(@SkipRecord List<PoprKey> keys) throws ServiceException {
         return crudService.nonExists(keys);
     }
 
@@ -111,7 +121,7 @@ public class ProfileMaintainServiceImpl implements ProfileMaintainService {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<Profile> batchGet(@SkipRecord List<StringIdKey> keys) throws ServiceException {
+    public List<Popr> batchGet(@SkipRecord List<PoprKey> keys) throws ServiceException {
         return crudService.batchGet(keys);
     }
 
@@ -119,21 +129,21 @@ public class ProfileMaintainServiceImpl implements ProfileMaintainService {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<StringIdKey> batchInsert(@SkipRecord List<Profile> elements) throws ServiceException {
+    public List<PoprKey> batchInsert(@SkipRecord List<Popr> elements) throws ServiceException {
         return crudService.batchInsert(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchUpdate(@SkipRecord List<Profile> elements) throws ServiceException {
+    public void batchUpdate(@SkipRecord List<Popr> elements) throws ServiceException {
         crudService.batchUpdate(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDelete(@SkipRecord List<StringIdKey> keys) throws ServiceException {
+    public void batchDelete(@SkipRecord List<PoprKey> keys) throws ServiceException {
         crudService.batchDelete(keys);
     }
 
@@ -141,7 +151,7 @@ public class ProfileMaintainServiceImpl implements ProfileMaintainService {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<Profile> batchGetIfExists(@SkipRecord List<StringIdKey> keys) throws ServiceException {
+    public List<Popr> batchGetIfExists(@SkipRecord List<PoprKey> keys) throws ServiceException {
         return crudService.batchGetIfExists(keys);
     }
 
@@ -149,21 +159,21 @@ public class ProfileMaintainServiceImpl implements ProfileMaintainService {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<StringIdKey> batchInsertIfExists(@SkipRecord List<Profile> elements) throws ServiceException {
+    public List<PoprKey> batchInsertIfExists(@SkipRecord List<Popr> elements) throws ServiceException {
         return crudService.batchInsertIfExists(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchUpdateIfExists(@SkipRecord List<Profile> elements) throws ServiceException {
+    public void batchUpdateIfExists(@SkipRecord List<Popr> elements) throws ServiceException {
         crudService.batchUpdateIfExists(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDeleteIfExists(@SkipRecord List<StringIdKey> keys) throws ServiceException {
+    public void batchDeleteIfExists(@SkipRecord List<PoprKey> keys) throws ServiceException {
         crudService.batchDeleteIfExists(keys);
     }
 
@@ -171,7 +181,39 @@ public class ProfileMaintainServiceImpl implements ProfileMaintainService {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<StringIdKey> batchInsertOrUpdate(@SkipRecord List<Profile> elements) throws ServiceException {
+    public List<PoprKey> batchInsertOrUpdate(@SkipRecord List<Popr> elements) throws ServiceException {
         return crudService.batchInsertOrUpdate(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public PagedData<Popr> lookup() throws ServiceException {
+        return entireLookupService.lookup();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public PagedData<Popr> lookup(PagingInfo pagingInfo) throws ServiceException {
+        return entireLookupService.lookup(pagingInfo);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public PagedData<Popr> lookup(String preset, Object[] objs) throws ServiceException {
+        return presetLookupService.lookup(preset, objs);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public PagedData<Popr> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
+        return presetLookupService.lookup(preset, objs, pagingInfo);
     }
 }

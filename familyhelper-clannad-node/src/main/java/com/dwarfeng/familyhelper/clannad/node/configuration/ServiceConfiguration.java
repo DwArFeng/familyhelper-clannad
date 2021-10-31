@@ -1,17 +1,21 @@
 package com.dwarfeng.familyhelper.clannad.node.configuration;
 
+import com.dwarfeng.familyhelper.clannad.impl.service.operation.ProfileCrudOperation;
 import com.dwarfeng.familyhelper.clannad.impl.service.operation.UserCrudOperation;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.ProfileTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
-import com.dwarfeng.familyhelper.clannad.stack.cache.ProfileCache;
+import com.dwarfeng.familyhelper.clannad.stack.cache.PoprCache;
 import com.dwarfeng.familyhelper.clannad.stack.cache.ProfileTypeIndicatorCache;
-import com.dwarfeng.familyhelper.clannad.stack.dao.ProfileDao;
+import com.dwarfeng.familyhelper.clannad.stack.dao.PoprDao;
 import com.dwarfeng.familyhelper.clannad.stack.dao.ProfileTypeIndicatorDao;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
 import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
+import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
 import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
@@ -27,31 +31,33 @@ public class ServiceConfiguration {
 
     private final ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
 
-    private final ProfileDao profileDao;
-    private final ProfileCache profileCache;
+    private final ProfileCrudOperation profileCrudOperation;
     private final UserCrudOperation userCrudOperation;
     private final ProfileTypeIndicatorDao profileTypeIndicatorDao;
     private final ProfileTypeIndicatorCache profileTypeIndicatorCache;
+    private final PoprDao poprDao;
+    private final PoprCache poprCache;
 
-    @Value("${cache.timeout.entity.profile}")
-    private long profileTimeout;
     @Value("${cache.timeout.entity.profile_type_indicator}")
     private long profileTypeIndicatorTimeout;
+    @Value("${cache.timeout.entity.popr}")
+    private long poprTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
-            ProfileDao profileDao,
-            ProfileCache profileCache,
+            ProfileCrudOperation profileCrudOperation,
             UserCrudOperation userCrudOperation,
             ProfileTypeIndicatorDao profileTypeIndicatorDao,
-            ProfileTypeIndicatorCache profileTypeIndicatorCache
+            ProfileTypeIndicatorCache profileTypeIndicatorCache,
+            PoprDao poprDao, PoprCache poprCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
-        this.profileDao = profileDao;
-        this.profileCache = profileCache;
+        this.profileCrudOperation = profileCrudOperation;
         this.userCrudOperation = userCrudOperation;
         this.profileTypeIndicatorDao = profileTypeIndicatorDao;
         this.profileTypeIndicatorCache = profileTypeIndicatorCache;
+        this.poprDao = poprDao;
+        this.poprCache = poprCache;
     }
 
     @Bean
@@ -60,14 +66,12 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public GeneralBatchCrudService<StringIdKey, Profile> profileGeneralBatchCrudService() {
-        return new GeneralBatchCrudService<>(
-                profileDao,
-                profileCache,
+    public CustomBatchCrudService<StringIdKey, Profile> profileBatchCustomCrudService() {
+        return new CustomBatchCrudService<>(
+                profileCrudOperation,
                 new ExceptionKeyFetcher<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN,
-                profileTimeout
+                LogLevel.WARN
         );
     }
 
@@ -99,6 +103,36 @@ public class ServiceConfiguration {
     profileTypeIndicatorDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 profileTypeIndicatorDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<PoprKey, Popr> poprGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                poprDao,
+                poprCache,
+                new ExceptionKeyFetcher<>(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                poprTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Popr> poprDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                poprDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Popr> poprDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                poprDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
