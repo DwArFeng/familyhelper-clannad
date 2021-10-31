@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 新增实体。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.User。
 
 #### Bug修复
 

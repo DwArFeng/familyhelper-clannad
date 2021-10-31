@@ -2,8 +2,10 @@ package com.dwarfeng.familyhelper.clannad.impl.configuration;
 
 import com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateGenderTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateProfile;
+import com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateUser;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.GenderTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
@@ -67,6 +69,18 @@ public class DaoConfiguration {
                         GenderTypeIndicator.class, HibernateGenderTypeIndicator.class, mapper
                 ),
                 HibernateGenderTypeIndicator.class
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, User, HibernateUser> userHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
+                new DozerBeanTransformer<>(User.class, HibernateUser.class, mapper),
+                HibernateUser.class,
+                new DefaultDeletionMod<>(),
+                batchSize
         );
     }
 }

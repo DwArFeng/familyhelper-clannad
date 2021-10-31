@@ -2,8 +2,10 @@ package com.dwarfeng.familyhelper.clannad.node.configuration;
 
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonGenderTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonProfile;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonUser;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.GenderTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.StringIdStringKeyFormatter;
@@ -24,6 +26,8 @@ public class CacheConfiguration {
     private String profilePrefix;
     @Value("${cache.prefix.entity.gender_type_indicator}")
     private String genderTypeIndicatorPrefix;
+    @Value("${cache.prefix.entity.user}")
+    private String userPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -48,6 +52,16 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonGenderTypeIndicator>) template,
                 new StringIdStringKeyFormatter(genderTypeIndicatorPrefix),
                 new DozerBeanTransformer<>(GenderTypeIndicator.class, FastJsonGenderTypeIndicator.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<StringIdKey, User, FastJsonUser> userRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonUser>) template,
+                new StringIdStringKeyFormatter(userPrefix),
+                new DozerBeanTransformer<>(User.class, FastJsonUser.class, mapper)
         );
     }
 }
