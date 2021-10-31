@@ -31,7 +31,10 @@ public class ProfileMaintainServiceImplTest {
         profiles = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Profile profile = new Profile(
-                    new StringIdKey("test_profile." + i), "name", "idNumber", "motd", "birthday", "gender", "remark"
+                    new StringIdKey("test_profile." + i), "name", "idNumber", "idType", "birthDay", "gender",
+                    "bloodType", "nationality", "familyAddress", "phoneNumber", "emailAddress", "employer",
+                    "jobPosition", "employerAddress", "jobTitle", "latestSchoolName", "educationalLevel",
+                    "educationalBackground", "politicalStatus", "maritalStatus", "remark"
             );
             profiles.add(profile);
         }

@@ -58,7 +58,6 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         userDao.update(user);
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public void delete(StringIdKey key) throws Exception {
         // 删除账本实体自身。

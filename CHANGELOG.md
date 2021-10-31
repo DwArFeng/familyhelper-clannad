@@ -7,6 +7,9 @@
 - 新增实体。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.User。
 
+- 修改实体字段。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile。
+
 #### Bug修复
 
 - (无)

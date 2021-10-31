@@ -9,19 +9,9 @@ package com.dwarfeng.familyhelper.clannad.sdk.util;
 public final class Constraints {
 
     /**
-     * 用户主键的长度约束。
-     */
-    public static final int LENGTH_KEY = 50;
-
-    /**
      * 名称的长度约束。
      */
     public static final int LENGTH_NAME = 20;
-
-    /**
-     * 身份证的长度约束。
-     */
-    public static final int LENGTH_ID_NUMBER = 20;
 
     /**
      * MOTD的长度约束。
