@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.Objects;
 
 /**
- * WebInput 个人信息。
+ * WebInput 个人简介。
  *
  * @author DwArFeng
  * @since 1.1.1

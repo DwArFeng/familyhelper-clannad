@@ -4,7 +4,7 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
 /**
- * 个人信息。
+ * 个人简介。
  *
  * @author DwArFeng
  * @since 1.1.1

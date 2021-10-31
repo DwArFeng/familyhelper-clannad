@@ -1,9 +1,13 @@
 package com.dwarfeng.familyhelper.clannad.impl.configuration;
 
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonProfile;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonProfileTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonUser;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.ProfileTypeIndicatorStringKeyFormatter;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.ProfileTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.StringIdStringKeyFormatter;
@@ -24,6 +28,8 @@ public class CacheConfiguration {
     private String profilePrefix;
     @Value("${cache.prefix.entity.user}")
     private String userPrefix;
+    @Value("${cache.prefix.entity.profile_type_indicator}")
+    private String profileTypeIndicatorPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -47,6 +53,17 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonUser>) template,
                 new StringIdStringKeyFormatter(userPrefix),
                 new DozerBeanTransformer<>(User.class, FastJsonUser.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<ProfileTypeIndicatorKey, ProfileTypeIndicator, FastJsonProfileTypeIndicator>
+    profileTypeIndicatorRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonProfileTypeIndicator>) template,
+                new ProfileTypeIndicatorStringKeyFormatter(profileTypeIndicatorPrefix),
+                new DozerBeanTransformer<>(ProfileTypeIndicator.class, FastJsonProfileTypeIndicator.class, mapper)
         );
     }
 }

@@ -8,7 +8,7 @@ import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import java.util.Objects;
 
 /**
- * FastJson 个人信息。
+ * FastJson 个人简介。
  *
  * @author DwArFeng
  * @since 1.1.1

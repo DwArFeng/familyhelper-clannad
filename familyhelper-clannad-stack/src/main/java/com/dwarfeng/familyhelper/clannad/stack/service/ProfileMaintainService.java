@@ -5,7 +5,7 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.service.BatchCrudService;
 
 /**
- * 个人设置维护服务。
+ * 个人简介维护服务。
  *
  * @author DwArFeng
  * @since 1.1.0
