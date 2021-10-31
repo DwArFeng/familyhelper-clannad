@@ -16,7 +16,8 @@
 
 #### 功能移除
 
-- (无)
+- 删除实体。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile。
 
 ---
 

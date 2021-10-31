@@ -1,14 +1,11 @@
 package com.dwarfeng.familyhelper.clannad.node.configuration;
 
-import com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateGenderTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateProfile;
 import com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateUser;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.GenderTypeIndicator;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
-import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletionMod;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -42,33 +39,6 @@ public class DaoConfiguration {
                 HibernateProfile.class,
                 new DefaultDeletionMod<>(),
                 batchSize
-        );
-    }
-
-    @Bean
-    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, GenderTypeIndicator,
-            HibernateGenderTypeIndicator> genderTypeIndicatorHibernateBatchBaseDao() {
-        return new HibernateBatchBaseDao<>(
-                template,
-                new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
-                new DozerBeanTransformer<>(
-                        GenderTypeIndicator.class, HibernateGenderTypeIndicator.class, mapper
-                ),
-                HibernateGenderTypeIndicator.class,
-                new DefaultDeletionMod<>(),
-                batchSize
-        );
-    }
-
-    @Bean
-    public HibernateEntireLookupDao<GenderTypeIndicator, HibernateGenderTypeIndicator>
-    genderTypeIndicatorHibernateEntireLookupDao() {
-        return new HibernateEntireLookupDao<>(
-                template,
-                new DozerBeanTransformer<>(
-                        GenderTypeIndicator.class, HibernateGenderTypeIndicator.class, mapper
-                ),
-                HibernateGenderTypeIndicator.class
         );
     }
 
