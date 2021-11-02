@@ -55,7 +55,7 @@ public class HibernateProfile implements Bean {
     @Column(name = "employer")
     private String employer;
 
-    @Column(name = "job_position", length = Constraints.LENGTH_ID)
+    @Column(name = "job_position")
     private String jobPosition;
 
     @Column(name = "employer_address")

@@ -82,7 +82,6 @@ public class WebInputProfile implements Dto {
     private String employer;
 
     @JSONField(name = "job_position")
-    @Length(max = Constraints.LENGTH_ID)
     private String jobPosition;
 
     @JSONField(name = "employer_address")

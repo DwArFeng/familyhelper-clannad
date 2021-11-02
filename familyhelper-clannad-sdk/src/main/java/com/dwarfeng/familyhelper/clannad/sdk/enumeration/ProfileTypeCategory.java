@@ -12,7 +12,6 @@ public enum ProfileTypeCategory {
     GENDER("gender"),
     BLOOD_TYPE("blood_type"),
     NATIONALITY("nationality"),
-    JOB_POSITION("job_position"),
     EDUCATIONAL_LEVEL("educational_level"),
     EDUCATIONAL_BACKGROUND("educational_background"),
     POLITICAL_STATUS("political_status"),
