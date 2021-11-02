@@ -12,6 +12,9 @@
 - 修改实体字段。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile。
 
+- 实现操作服务。
+  - com.dwarfeng.familyhelper.clannad.stack.service.ProfileOperateService。
+
 #### Bug修复
 
 - (无)

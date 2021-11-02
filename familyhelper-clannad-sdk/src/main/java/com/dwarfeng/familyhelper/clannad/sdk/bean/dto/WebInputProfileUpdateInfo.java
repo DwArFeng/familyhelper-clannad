@@ -1,45 +1,38 @@
-package com.dwarfeng.familyhelper.clannad.sdk.bean.entity;
+package com.dwarfeng.familyhelper.clannad.sdk.bean.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.familyhelper.clannad.sdk.util.Constraints;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
-import com.dwarfeng.subgrade.sdk.bean.key.WebInputStringIdKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.ProfileUpdateInfo;
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.Valid;
 import java.util.Objects;
 
 /**
- * WebInput 个人简介。
+ * WebInput 个人简介更新信息。
  *
  * @author DwArFeng
  * @since 1.1.1
  */
-public class WebInputProfile implements Dto {
+public class WebInputProfileUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = 7334666474539718328L;
+    private static final long serialVersionUID = 1974148480204243172L;
 
-    public static Profile toStackBean(WebInputProfile webInput) {
+    public static ProfileUpdateInfo toStackBean(WebInputProfileUpdateInfo webInput) {
         if (Objects.isNull(webInput)) {
             return null;
         } else {
-            return new Profile(
-                    WebInputStringIdKey.toStackBean(webInput.getKey()), webInput.getName(), webInput.getIdNumber(),
-                    webInput.getIdType(), webInput.getBirthday(), webInput.getGender(), webInput.getBloodType(),
-                    webInput.getNationality(), webInput.getFamilyAddress(), webInput.getPhoneNumber(),
-                    webInput.getEmailAddress(), webInput.getEmployer(), webInput.getJobPosition(),
-                    webInput.getEmployerAddress(), webInput.getJobTitle(), webInput.getLatestSchoolName(),
-                    webInput.getEducationalLevel(), webInput.getEducationalBackground(), webInput.getPoliticalStatus(),
-                    webInput.getMaritalStatus(), webInput.getRemark()
+            return new ProfileUpdateInfo(
+                    webInput.getName(), webInput.getIdNumber(), webInput.getIdType(), webInput.getBirthday(),
+                    webInput.getGender(), webInput.getBloodType(), webInput.getNationality(),
+                    webInput.getFamilyAddress(), webInput.getPhoneNumber(), webInput.getEmailAddress(),
+                    webInput.getEmployer(), webInput.getJobPosition(), webInput.getEmployerAddress(),
+                    webInput.getJobTitle(), webInput.getLatestSchoolName(), webInput.getEducationalLevel(),
+                    webInput.getEducationalBackground(), webInput.getPoliticalStatus(), webInput.getMaritalStatus(),
+                    webInput.getRemark()
             );
         }
     }
-
-    // -----------------------------------------------------------主键-----------------------------------------------------------
-    @JSONField(name = "key")
-    @Valid
-    private WebInputStringIdKey key;
 
     // -----------------------------------------------------------基本信息-----------------------------------------------------------
     @JSONField(name = "name")
@@ -117,15 +110,7 @@ public class WebInputProfile implements Dto {
     @JSONField(name = "remark")
     private String remark;
 
-    public WebInputProfile() {
-    }
-
-    public WebInputStringIdKey getKey() {
-        return key;
-    }
-
-    public void setKey(WebInputStringIdKey key) {
-        this.key = key;
+    public WebInputProfileUpdateInfo() {
     }
 
     public String getName() {
@@ -292,8 +277,7 @@ public class WebInputProfile implements Dto {
     @Override
     public String toString() {
         return "WebInputProfileUpdateInfo{" +
-                "key=" + key +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", idNumber='" + idNumber + '\'' +
                 ", idType='" + idType + '\'' +
                 ", birthday='" + birthday + '\'' +

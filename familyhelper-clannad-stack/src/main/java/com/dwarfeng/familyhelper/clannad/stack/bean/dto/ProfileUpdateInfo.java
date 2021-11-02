@@ -1,131 +1,81 @@
-package com.dwarfeng.familyhelper.clannad.sdk.bean.entity;
+package com.dwarfeng.familyhelper.clannad.stack.bean.dto;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.familyhelper.clannad.sdk.util.Constraints;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
-import com.dwarfeng.subgrade.sdk.bean.key.WebInputStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.dto.Dto;
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.Valid;
-import java.util.Objects;
 
 /**
- * WebInput 个人简介。
+ * 个人简介更新信息。
  *
  * @author DwArFeng
  * @since 1.1.1
  */
-public class WebInputProfile implements Dto {
+public class ProfileUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = 7334666474539718328L;
-
-    public static Profile toStackBean(WebInputProfile webInput) {
-        if (Objects.isNull(webInput)) {
-            return null;
-        } else {
-            return new Profile(
-                    WebInputStringIdKey.toStackBean(webInput.getKey()), webInput.getName(), webInput.getIdNumber(),
-                    webInput.getIdType(), webInput.getBirthday(), webInput.getGender(), webInput.getBloodType(),
-                    webInput.getNationality(), webInput.getFamilyAddress(), webInput.getPhoneNumber(),
-                    webInput.getEmailAddress(), webInput.getEmployer(), webInput.getJobPosition(),
-                    webInput.getEmployerAddress(), webInput.getJobTitle(), webInput.getLatestSchoolName(),
-                    webInput.getEducationalLevel(), webInput.getEducationalBackground(), webInput.getPoliticalStatus(),
-                    webInput.getMaritalStatus(), webInput.getRemark()
-            );
-        }
-    }
-
-    // -----------------------------------------------------------主键-----------------------------------------------------------
-    @JSONField(name = "key")
-    @Valid
-    private WebInputStringIdKey key;
+    private static final long serialVersionUID = 8179648487527927638L;
 
     // -----------------------------------------------------------基本信息-----------------------------------------------------------
-    @JSONField(name = "name")
     private String name;
-
-    @JSONField(name = "id_number")
     private String idNumber;
-
-    @JSONField(name = "id_type")
-    @Length(max = Constraints.LENGTH_ID)
     private String idType;
-
-    @JSONField(name = "birthday")
     private String birthday;
-
-    @JSONField(name = "gender")
-    @Length(max = Constraints.LENGTH_ID)
     private String gender;
-
-    @JSONField(name = "bloodType")
-    @Length(max = Constraints.LENGTH_ID)
     private String bloodType;
-
-    @JSONField(name = "nationality")
-    @Length(max = Constraints.LENGTH_ID)
     private String nationality;
 
     // -----------------------------------------------------------联系方式-----------------------------------------------------------
-    @JSONField(name = "family_address")
     private String familyAddress;
-
-    @JSONField(name = "phone_number")
     private String phoneNumber;
-
-    @JSONField(name = "email_address")
     private String emailAddress;
 
     // -----------------------------------------------------------职务信息-----------------------------------------------------------
-    @JSONField(name = "employer")
     private String employer;
-
-    @JSONField(name = "job_position")
-    @Length(max = Constraints.LENGTH_ID)
     private String jobPosition;
-
-    @JSONField(name = "employer_address")
     private String employerAddress;
-
-    @JSONField(name = "job_title")
     private String jobTitle;
 
     // -----------------------------------------------------------政治信息-----------------------------------------------------------
-    @JSONField(name = "latest_school_name")
     private String latestSchoolName;
-
-    @JSONField(name = "educational_level")
-    @Length(max = Constraints.LENGTH_ID)
     private String educationalLevel;
-
-    @JSONField(name = "educational_background")
-    @Length(max = Constraints.LENGTH_ID)
     private String educationalBackground;
 
     // -----------------------------------------------------------政治信息-----------------------------------------------------------
-    @JSONField(name = "political_status")
-    @Length(max = Constraints.LENGTH_ID)
     private String politicalStatus;
 
     // -----------------------------------------------------------婚姻信息-----------------------------------------------------------
-    @JSONField(name = "marital_status")
-    @Length(max = Constraints.LENGTH_ID)
     private String maritalStatus;
 
     // -----------------------------------------------------------杂项-----------------------------------------------------------
-    @JSONField(name = "remark")
     private String remark;
 
-    public WebInputProfile() {
+    public ProfileUpdateInfo() {
     }
 
-    public WebInputStringIdKey getKey() {
-        return key;
-    }
-
-    public void setKey(WebInputStringIdKey key) {
-        this.key = key;
+    public ProfileUpdateInfo(
+            String name, String idNumber, String idType, String birthday, String gender, String bloodType,
+            String nationality, String familyAddress, String phoneNumber, String emailAddress, String employer,
+            String jobPosition, String employerAddress, String jobTitle, String latestSchoolName,
+            String educationalLevel, String educationalBackground, String politicalStatus, String maritalStatus,
+            String remark
+    ) {
+        this.name = name;
+        this.idNumber = idNumber;
+        this.idType = idType;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.bloodType = bloodType;
+        this.nationality = nationality;
+        this.familyAddress = familyAddress;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.employer = employer;
+        this.jobPosition = jobPosition;
+        this.employerAddress = employerAddress;
+        this.jobTitle = jobTitle;
+        this.latestSchoolName = latestSchoolName;
+        this.educationalLevel = educationalLevel;
+        this.educationalBackground = educationalBackground;
+        this.politicalStatus = politicalStatus;
+        this.maritalStatus = maritalStatus;
+        this.remark = remark;
     }
 
     public String getName() {
@@ -291,9 +241,8 @@ public class WebInputProfile implements Dto {
     @SuppressWarnings("DuplicatedCode")
     @Override
     public String toString() {
-        return "WebInputProfileUpdateInfo{" +
-                "key=" + key +
-                ", name='" + name + '\'' +
+        return "ProfileUpdateInfo{" +
+                "name='" + name + '\'' +
                 ", idNumber='" + idNumber + '\'' +
                 ", idType='" + idType + '\'' +
                 ", birthday='" + birthday + '\'' +
