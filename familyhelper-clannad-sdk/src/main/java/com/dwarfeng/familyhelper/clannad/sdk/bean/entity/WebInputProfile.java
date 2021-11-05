@@ -59,7 +59,7 @@ public class WebInputProfile implements Dto {
     @Length(max = Constraints.LENGTH_ID)
     private String gender;
 
-    @JSONField(name = "bloodType")
+    @JSONField(name = "blood_type")
     @Length(max = Constraints.LENGTH_ID)
     private String bloodType;
 

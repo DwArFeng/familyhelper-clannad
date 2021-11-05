@@ -10,6 +10,8 @@
 
 - 修复 `HibernateProfileTypeIndicator` 中不正确的 JPA 注解。
 
+- 修正 Profile 相关实体注解中不规范的命名。
+
 #### 功能移除
 
 - (无)

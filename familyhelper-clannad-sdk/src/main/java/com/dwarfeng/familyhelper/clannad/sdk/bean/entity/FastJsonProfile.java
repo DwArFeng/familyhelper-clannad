@@ -53,7 +53,7 @@ public class FastJsonProfile implements Dto {
     @JSONField(name = "gender", ordinal = 6)
     private String gender;
 
-    @JSONField(name = "bloodType", ordinal = 7)
+    @JSONField(name = "blood_type", ordinal = 7)
     private String bloodType;
 
     @JSONField(name = "nationality", ordinal = 8)

@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tbl_profile")
 public class HibernateProfile implements Bean {
 
-    private static final long serialVersionUID = 1708588983724769069L;
+    private static final long serialVersionUID = 8561943000513920342L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -37,7 +37,7 @@ public class HibernateProfile implements Bean {
     @Column(name = "gender", length = Constraints.LENGTH_ID)
     private String gender;
 
-    @Column(name = "bloodType", length = Constraints.LENGTH_ID)
+    @Column(name = "blood_type", length = Constraints.LENGTH_ID)
     private String bloodType;
 
     @Column(name = "nationality", length = Constraints.LENGTH_ID)
