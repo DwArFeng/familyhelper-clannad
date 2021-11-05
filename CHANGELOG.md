@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复 `HibernateProfileTypeIndicator` 中不正确的 JPA 注解。
 
 #### 功能移除
 

@@ -16,11 +16,11 @@ public class HibernateProfileTypeIndicator implements Dto {
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
-    @Column(name = "category_id", nullable = false, unique = true, length = Constraints.LENGTH_ID)
+    @Column(name = "category_id", nullable = false, length = Constraints.LENGTH_ID)
     private String categoryId;
 
     @Id
-    @Column(name = "string_id", nullable = false, unique = true, length = Constraints.LENGTH_ID)
+    @Column(name = "string_id", nullable = false, length = Constraints.LENGTH_ID)
     private String stringId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
