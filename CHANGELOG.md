@@ -12,6 +12,8 @@
 
 - 修正 Profile 相关实体注解中不规范的命名。
 
+- 修正调用 ServiceExceptionCodes.setExceptionCodeOffset 后，报警代码不更新的 bug。
+
 #### 功能移除
 
 - (无)
