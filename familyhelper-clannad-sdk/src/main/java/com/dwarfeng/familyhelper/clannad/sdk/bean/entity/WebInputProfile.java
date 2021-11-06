@@ -90,7 +90,7 @@ public class WebInputProfile implements Dto {
     @JSONField(name = "job_title")
     private String jobTitle;
 
-    // -----------------------------------------------------------政治信息-----------------------------------------------------------
+    // -----------------------------------------------------------教育水平-----------------------------------------------------------
     @JSONField(name = "latest_school_name")
     private String latestSchoolName;
 

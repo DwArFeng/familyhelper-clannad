@@ -10,6 +10,8 @@
 
 - 修改 ProfileOperateService 服务接口中错误的方法名称。
 
+- 修改 Profile 及其相关实体的错误注释。
+
 #### 功能移除
 
 - (无)

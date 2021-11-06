@@ -82,7 +82,7 @@ public class FastJsonProfile implements Dto {
     @JSONField(name = "job_title", ordinal = 15)
     private String jobTitle;
 
-    // -----------------------------------------------------------政治信息-----------------------------------------------------------
+    // -----------------------------------------------------------教育水平-----------------------------------------------------------
     @JSONField(name = "latest_school_name", ordinal = 16)
     private String latestSchoolName;
 

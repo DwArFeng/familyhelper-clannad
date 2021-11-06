@@ -36,7 +36,7 @@ public class Profile implements Entity<StringIdKey> {
     private String employerAddress;
     private String jobTitle;
 
-    // -----------------------------------------------------------政治信息-----------------------------------------------------------
+    // -----------------------------------------------------------教育水平-----------------------------------------------------------
     private String latestSchoolName;
     private String educationalLevel;
     private String educationalBackground;
