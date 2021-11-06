@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修改 ProfileOperateService 服务接口中错误的方法名称。
 
 #### 功能移除
 

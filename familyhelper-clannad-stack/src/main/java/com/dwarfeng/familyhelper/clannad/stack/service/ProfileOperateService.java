@@ -22,7 +22,7 @@ public interface ProfileOperateService extends Service {
      * @param profileUpdateInfo 个人简介的更新信息。
      * @throws ServiceException 服务异常。
      */
-    void updateAccountBook(StringIdKey userKey, ProfileUpdateInfo profileUpdateInfo) throws ServiceException;
+    void updateProfile(StringIdKey userKey, ProfileUpdateInfo profileUpdateInfo) throws ServiceException;
 
     /**
      * 添加个人设置的访客权限。

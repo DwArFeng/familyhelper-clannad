@@ -38,7 +38,7 @@ public class ProfileOperateHandlerImpl implements ProfileOperateHandler {
     }
 
     @Override
-    public void updateAccountBook(StringIdKey userKey, ProfileUpdateInfo profileUpdateInfo) throws HandlerException {
+    public void updateProfile(StringIdKey userKey, ProfileUpdateInfo profileUpdateInfo) throws HandlerException {
         try {
             // 1. 确认用户存在。
             makeSureUserExists(userKey);

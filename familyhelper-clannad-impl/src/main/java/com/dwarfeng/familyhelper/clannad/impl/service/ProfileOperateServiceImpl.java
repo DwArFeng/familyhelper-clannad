@@ -25,9 +25,9 @@ public class ProfileOperateServiceImpl implements ProfileOperateService {
     }
 
     @Override
-    public void updateAccountBook(StringIdKey userKey, ProfileUpdateInfo profileUpdateInfo) throws ServiceException {
+    public void updateProfile(StringIdKey userKey, ProfileUpdateInfo profileUpdateInfo) throws ServiceException {
         try {
-            profileOperateHandler.updateAccountBook(userKey, profileUpdateInfo);
+            profileOperateHandler.updateProfile(userKey, profileUpdateInfo);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logAndThrow("更新个人设置时发生异常", LogLevel.WARN, sem, e);
         }

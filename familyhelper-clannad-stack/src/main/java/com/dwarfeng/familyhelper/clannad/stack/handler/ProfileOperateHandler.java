@@ -22,7 +22,7 @@ public interface ProfileOperateHandler extends Handler {
      * @param profileUpdateInfo 个人简介的更新信息。
      * @throws HandlerException 处理器异常。
      */
-    void updateAccountBook(StringIdKey userKey, ProfileUpdateInfo profileUpdateInfo) throws HandlerException;
+    void updateProfile(StringIdKey userKey, ProfileUpdateInfo profileUpdateInfo) throws HandlerException;
 
     /**
      * 添加账本的访客权限。
