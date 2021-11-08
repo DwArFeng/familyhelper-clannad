@@ -1,5 +1,6 @@
 package com.dwarfeng.familyhelper.clannad.node.configuration;
 
+import com.dwarfeng.familyhelper.clannad.impl.service.operation.AvatarInfoCrudOperation;
 import com.dwarfeng.familyhelper.clannad.impl.service.operation.ProfileCrudOperation;
 import com.dwarfeng.familyhelper.clannad.impl.service.operation.UserCrudOperation;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
@@ -39,6 +40,7 @@ public class ServiceConfiguration {
     private final PoprCache poprCache;
     private final NicknameDao nicknameDao;
     private final NicknameCache nicknameCache;
+    private final AvatarInfoCrudOperation avatarInfoCrudOperation;
 
     @Value("${cache.timeout.entity.profile_type_indicator}")
     private long profileTypeIndicatorTimeout;
@@ -54,7 +56,8 @@ public class ServiceConfiguration {
             ProfileTypeIndicatorDao profileTypeIndicatorDao,
             ProfileTypeIndicatorCache profileTypeIndicatorCache,
             PoprDao poprDao, PoprCache poprCache,
-            NicknameDao nicknameDao, NicknameCache nicknameCache
+            NicknameDao nicknameDao, NicknameCache nicknameCache,
+            AvatarInfoCrudOperation avatarInfoCrudOperation
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.profileCrudOperation = profileCrudOperation;
@@ -65,6 +68,7 @@ public class ServiceConfiguration {
         this.poprCache = poprCache;
         this.nicknameDao = nicknameDao;
         this.nicknameCache = nicknameCache;
+        this.avatarInfoCrudOperation = avatarInfoCrudOperation;
     }
 
     @Bean
@@ -161,6 +165,16 @@ public class ServiceConfiguration {
     public DaoOnlyPresetLookupService<Nickname> nicknameDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 nicknameDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<StringIdKey, AvatarInfo> avatarInfoBatchCustomCrudService() {
+        return new CustomBatchCrudService<>(
+                avatarInfoCrudOperation,
+                new ExceptionKeyFetcher<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

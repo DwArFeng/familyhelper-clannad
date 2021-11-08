@@ -6,6 +6,7 @@
 
 - 新增实体。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Nickname。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.AvatarInfo。
 
 #### Bug修复
 

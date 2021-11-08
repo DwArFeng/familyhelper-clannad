@@ -34,6 +34,8 @@ public class CacheConfiguration {
     private String poprPrefix;
     @Value("${cache.prefix.entity.nickname}")
     private String nicknamePrefix;
+    @Value("${cache.prefix.entity.avatar_info}")
+    private String avatarInfoPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -88,6 +90,16 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonNickname>) template,
                 new NicknameStringKeyFormatter(nicknamePrefix),
                 new DozerBeanTransformer<>(Nickname.class, FastJsonNickname.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<StringIdKey, AvatarInfo, FastJsonAvatarInfo> avatarInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonAvatarInfo>) template,
+                new StringIdStringKeyFormatter(avatarInfoPrefix),
+                new DozerBeanTransformer<>(AvatarInfo.class, FastJsonAvatarInfo.class, mapper)
         );
     }
 }

@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tbl_profile")
 public class HibernateProfile implements Bean {
 
-    private static final long serialVersionUID = 8561943000513920342L;
+    private static final long serialVersionUID = -1198279464948079761L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -79,8 +79,13 @@ public class HibernateProfile implements Bean {
     @Column(name = "marital_status", length = Constraints.LENGTH_ID)
     private String maritalStatus;
 
-    @Column(name = "remark")
+    @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
+
+    // -----------------------------------------------------------一对一-----------------------------------------------------------
+    @OneToOne(targetEntity = HibernateUser.class)
+    @PrimaryKeyJoinColumn
+    private HibernateUser user;
 
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePopr.class, mappedBy = "profile")
@@ -267,6 +272,14 @@ public class HibernateProfile implements Bean {
         this.remark = remark;
     }
 
+    public HibernateUser getUser() {
+        return user;
+    }
+
+    public void setUser(HibernateUser user) {
+        this.user = user;
+    }
+
     public Set<HibernatePopr> getPoprs() {
         return poprs;
     }
@@ -298,6 +311,7 @@ public class HibernateProfile implements Bean {
                 "educationalBackground = " + educationalBackground + ", " +
                 "politicalStatus = " + politicalStatus + ", " +
                 "maritalStatus = " + maritalStatus + ", " +
-                "remark = " + remark + ")";
+                "remark = " + remark + ", " +
+                "user = " + user + ")";
     }
 }

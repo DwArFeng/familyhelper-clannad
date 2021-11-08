@@ -5,12 +5,8 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
-import com.dwarfeng.familyhelper.clannad.stack.cache.NicknameCache;
-import com.dwarfeng.familyhelper.clannad.stack.cache.PoprCache;
-import com.dwarfeng.familyhelper.clannad.stack.cache.UserCache;
-import com.dwarfeng.familyhelper.clannad.stack.dao.NicknameDao;
-import com.dwarfeng.familyhelper.clannad.stack.dao.PoprDao;
-import com.dwarfeng.familyhelper.clannad.stack.dao.UserDao;
+import com.dwarfeng.familyhelper.clannad.stack.cache.*;
+import com.dwarfeng.familyhelper.clannad.stack.dao.*;
 import com.dwarfeng.familyhelper.clannad.stack.service.NicknameMaintainService;
 import com.dwarfeng.familyhelper.clannad.stack.service.PoprMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
@@ -29,26 +25,34 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
     private final UserDao userDao;
     private final PoprDao poprDao;
     private final NicknameDao nicknameDao;
+    private final ProfileDao profileDao;
+    private final AvatarInfoDao avatarInfoDao;
 
     private final UserCache userCache;
     private final PoprCache poprCache;
     private final NicknameCache nicknameCache;
+    private final ProfileCache profileCache;
+    private final AvatarInfoCache avatarInfoCache;
 
     @Value("${cache.timeout.entity.user}")
     private long userTimeout;
 
     public UserCrudOperation(
-            UserDao userDao, PoprDao poprDao, NicknameDao nicknameDao,
-            UserCache userCache, PoprCache poprCache, NicknameCache nicknameCache
+            UserDao userDao, PoprDao poprDao, NicknameDao nicknameDao, ProfileDao profileDao,
+            AvatarInfoDao avatarInfoDao, UserCache userCache, PoprCache poprCache, NicknameCache nicknameCache,
+            ProfileCache profileCache, AvatarInfoCache avatarInfoCache
     ) {
         this.userDao = userDao;
         this.poprDao = poprDao;
         this.nicknameDao = nicknameDao;
+        this.profileDao = profileDao;
+        this.avatarInfoDao = avatarInfoDao;
         this.userCache = userCache;
         this.poprCache = poprCache;
         this.nicknameCache = nicknameCache;
+        this.profileCache = profileCache;
+        this.avatarInfoCache = avatarInfoCache;
     }
-
 
     @Override
     public boolean exists(StringIdKey key) throws Exception {
@@ -83,13 +87,17 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
 
     @Override
     public void delete(StringIdKey key) throws Exception {
-        // 删除与个人简介权限相关的账本权限。
+        // 删除与用户相关的个人简介权限。
         List<PoprKey> poprKeys = poprDao.lookup(PoprMaintainService.CHILD_FOR_USER, new Object[]{key})
                 .stream().map(Popr::getKey).collect(Collectors.toList());
         poprCache.batchDelete(poprKeys);
         poprDao.batchDelete(poprKeys);
+        poprKeys = poprDao.lookup(PoprMaintainService.CHILD_FOR_PROFILE, new Object[]{key})
+                .stream().map(Popr::getKey).collect(Collectors.toList());
+        poprCache.batchDelete(poprKeys);
+        poprDao.batchDelete(poprKeys);
 
-        // 删除与昵称相关的账本权限。
+        // 删除与用户相关的昵称。
         List<NicknameKey> nicknameKeys = nicknameDao.lookup(NicknameMaintainService.CHILD_FOR_SUBJECT_USER, new Object[]{key})
                 .stream().map(Nickname::getKey).collect(Collectors.toList());
         nicknameCache.batchDelete(nicknameKeys);
@@ -98,6 +106,18 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
                 .stream().map(Nickname::getKey).collect(Collectors.toList());
         nicknameCache.batchDelete(nicknameKeys);
         nicknameDao.batchDelete(nicknameKeys);
+
+        // 删除与用户相关的个人简介。
+        if (profileDao.exists(key)) {
+            profileCache.delete(key);
+            profileDao.delete(key);
+        }
+
+        // 删除与用户相关的头像信息。
+        if (avatarInfoDao.exists(key)) {
+            avatarInfoCache.delete(key);
+            avatarInfoDao.delete(key);
+        }
 
         // 删除账本实体自身。
         userCache.delete(key);

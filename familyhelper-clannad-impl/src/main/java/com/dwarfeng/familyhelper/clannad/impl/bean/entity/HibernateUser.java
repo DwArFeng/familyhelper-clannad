@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tbl_user")
 public class HibernateUser implements Bean {
 
-    private static final long serialVersionUID = 9042387779772304265L;
+    private static final long serialVersionUID = -2759779386622087076L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -24,6 +24,13 @@ public class HibernateUser implements Bean {
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
+
+    // -----------------------------------------------------------一对一-----------------------------------------------------------
+    @OneToOne(cascade = CascadeType.MERGE, targetEntity = HibernateProfile.class, mappedBy = "user")
+    private HibernateProfile profile;
+
+    @OneToOne(cascade = CascadeType.MERGE, targetEntity = HibernateAvatarInfo.class, mappedBy = "user")
+    private HibernateAvatarInfo avatarInfo;
 
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePopr.class, mappedBy = "user")
@@ -64,6 +71,22 @@ public class HibernateUser implements Bean {
         this.remark = remark;
     }
 
+    public HibernateProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(HibernateProfile profile) {
+        this.profile = profile;
+    }
+
+    public HibernateAvatarInfo getAvatarInfo() {
+        return avatarInfo;
+    }
+
+    public void setAvatarInfo(HibernateAvatarInfo avatarInfo) {
+        this.avatarInfo = avatarInfo;
+    }
+
     public Set<HibernatePopr> getPoprs() {
         return poprs;
     }
@@ -92,6 +115,8 @@ public class HibernateUser implements Bean {
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "stringId = " + stringId + ", " +
-                "remark = " + remark + ")";
+                "remark = " + remark + ", " +
+                "profile = " + profile + ", " +
+                "avatarInfo = " + avatarInfo + ")";
     }
 }

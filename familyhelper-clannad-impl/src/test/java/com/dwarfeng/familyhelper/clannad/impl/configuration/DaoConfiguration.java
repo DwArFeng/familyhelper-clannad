@@ -152,4 +152,17 @@ public class DaoConfiguration {
                 nicknamePresetCriteriaMaker
         );
     }
+
+    @Bean
+    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, AvatarInfo, HibernateAvatarInfo>
+    avatarInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
+                new DozerBeanTransformer<>(AvatarInfo.class, HibernateAvatarInfo.class, mapper),
+                HibernateAvatarInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
 }
