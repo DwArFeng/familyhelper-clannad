@@ -1,15 +1,11 @@
 package com.dwarfeng.familyhelper.clannad.impl.configuration;
 
-import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonPopr;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonProfile;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonProfileTypeIndicator;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonUser;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.*;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.NicknameStringKeyFormatter;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.PoprStringKeyFormatter;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.ProfileTypeIndicatorStringKeyFormatter;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.ProfileTypeIndicator;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
@@ -36,6 +32,8 @@ public class CacheConfiguration {
     private String profileTypeIndicatorPrefix;
     @Value("${cache.prefix.entity.popr}")
     private String poprPrefix;
+    @Value("${cache.prefix.entity.nickname}")
+    private String nicknamePrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -80,6 +78,16 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonPopr>) template,
                 new PoprStringKeyFormatter(poprPrefix),
                 new DozerBeanTransformer<>(Popr.class, FastJsonPopr.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<NicknameKey, Nickname, FastJsonNickname> nicknameRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonNickname>) template,
+                new NicknameStringKeyFormatter(nicknamePrefix),
+                new DozerBeanTransformer<>(Nickname.class, FastJsonNickname.class, mapper)
         );
     }
 }

@@ -79,8 +79,8 @@ public class ProfileCrudOperation implements BatchCrudOperation<StringIdKey, Pro
         poprDao.batchDelete(poprKeys);
 
         // 删除账本实体自身。
-        profileDao.delete(key);
         profileCache.delete(key);
+        profileDao.delete(key);
     }
 
     @Override

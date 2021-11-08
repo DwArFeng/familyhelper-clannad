@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tbl_user")
 public class HibernateUser implements Bean {
 
-    private static final long serialVersionUID = 8403186669007084122L;
+    private static final long serialVersionUID = 9042387779772304265L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -28,6 +28,12 @@ public class HibernateUser implements Bean {
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePopr.class, mappedBy = "user")
     private Set<HibernatePopr> poprs = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateNickname.class, mappedBy = "subjectUser")
+    private Set<HibernateNickname> subjectNicknames = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateNickname.class, mappedBy = "objectUser")
+    private Set<HibernateNickname> objectNicknames = new HashSet<>();
 
     public HibernateUser() {
     }
@@ -64,6 +70,22 @@ public class HibernateUser implements Bean {
 
     public void setPoprs(Set<HibernatePopr> poprs) {
         this.poprs = poprs;
+    }
+
+    public Set<HibernateNickname> getSubjectNicknames() {
+        return subjectNicknames;
+    }
+
+    public void setSubjectNicknames(Set<HibernateNickname> subjectNicknames) {
+        this.subjectNicknames = subjectNicknames;
+    }
+
+    public Set<HibernateNickname> getObjectNicknames() {
+        return objectNicknames;
+    }
+
+    public void setObjectNicknames(Set<HibernateNickname> objectNicknames) {
+        this.objectNicknames = objectNicknames;
     }
 
     @Override

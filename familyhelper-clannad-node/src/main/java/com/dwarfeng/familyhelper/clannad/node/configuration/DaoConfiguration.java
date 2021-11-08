@@ -1,17 +1,14 @@
 package com.dwarfeng.familyhelper.clannad.node.configuration;
 
-import com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernatePopr;
-import com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateProfile;
-import com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateProfileTypeIndicator;
-import com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateUser;
+import com.dwarfeng.familyhelper.clannad.impl.bean.entity.*;
+import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateNicknameKey;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernatePoprKey;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateProfileTypeIndicatorKey;
+import com.dwarfeng.familyhelper.clannad.impl.dao.preset.NicknamePresetCriteriaMaker;
 import com.dwarfeng.familyhelper.clannad.impl.dao.preset.PoprPresetCriteriaMaker;
 import com.dwarfeng.familyhelper.clannad.impl.dao.preset.ProfileTypeIndicatorPresetCriteriaMaker;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.ProfileTypeIndicator;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
@@ -35,6 +32,7 @@ public class DaoConfiguration {
 
     private final ProfileTypeIndicatorPresetCriteriaMaker profileTypeIndicatorPresetCriteriaMaker;
     private final PoprPresetCriteriaMaker poprPresetCriteriaMaker;
+    private final NicknamePresetCriteriaMaker nicknamePresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -43,12 +41,14 @@ public class DaoConfiguration {
             HibernateTemplate template,
             Mapper mapper,
             ProfileTypeIndicatorPresetCriteriaMaker profileTypeIndicatorPresetCriteriaMaker,
-            PoprPresetCriteriaMaker poprPresetCriteriaMaker
+            PoprPresetCriteriaMaker poprPresetCriteriaMaker,
+            NicknamePresetCriteriaMaker nicknamePresetCriteriaMaker
     ) {
         this.template = template;
         this.mapper = mapper;
         this.profileTypeIndicatorPresetCriteriaMaker = profileTypeIndicatorPresetCriteriaMaker;
         this.poprPresetCriteriaMaker = poprPresetCriteriaMaker;
+        this.nicknamePresetCriteriaMaker = nicknamePresetCriteriaMaker;
     }
 
     @Bean
@@ -128,6 +128,28 @@ public class DaoConfiguration {
                 new DozerBeanTransformer<>(Popr.class, HibernatePopr.class, mapper),
                 HibernatePopr.class,
                 poprPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<NicknameKey, HibernateNicknameKey, Nickname, HibernateNickname> nicknameHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(NicknameKey.class, HibernateNicknameKey.class, mapper),
+                new DozerBeanTransformer<>(Nickname.class, HibernateNickname.class, mapper),
+                HibernateNickname.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<Nickname, HibernateNickname> nicknameHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(Nickname.class, HibernateNickname.class, mapper),
+                HibernateNickname.class,
+                nicknamePresetCriteriaMaker
         );
     }
 }

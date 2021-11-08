@@ -1,12 +1,17 @@
 package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Nickname;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
+import com.dwarfeng.familyhelper.clannad.stack.cache.NicknameCache;
 import com.dwarfeng.familyhelper.clannad.stack.cache.PoprCache;
 import com.dwarfeng.familyhelper.clannad.stack.cache.UserCache;
+import com.dwarfeng.familyhelper.clannad.stack.dao.NicknameDao;
 import com.dwarfeng.familyhelper.clannad.stack.dao.PoprDao;
 import com.dwarfeng.familyhelper.clannad.stack.dao.UserDao;
+import com.dwarfeng.familyhelper.clannad.stack.service.NicknameMaintainService;
 import com.dwarfeng.familyhelper.clannad.stack.service.PoprMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
@@ -23,19 +28,27 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
 
     private final UserDao userDao;
     private final PoprDao poprDao;
+    private final NicknameDao nicknameDao;
 
     private final UserCache userCache;
     private final PoprCache poprCache;
+    private final NicknameCache nicknameCache;
 
     @Value("${cache.timeout.entity.user}")
     private long userTimeout;
 
-    public UserCrudOperation(UserDao userDao, PoprDao poprDao, UserCache userCache, PoprCache poprCache) {
+    public UserCrudOperation(
+            UserDao userDao, PoprDao poprDao, NicknameDao nicknameDao,
+            UserCache userCache, PoprCache poprCache, NicknameCache nicknameCache
+    ) {
         this.userDao = userDao;
         this.poprDao = poprDao;
+        this.nicknameDao = nicknameDao;
         this.userCache = userCache;
         this.poprCache = poprCache;
+        this.nicknameCache = nicknameCache;
     }
+
 
     @Override
     public boolean exists(StringIdKey key) throws Exception {
@@ -70,15 +83,25 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
 
     @Override
     public void delete(StringIdKey key) throws Exception {
-        // 删除与账本相关的账本权限。
+        // 删除与个人简介权限相关的账本权限。
         List<PoprKey> poprKeys = poprDao.lookup(PoprMaintainService.CHILD_FOR_USER, new Object[]{key})
                 .stream().map(Popr::getKey).collect(Collectors.toList());
         poprCache.batchDelete(poprKeys);
         poprDao.batchDelete(poprKeys);
 
+        // 删除与昵称相关的账本权限。
+        List<NicknameKey> nicknameKeys = nicknameDao.lookup(NicknameMaintainService.CHILD_FOR_SUBJECT_USER, new Object[]{key})
+                .stream().map(Nickname::getKey).collect(Collectors.toList());
+        nicknameCache.batchDelete(nicknameKeys);
+        nicknameDao.batchDelete(nicknameKeys);
+        nicknameKeys = nicknameDao.lookup(NicknameMaintainService.CHILD_FOR_OBJECT_USER, new Object[]{key})
+                .stream().map(Nickname::getKey).collect(Collectors.toList());
+        nicknameCache.batchDelete(nicknameKeys);
+        nicknameDao.batchDelete(nicknameKeys);
+
         // 删除账本实体自身。
-        userDao.delete(key);
         userCache.delete(key);
+        userDao.delete(key);
     }
 
     @Override

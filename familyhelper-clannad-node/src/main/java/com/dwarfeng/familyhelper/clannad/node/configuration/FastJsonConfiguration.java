@@ -1,10 +1,8 @@
 package com.dwarfeng.familyhelper.clannad.node.configuration;
 
 import com.alibaba.fastjson.parser.ParserConfig;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonPopr;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonProfile;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonProfileTypeIndicator;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.FastJsonUser;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.*;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonNicknameKey;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonPoprKey;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonProfileTypeIndicatorKey;
 import org.slf4j.Logger;
@@ -24,6 +22,8 @@ public class FastJsonConfiguration {
         ParserConfig.getGlobalInstance().addAccept(FastJsonProfileTypeIndicatorKey.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonPopr.class.getCanonicalName());
         ParserConfig.getGlobalInstance().addAccept(FastJsonPoprKey.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonNickname.class.getCanonicalName());
+        ParserConfig.getGlobalInstance().addAccept(FastJsonNicknameKey.class.getCanonicalName());
         LOGGER.debug("FastJson autotype 白名单配置完毕");
     }
 }
