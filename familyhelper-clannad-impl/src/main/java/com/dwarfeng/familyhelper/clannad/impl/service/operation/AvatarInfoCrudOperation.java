@@ -1,5 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 
+import com.dwarfeng.familyhelper.clannad.impl.handler.FtpHandler;
+import com.dwarfeng.familyhelper.clannad.impl.util.FtpConstants;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.AvatarInfo;
 import com.dwarfeng.familyhelper.clannad.stack.cache.AvatarInfoCache;
 import com.dwarfeng.familyhelper.clannad.stack.dao.AvatarInfoDao;
@@ -19,12 +21,19 @@ public class AvatarInfoCrudOperation implements BatchCrudOperation<StringIdKey, 
 
     private final AvatarInfoCache avatarInfoCache;
 
+    private final FtpHandler ftpHandler;
+
     @Value("${cache.timeout.entity.avatar_info}")
     private long avatarInfoTimeout;
 
-    public AvatarInfoCrudOperation(AvatarInfoDao avatarInfoDao, AvatarInfoCache avatarInfoCache) {
+    public AvatarInfoCrudOperation(
+            AvatarInfoDao avatarInfoDao,
+            AvatarInfoCache avatarInfoCache,
+            FtpHandler ftpHandler
+    ) {
         this.avatarInfoDao = avatarInfoDao;
         this.avatarInfoCache = avatarInfoCache;
+        this.ftpHandler = ftpHandler;
     }
 
     @Override
@@ -60,6 +69,11 @@ public class AvatarInfoCrudOperation implements BatchCrudOperation<StringIdKey, 
 
     @Override
     public void delete(StringIdKey key) throws Exception {
+        // 删除用户有关的头像文件。
+        if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_AVATAR}, key.getStringId())) {
+            ftpHandler.deleteFile(new String[]{FtpConstants.PATH_AVATAR}, key.getStringId());
+        }
+
         // 删除账本实体自身。
         avatarInfoCache.delete(key);
         avatarInfoDao.delete(key);

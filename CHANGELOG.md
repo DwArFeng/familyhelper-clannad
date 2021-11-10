@@ -8,6 +8,9 @@
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Nickname。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.AvatarInfo。
 
+- 新增服务。
+  - com.dwarfeng.familyhelper.clannad.stack.service.AvatarOperateService。
+
 #### Bug修复
 
 - (无)

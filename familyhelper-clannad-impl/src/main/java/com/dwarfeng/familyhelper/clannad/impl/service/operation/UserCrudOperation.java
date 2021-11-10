@@ -1,5 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 
+import com.dwarfeng.familyhelper.clannad.impl.handler.FtpHandler;
+import com.dwarfeng.familyhelper.clannad.impl.util.FtpConstants;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Nickname;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
@@ -34,13 +36,16 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
     private final ProfileCache profileCache;
     private final AvatarInfoCache avatarInfoCache;
 
+    private final FtpHandler ftpHandler;
+
     @Value("${cache.timeout.entity.user}")
     private long userTimeout;
 
     public UserCrudOperation(
             UserDao userDao, PoprDao poprDao, NicknameDao nicknameDao, ProfileDao profileDao,
             AvatarInfoDao avatarInfoDao, UserCache userCache, PoprCache poprCache, NicknameCache nicknameCache,
-            ProfileCache profileCache, AvatarInfoCache avatarInfoCache
+            ProfileCache profileCache, AvatarInfoCache avatarInfoCache,
+            FtpHandler ftpHandler
     ) {
         this.userDao = userDao;
         this.poprDao = poprDao;
@@ -52,6 +57,7 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         this.nicknameCache = nicknameCache;
         this.profileCache = profileCache;
         this.avatarInfoCache = avatarInfoCache;
+        this.ftpHandler = ftpHandler;
     }
 
     @Override
@@ -98,8 +104,9 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         poprDao.batchDelete(poprKeys);
 
         // 删除与用户相关的昵称。
-        List<NicknameKey> nicknameKeys = nicknameDao.lookup(NicknameMaintainService.CHILD_FOR_SUBJECT_USER, new Object[]{key})
-                .stream().map(Nickname::getKey).collect(Collectors.toList());
+        List<NicknameKey> nicknameKeys = nicknameDao.lookup(
+                NicknameMaintainService.CHILD_FOR_SUBJECT_USER, new Object[]{key}
+        ).stream().map(Nickname::getKey).collect(Collectors.toList());
         nicknameCache.batchDelete(nicknameKeys);
         nicknameDao.batchDelete(nicknameKeys);
         nicknameKeys = nicknameDao.lookup(NicknameMaintainService.CHILD_FOR_OBJECT_USER, new Object[]{key})
@@ -111,6 +118,11 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         if (profileDao.exists(key)) {
             profileCache.delete(key);
             profileDao.delete(key);
+        }
+
+        // 删除用户有关的头像文件。
+        if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_AVATAR}, key.getStringId())) {
+            ftpHandler.deleteFile(new String[]{FtpConstants.PATH_AVATAR}, key.getStringId());
         }
 
         // 删除与用户相关的头像信息。
