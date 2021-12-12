@@ -8,7 +8,7 @@ package com.dwarfeng.familyhelper.clannad.impl.util;
  */
 public final class FtpConstants {
 
-    public static final String PATH_AVATAR = "avatar";
+    public static final String PATH_AVATAR = "familyhelper-clannad/avatar";
 
     private FtpConstants() {
         throw new IllegalStateException("禁止实例化");
