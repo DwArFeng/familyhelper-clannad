@@ -6,7 +6,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>familyhelper-clannad</artifactId>
-    <version>1.1.5.a-SNAPSHOT</version>
+    <version>1.1.5.a</version>
 
     <packaging>pom</packaging>
 
@@ -381,22 +381,22 @@
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-clannad-stack</artifactId>
-                <version>1.1.5.a-SNAPSHOT</version>
+                <version>1.1.5.a</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-clannad-sdk</artifactId>
-                <version>1.1.5.a-SNAPSHOT</version>
+                <version>1.1.5.a</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-clannad-impl</artifactId>
-                <version>1.1.5.a-SNAPSHOT</version>
+                <version>1.1.5.a</version>
             </dependency>
             <dependency>
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>familyhelper-clannad-node</artifactId>
-                <version>1.1.5.a-SNAPSHOT</version>
+                <version>1.1.5.a</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
