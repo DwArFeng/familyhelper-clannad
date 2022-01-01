@@ -1,6 +1,6 @@
 package com.dwarfeng.familyhelper.clannad.impl.service;
 
-import com.dwarfeng.familyhelper.clannad.stack.bean.dto.AvatarDownloadInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.Avatar;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.AvatarUploadInfo;
 import com.dwarfeng.familyhelper.clannad.stack.handler.AvatarOperateHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.AvatarOperateService;
@@ -24,7 +24,7 @@ public class AvatarOperateServiceImpl implements AvatarOperateService {
     }
 
     @Override
-    public AvatarDownloadInfo downloadAvatar(StringIdKey userKey) throws ServiceException {
+    public Avatar downloadAvatar(StringIdKey userKey) throws ServiceException {
         try {
             return avatarOperateHandler.downloadAvatar(userKey);
         } catch (Exception e) {

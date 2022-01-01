@@ -3,7 +3,7 @@ package com.dwarfeng.familyhelper.clannad.impl.service;
 import com.dwarfeng.dutil.basic.io.IOUtil;
 import com.dwarfeng.familyhelper.clannad.impl.handler.FtpHandler;
 import com.dwarfeng.familyhelper.clannad.impl.util.FtpConstants;
-import com.dwarfeng.familyhelper.clannad.stack.bean.dto.AvatarDownloadInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.Avatar;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.AvatarUploadInfo;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
 import com.dwarfeng.familyhelper.clannad.stack.service.AvatarInfoMaintainService;
@@ -78,14 +78,14 @@ public class AvatarOperateServiceImplTest {
             // 第一次保存。
             avatarOperateService.uploadAvatar(USER_KEY, avatarUploadInfo);
             // 下载头像，头像的内容应该与 content 相等。
-            AvatarDownloadInfo avatarDownloadInfo = avatarOperateService.downloadAvatar(USER_KEY);
-            assertArrayEquals(content, avatarDownloadInfo.getContent());
+            Avatar avatar = avatarOperateService.downloadAvatar(USER_KEY);
+            assertArrayEquals(content, avatar.getContent());
 
             // 第二次保存。
             avatarOperateService.uploadAvatar(USER_KEY, avatarUploadInfo);
             // 下载头像，头像的内容应该与 content 相等。
-            avatarDownloadInfo = avatarOperateService.downloadAvatar(USER_KEY);
-            assertArrayEquals(content, avatarDownloadInfo.getContent());
+            avatar = avatarOperateService.downloadAvatar(USER_KEY);
+            assertArrayEquals(content, avatar.getContent());
 
             // 移除头像，头像文件和头像信息应该一并移除。
             avatarOperateService.removeAvatar(USER_KEY);

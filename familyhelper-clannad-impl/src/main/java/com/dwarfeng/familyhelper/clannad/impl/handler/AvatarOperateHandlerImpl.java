@@ -2,7 +2,7 @@ package com.dwarfeng.familyhelper.clannad.impl.handler;
 
 import com.dwarfeng.familyhelper.clannad.impl.exception.FileException;
 import com.dwarfeng.familyhelper.clannad.impl.util.FtpConstants;
-import com.dwarfeng.familyhelper.clannad.stack.bean.dto.AvatarDownloadInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.Avatar;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.AvatarUploadInfo;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.AvatarInfo;
 import com.dwarfeng.familyhelper.clannad.stack.exception.AvatarNotExistsException;
@@ -36,7 +36,7 @@ public class AvatarOperateHandlerImpl implements AvatarOperateHandler {
     }
 
     @Override
-    public AvatarDownloadInfo downloadAvatar(StringIdKey userKey) throws HandlerException {
+    public Avatar downloadAvatar(StringIdKey userKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
             makeSureUserExists(userKey);
@@ -50,8 +50,8 @@ public class AvatarOperateHandlerImpl implements AvatarOperateHandler {
             // 4. 下载头像。
             byte[] content = ftpHandler.getFileContent(new String[]{FtpConstants.PATH_AVATAR}, userKey.getStringId());
 
-            // 5. 拼接 AvatarDownloadInfo 并返回。
-            return new AvatarDownloadInfo(avatarInfo.getOriginName(), content);
+            // 5. 拼接 Avatar 并返回。
+            return new Avatar(avatarInfo.getOriginName(), content);
         } catch (FileException e) {
             throw new AvatarTransportException(e, userKey);
         } catch (HandlerException e) {

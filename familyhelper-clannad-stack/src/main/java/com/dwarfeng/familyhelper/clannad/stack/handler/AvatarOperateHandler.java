@@ -1,6 +1,6 @@
 package com.dwarfeng.familyhelper.clannad.stack.handler;
 
-import com.dwarfeng.familyhelper.clannad.stack.bean.dto.AvatarDownloadInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.Avatar;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.AvatarUploadInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -21,7 +21,7 @@ public interface AvatarOperateHandler extends Handler {
      * @return 头像下载信息。
      * @throws HandlerException 处理器异常。
      */
-    AvatarDownloadInfo downloadAvatar(StringIdKey userKey) throws HandlerException;
+    Avatar downloadAvatar(StringIdKey userKey) throws HandlerException;
 
     /**
      * 上传头像。

@@ -8,19 +8,19 @@ import java.util.Arrays;
  * 头像下载信息。
  *
  * @author DwArFeng
- * @since 1.1.4
+ * @since 1.2.0
  */
-public class AvatarDownloadInfo implements Dto {
+public class Avatar implements Dto {
 
-    private static final long serialVersionUID = 3589529388093777468L;
+    private static final long serialVersionUID = 6860496142664630355L;
 
     private String originName;
     private byte[] content;
 
-    public AvatarDownloadInfo() {
+    public Avatar() {
     }
 
-    public AvatarDownloadInfo(String originName, byte[] content) {
+    public Avatar(String originName, byte[] content) {
         this.originName = originName;
         this.content = content;
     }
@@ -43,7 +43,7 @@ public class AvatarDownloadInfo implements Dto {
 
     @Override
     public String toString() {
-        return "AvatarDownloadInfo{" +
+        return "Avatar{" +
                 "originName='" + originName + '\'' +
                 ", content=" + Arrays.toString(content) +
                 '}';

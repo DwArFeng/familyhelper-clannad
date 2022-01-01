@@ -1,6 +1,6 @@
 package com.dwarfeng.familyhelper.clannad.stack.service;
 
-import com.dwarfeng.familyhelper.clannad.stack.bean.dto.AvatarDownloadInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.Avatar;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.AvatarUploadInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
@@ -21,7 +21,7 @@ public interface AvatarOperateService extends Service {
      * @return 头像下载信息。
      * @throws ServiceException 服务异常。
      */
-    AvatarDownloadInfo downloadAvatar(StringIdKey userKey) throws ServiceException;
+    Avatar downloadAvatar(StringIdKey userKey) throws ServiceException;
 
     /**
      * 上传头像。
