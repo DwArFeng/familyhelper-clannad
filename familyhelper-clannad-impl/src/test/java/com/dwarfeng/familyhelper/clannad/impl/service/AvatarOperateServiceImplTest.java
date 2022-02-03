@@ -1,7 +1,6 @@
 package com.dwarfeng.familyhelper.clannad.impl.service;
 
 import com.dwarfeng.dutil.basic.io.IOUtil;
-import com.dwarfeng.familyhelper.clannad.impl.handler.FtpHandler;
 import com.dwarfeng.familyhelper.clannad.impl.util.FtpConstants;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.Avatar;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.AvatarUploadInfo;
@@ -9,6 +8,7 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
 import com.dwarfeng.familyhelper.clannad.stack.service.AvatarInfoMaintainService;
 import com.dwarfeng.familyhelper.clannad.stack.service.AvatarOperateService;
 import com.dwarfeng.familyhelper.clannad.stack.service.UserMaintainService;
+import com.dwarfeng.ftp.handler.FtpHandler;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.junit.After;
 import org.junit.Before;

@@ -1,10 +1,10 @@
 package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 
-import com.dwarfeng.familyhelper.clannad.impl.handler.FtpHandler;
 import com.dwarfeng.familyhelper.clannad.impl.util.FtpConstants;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.AvatarInfo;
 import com.dwarfeng.familyhelper.clannad.stack.cache.AvatarInfoCache;
 import com.dwarfeng.familyhelper.clannad.stack.dao.AvatarInfoDao;
+import com.dwarfeng.ftp.handler.FtpHandler;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;

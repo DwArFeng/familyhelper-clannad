@@ -18,8 +18,6 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(10), "user not exists");
     public static final ServiceException.Code AVATAR_NOT_EXISTS =
             new ServiceException.Code(offset(20), "avatar not exists");
-    public static final ServiceException.Code AVATAR_TRANSPORT_FAILED =
-            new ServiceException.Code(offset(30), "avatar transport failed");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -47,7 +45,6 @@ public final class ServiceExceptionCodes {
         PROFILE_NOT_EXISTS.setCode(offset(0));
         USER_NOT_EXISTS.setCode(offset(10));
         AVATAR_NOT_EXISTS.setCode(offset(20));
-        AVATAR_TRANSPORT_FAILED.setCode(offset(30));
     }
 
     private ServiceExceptionCodes() {
