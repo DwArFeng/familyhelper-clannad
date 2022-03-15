@@ -10,7 +10,9 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
+import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
 import com.dwarfeng.subgrade.sdk.redis.formatter.StringIdStringKeyFormatter;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +38,8 @@ public class CacheConfiguration {
     private String nicknamePrefix;
     @Value("${cache.prefix.entity.avatar_info}")
     private String avatarInfoPrefix;
+    @Value("${cache.prefix.entity.notification}")
+    private String notificationPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -100,6 +104,16 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonAvatarInfo>) template,
                 new StringIdStringKeyFormatter(avatarInfoPrefix),
                 new DozerBeanTransformer<>(AvatarInfo.class, FastJsonAvatarInfo.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, Notification, FastJsonNotification> notificationRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonNotification>) template,
+                new LongIdStringKeyFormatter(notificationPrefix),
+                new DozerBeanTransformer<>(Notification.class, FastJsonNotification.class, mapper)
         );
     }
 }

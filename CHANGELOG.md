@@ -6,6 +6,9 @@
 
 - 升级 `log4j2` 依赖版本至 `2.17.1`。
 
+- 新增实体。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Notification。
+
 #### Bug修复
 
 - (无)

@@ -5,6 +5,7 @@ import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateNicknameKey;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernatePoprKey;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateProfileTypeIndicatorKey;
 import com.dwarfeng.familyhelper.clannad.impl.dao.preset.NicknamePresetCriteriaMaker;
+import com.dwarfeng.familyhelper.clannad.impl.dao.preset.NotificationPresetCriteriaMaker;
 import com.dwarfeng.familyhelper.clannad.impl.dao.preset.PoprPresetCriteriaMaker;
 import com.dwarfeng.familyhelper.clannad.impl.dao.preset.ProfileTypeIndicatorPresetCriteriaMaker;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
@@ -15,8 +16,10 @@ import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
 import com.dwarfeng.subgrade.impl.dao.HibernatePresetLookupDao;
+import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.sdk.hibernate.modification.DefaultDeletionMod;
+import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +36,7 @@ public class DaoConfiguration {
     private final ProfileTypeIndicatorPresetCriteriaMaker profileTypeIndicatorPresetCriteriaMaker;
     private final PoprPresetCriteriaMaker poprPresetCriteriaMaker;
     private final NicknamePresetCriteriaMaker nicknamePresetCriteriaMaker;
+    private final NotificationPresetCriteriaMaker notificationPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -42,13 +46,15 @@ public class DaoConfiguration {
             Mapper mapper,
             ProfileTypeIndicatorPresetCriteriaMaker profileTypeIndicatorPresetCriteriaMaker,
             PoprPresetCriteriaMaker poprPresetCriteriaMaker,
-            NicknamePresetCriteriaMaker nicknamePresetCriteriaMaker
+            NicknamePresetCriteriaMaker nicknamePresetCriteriaMaker,
+            NotificationPresetCriteriaMaker notificationPresetCriteriaMaker
     ) {
         this.template = template;
         this.mapper = mapper;
         this.profileTypeIndicatorPresetCriteriaMaker = profileTypeIndicatorPresetCriteriaMaker;
         this.poprPresetCriteriaMaker = poprPresetCriteriaMaker;
         this.nicknamePresetCriteriaMaker = nicknamePresetCriteriaMaker;
+        this.notificationPresetCriteriaMaker = notificationPresetCriteriaMaker;
     }
 
     @Bean
@@ -163,6 +169,38 @@ public class DaoConfiguration {
                 HibernateAvatarInfo.class,
                 new DefaultDeletionMod<>(),
                 batchSize
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Notification, HibernateNotification>
+    notificationHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
+                new DozerBeanTransformer<>(Notification.class, HibernateNotification.class, mapper),
+                HibernateNotification.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<Notification, HibernateNotification> notificationHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(Notification.class, HibernateNotification.class, mapper),
+                HibernateNotification.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<Notification, HibernateNotification> notificationHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(Notification.class, HibernateNotification.class, mapper),
+                HibernateNotification.class,
+                notificationPresetCriteriaMaker
         );
     }
 }

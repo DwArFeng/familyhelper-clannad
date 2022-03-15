@@ -8,9 +8,11 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
 import com.dwarfeng.familyhelper.clannad.stack.cache.NicknameCache;
+import com.dwarfeng.familyhelper.clannad.stack.cache.NotificationCache;
 import com.dwarfeng.familyhelper.clannad.stack.cache.PoprCache;
 import com.dwarfeng.familyhelper.clannad.stack.cache.ProfileTypeIndicatorCache;
 import com.dwarfeng.familyhelper.clannad.stack.dao.NicknameDao;
+import com.dwarfeng.familyhelper.clannad.stack.dao.NotificationDao;
 import com.dwarfeng.familyhelper.clannad.stack.dao.PoprDao;
 import com.dwarfeng.familyhelper.clannad.stack.dao.ProfileTypeIndicatorDao;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
@@ -41,6 +43,8 @@ public class ServiceConfiguration {
     private final NicknameDao nicknameDao;
     private final NicknameCache nicknameCache;
     private final AvatarInfoCrudOperation avatarInfoCrudOperation;
+    private final NotificationDao notificationDao;
+    private final NotificationCache notificationCache;
 
     @Value("${cache.timeout.entity.profile_type_indicator}")
     private long profileTypeIndicatorTimeout;
@@ -48,6 +52,8 @@ public class ServiceConfiguration {
     private long poprTimeout;
     @Value("${cache.timeout.entity.nickname}")
     private long nicknameTimeout;
+    @Value("${cache.timeout.entity.notification}")
+    private long notificationTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -57,7 +63,8 @@ public class ServiceConfiguration {
             ProfileTypeIndicatorCache profileTypeIndicatorCache,
             PoprDao poprDao, PoprCache poprCache,
             NicknameDao nicknameDao, NicknameCache nicknameCache,
-            AvatarInfoCrudOperation avatarInfoCrudOperation
+            AvatarInfoCrudOperation avatarInfoCrudOperation,
+            NotificationDao notificationDao, NotificationCache notificationCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.profileCrudOperation = profileCrudOperation;
@@ -69,6 +76,8 @@ public class ServiceConfiguration {
         this.nicknameDao = nicknameDao;
         this.nicknameCache = nicknameCache;
         this.avatarInfoCrudOperation = avatarInfoCrudOperation;
+        this.notificationDao = notificationDao;
+        this.notificationCache = notificationCache;
     }
 
     @Bean
@@ -175,6 +184,36 @@ public class ServiceConfiguration {
         return new CustomBatchCrudService<>(
                 avatarInfoCrudOperation,
                 new ExceptionKeyFetcher<>(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<LongIdKey, Notification> notificationGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                notificationDao,
+                notificationCache,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                notificationTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Notification> notificationDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                notificationDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Notification> notificationDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                notificationDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
