@@ -9,6 +9,9 @@
 - 新增实体。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Notification。
 
+- 实现操作服务。
+  - com.dwarfeng.familyhelper.clannad.stack.service.NotificationOperateService。
+
 #### Bug修复
 
 - (无)
