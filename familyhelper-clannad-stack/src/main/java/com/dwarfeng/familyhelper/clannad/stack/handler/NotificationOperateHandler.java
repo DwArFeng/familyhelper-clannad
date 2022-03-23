@@ -38,4 +38,12 @@ public interface NotificationOperateHandler extends Handler {
      * @throws HandlerException 处理器异常。
      */
     void readAllNotification(StringIdKey userKey) throws HandlerException;
+
+    /**
+     * 清除用户的所有通知。
+     *
+     * @param userKey 用户的主键。
+     * @throws HandlerException 处理器异常。
+     */
+    void removeAllNotification(StringIdKey userKey) throws HandlerException;
 }

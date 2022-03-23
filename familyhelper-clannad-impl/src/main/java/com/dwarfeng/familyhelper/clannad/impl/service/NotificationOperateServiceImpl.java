@@ -51,4 +51,13 @@ public class NotificationOperateServiceImpl implements NotificationOperateServic
             throw ServiceExceptionHelper.logAndThrow("阅读用户的所有通知时发生异常", LogLevel.WARN, sem, e);
         }
     }
+
+    @Override
+    public void removeAllNotification(StringIdKey userKey) throws ServiceException {
+        try {
+            notificationOperateHandler.removeAllNotification(userKey);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logAndThrow("清除用户的所有通知时发生异常", LogLevel.WARN, sem, e);
+        }
+    }
 }

@@ -38,4 +38,12 @@ public interface NotificationOperateService extends Service {
      * @throws ServiceException 服务异常。
      */
     void readAllNotification(StringIdKey userKey) throws ServiceException;
+
+    /**
+     * 清除用户的所有通知。
+     *
+     * @param userKey 用户的主键。
+     * @throws ServiceException 服务异常。
+     */
+    void removeAllNotification(StringIdKey userKey) throws ServiceException;
 }

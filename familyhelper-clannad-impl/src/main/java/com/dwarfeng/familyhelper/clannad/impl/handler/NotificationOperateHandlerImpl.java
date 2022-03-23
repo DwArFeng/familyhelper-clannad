@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 public class NotificationOperateHandlerImpl implements NotificationOperateHandler {
@@ -96,6 +97,26 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
 
             // 4. 更新通知实体。
             notificationMaintainService.batchUpdate(notifications);
+        } catch (HandlerException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    @Override
+    public void removeAllNotification(StringIdKey userKey) throws HandlerException {
+        try {
+            // 1. 确认用户存在。
+            makeSureUserExists(userKey);
+
+            // 2. 查询用户所有的未读消息。
+            List<LongIdKey> notificationKeys = notificationMaintainService.lookup(
+                    NotificationMaintainService.CHILD_FOR_USER, new Object[]{userKey}
+            ).getData().stream().map(Notification::getKey).collect(Collectors.toList());
+
+            // 3. 删除通知实体。
+            notificationMaintainService.batchDelete(notificationKeys);
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {
