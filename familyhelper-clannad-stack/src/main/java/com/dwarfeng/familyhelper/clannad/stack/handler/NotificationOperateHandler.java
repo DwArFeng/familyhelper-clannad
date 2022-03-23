@@ -2,10 +2,9 @@ package com.dwarfeng.familyhelper.clannad.stack.handler;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.NotificationCreateInfo;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
+import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.handler.Handler;
-
-import java.util.List;
 
 /**
  * 通知操作服务。
@@ -27,8 +26,16 @@ public interface NotificationOperateHandler extends Handler {
     /**
      * 阅读通知。
      *
-     * @param notificationKeys 通知的主键组成的列表。
+     * @param notificationKey 通知的主键组。
      * @throws HandlerException 处理器异常。
      */
-    void readNotification(List<LongIdKey> notificationKeys) throws HandlerException;
+    void readNotification(LongIdKey notificationKey) throws HandlerException;
+
+    /**
+     * 阅读用户的所有通知。
+     *
+     * @param userKey 用户的主键。
+     * @throws HandlerException 处理器异常。
+     */
+    void readAllNotification(StringIdKey userKey) throws HandlerException;
 }

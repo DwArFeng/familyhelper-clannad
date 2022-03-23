@@ -56,22 +56,45 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
     }
 
     @Override
-    public void readNotification(List<LongIdKey> notificationKeys) throws HandlerException {
+    public void readNotification(LongIdKey notificationKey) throws HandlerException {
         try {
             // 1. 确认通知存在。
-            for (LongIdKey notificationKey : notificationKeys) {
-                makeSureNotificationExists(notificationKey);
-            }
+            makeSureNotificationExists(notificationKey);
 
             // 2. 设置通知属性，使其变为完成状态。
             Date currentDate = new Date();
-            List<Notification> notifications = notificationMaintainService.batchGet(notificationKeys);
+            Notification notification = notificationMaintainService.get(notificationKey);
+            notification.setReadDate(currentDate);
+            notification.setReadFlag(true);
+
+            // 3. 更新通知实体。
+            notificationMaintainService.update(notification);
+        } catch (HandlerException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    @Override
+    public void readAllNotification(StringIdKey userKey) throws HandlerException {
+        try {
+            // 1. 确认用户存在。
+            makeSureUserExists(userKey);
+
+            // 2. 查询用户所有的未读消息。
+            List<Notification> notifications = notificationMaintainService.lookup(
+                    NotificationMaintainService.CHILD_FOR_USER_UNREAD, new Object[]{userKey}
+            ).getData();
+
+            // 3. 设置通知属性，使其变为完成状态。
+            Date currentDate = new Date();
             for (Notification notification : notifications) {
                 notification.setReadDate(currentDate);
                 notification.setReadFlag(true);
             }
 
-            // 3. 更新通知实体。
+            // 4. 更新通知实体。
             notificationMaintainService.batchUpdate(notifications);
         } catch (HandlerException e) {
             throw e;
