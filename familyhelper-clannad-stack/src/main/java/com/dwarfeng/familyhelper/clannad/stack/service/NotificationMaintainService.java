@@ -17,4 +17,6 @@ public interface NotificationMaintainService extends BatchCrudService<LongIdKey,
 
     String CHILD_FOR_USER = "child_for_user";
     String CHILD_FOR_USER_UNREAD = "child_for_user_unread";
+    String CHILD_FOR_USER_NOTIFIED_DATE_DESC = "child_for_user_notified_date_desc";
+    String CHILD_FOR_USER_UNREAD_NOTIFIED_DATE_DESC = "child_for_user_unread_notified_date_desc";
 }
