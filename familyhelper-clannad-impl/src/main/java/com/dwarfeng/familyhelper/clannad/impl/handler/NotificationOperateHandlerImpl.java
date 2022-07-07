@@ -2,33 +2,30 @@ package com.dwarfeng.familyhelper.clannad.impl.handler;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.NotificationCreateInfo;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Notification;
-import com.dwarfeng.familyhelper.clannad.stack.exception.NotificationNotExistsException;
-import com.dwarfeng.familyhelper.clannad.stack.exception.UserNotExistsException;
 import com.dwarfeng.familyhelper.clannad.stack.handler.NotificationOperateHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.NotificationMaintainService;
-import com.dwarfeng.familyhelper.clannad.stack.service.UserMaintainService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
 public class NotificationOperateHandlerImpl implements NotificationOperateHandler {
 
-    private final UserMaintainService userMaintainService;
     private final NotificationMaintainService notificationMaintainService;
 
+    private final OperateHandlerValidator operateHandlerValidator;
+
     public NotificationOperateHandlerImpl(
-            UserMaintainService userMaintainService, NotificationMaintainService notificationMaintainService
+            NotificationMaintainService notificationMaintainService,
+            OperateHandlerValidator operateHandlerValidator
     ) {
-        this.userMaintainService = userMaintainService;
         this.notificationMaintainService = notificationMaintainService;
+        this.operateHandlerValidator = operateHandlerValidator;
     }
 
     @Override
@@ -37,7 +34,7 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
             StringIdKey userKey = notificationCreateInfo.getUserKey();
 
             // 1. 确认用户存在。
-            makeSureUserExists(userKey);
+            operateHandlerValidator.makeSureUserExists(userKey);
 
             // 2. 根据 notificationCreateInfo 以及创建的规则组合通知实体。
             Date currentDate = new Date();
@@ -59,7 +56,7 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
     public void readNotification(LongIdKey notificationKey) throws HandlerException {
         try {
             // 1. 确认通知存在。
-            makeSureNotificationExists(notificationKey);
+            operateHandlerValidator.makeSureNotificationExists(notificationKey);
 
             // 2. 设置通知属性，使其变为完成状态。
             Date currentDate = new Date();
@@ -80,7 +77,7 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
     public void readAllNotification(StringIdKey userKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            makeSureUserExists(userKey);
+            operateHandlerValidator.makeSureUserExists(userKey);
 
             // 2. 查询用户所有的未读消息。
             List<Notification> notifications = notificationMaintainService.lookup(
@@ -107,7 +104,7 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
     public void removeAllNotification(StringIdKey userKey) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            makeSureUserExists(userKey);
+            operateHandlerValidator.makeSureUserExists(userKey);
 
             // 2. 查询用户所有的未读消息。
             List<LongIdKey> notificationKeys = notificationMaintainService.lookup(
@@ -119,26 +116,6 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    private void makeSureUserExists(StringIdKey userKey) throws HandlerException {
-        try {
-            if (Objects.isNull(userKey) || !userMaintainService.exists(userKey)) {
-                throw new UserNotExistsException(userKey);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    private void makeSureNotificationExists(LongIdKey notificationKey) throws HandlerException {
-        try {
-            if (Objects.isNull(notificationKey) || !notificationMaintainService.exists(notificationKey)) {
-                throw new NotificationNotExistsException(notificationKey);
-            }
-        } catch (ServiceException e) {
             throw new HandlerException(e);
         }
     }

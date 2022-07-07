@@ -4,15 +4,11 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.dto.ProfileUpdateInfo;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
-import com.dwarfeng.familyhelper.clannad.stack.exception.ProfileNotExistsException;
-import com.dwarfeng.familyhelper.clannad.stack.exception.UserNotExistsException;
 import com.dwarfeng.familyhelper.clannad.stack.handler.ProfileOperateHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.PoprMaintainService;
 import com.dwarfeng.familyhelper.clannad.stack.service.ProfileMaintainService;
-import com.dwarfeng.familyhelper.clannad.stack.service.UserMaintainService;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
-import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -23,25 +19,26 @@ import java.util.stream.Collectors;
 @Component
 public class ProfileOperateHandlerImpl implements ProfileOperateHandler {
 
-    private final UserMaintainService userMaintainService;
     private final ProfileMaintainService profileMaintainService;
     private final PoprMaintainService poprMaintainService;
 
+    private final OperateHandlerValidator operateHandlerValidator;
+
     public ProfileOperateHandlerImpl(
-            UserMaintainService userMaintainService,
             ProfileMaintainService profileMaintainService,
-            PoprMaintainService poprMaintainService
+            PoprMaintainService poprMaintainService,
+            OperateHandlerValidator operateHandlerValidator
     ) {
-        this.userMaintainService = userMaintainService;
         this.profileMaintainService = profileMaintainService;
         this.poprMaintainService = poprMaintainService;
+        this.operateHandlerValidator = operateHandlerValidator;
     }
 
     @Override
     public void updateProfile(StringIdKey userKey, ProfileUpdateInfo profileUpdateInfo) throws HandlerException {
         try {
             // 1. 确认用户存在。
-            makeSureUserExists(userKey);
+            operateHandlerValidator.makeSureUserExists(userKey);
 
             // 2. 根据 profileUpdateInfo 以及更新的规则设置 个人简介 实体。
             Profile profile = new Profile(
@@ -75,11 +72,11 @@ public class ProfileOperateHandlerImpl implements ProfileOperateHandler {
             }
 
             // 2. 确认用户存在。
-            makeSureUserExists(ownerUserKey);
-            makeSureUserExists(guestUserKey);
+            operateHandlerValidator.makeSureUserExists(ownerUserKey);
+            operateHandlerValidator.makeSureUserExists(guestUserKey);
 
             // 3. 确认个人简介存在。
-            makeSureProfileExists(ownerUserKey);
+            operateHandlerValidator.makeSureProfileExists(ownerUserKey);
 
             // 4. 通过入口信息组合权限实体，并进行插入或更新操作。
             Popr popr = new Popr(
@@ -103,11 +100,11 @@ public class ProfileOperateHandlerImpl implements ProfileOperateHandler {
             }
 
             // 2. 确认用户存在。
-            makeSureUserExists(ownerUserKey);
-            makeSureUserExists(guestUserKey);
+            operateHandlerValidator.makeSureUserExists(ownerUserKey);
+            operateHandlerValidator.makeSureUserExists(guestUserKey);
 
             // 3. 确认个人简介存在。
-            makeSureProfileExists(ownerUserKey);
+            operateHandlerValidator.makeSureProfileExists(ownerUserKey);
 
             // 5. 通过入口信息组合权限实体主键，并进行存在删除操作。
             PoprKey poprKey = new PoprKey(ownerUserKey.getStringId(), guestUserKey.getStringId());
@@ -124,13 +121,13 @@ public class ProfileOperateHandlerImpl implements ProfileOperateHandler {
             throws HandlerException {
         try {
             // 1. 确认用户存在。
-            makeSureUserExists(ownerUserKey);
+            operateHandlerValidator.makeSureUserExists(ownerUserKey);
             for (StringIdKey guestUserKey : guestUserKeys) {
-                makeSureUserExists(guestUserKey);
+                operateHandlerValidator.makeSureUserExists(guestUserKey);
             }
 
             // 2. 确认个人简介存在。
-            makeSureProfileExists(ownerUserKey);
+            operateHandlerValidator.makeSureProfileExists(ownerUserKey);
 
             // 3. 查询并删除个人简介对应的所有权限。
             List<PoprKey> poprKeys = poprMaintainService.lookup(
@@ -154,26 +151,6 @@ public class ProfileOperateHandlerImpl implements ProfileOperateHandler {
         } catch (HandlerException e) {
             throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    private void makeSureUserExists(StringIdKey userKey) throws HandlerException {
-        try {
-            if (!userMaintainService.exists(userKey)) {
-                throw new UserNotExistsException(userKey);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    private void makeSureProfileExists(StringIdKey profileKey) throws HandlerException {
-        try {
-            if (!profileMaintainService.exists(profileKey)) {
-                throw new ProfileNotExistsException(profileKey);
-            }
-        } catch (ServiceException e) {
             throw new HandlerException(e);
         }
     }

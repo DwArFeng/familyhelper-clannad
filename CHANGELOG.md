@@ -26,6 +26,8 @@
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.CertificateFileInfo。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Poce。
 
+- 优化操作服务验证环节的代码结构。
+
 #### Bug修复
 
 - (无)
