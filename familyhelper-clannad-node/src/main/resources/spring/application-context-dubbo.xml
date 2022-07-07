@@ -42,8 +42,12 @@
                    ref="notificationOperateServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateMaintainService"
                    ref="certificateMaintainServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateOperateService"
+                   ref="certificateOperateServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateFileInfoMaintainService"
                    ref="certificateFileInfoMaintainServiceImpl"/>
+    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateFileOperateService"
+                   ref="certificateFileOperateServiceImpl"/>
     <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.PoceMaintainService"
                    ref="poceMaintainServiceImpl"/>
 

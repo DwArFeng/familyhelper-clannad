@@ -20,6 +20,14 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(20), "avatar not exists");
     public static final ServiceException.Code NOTIFICATION_NOT_EXISTS =
             new ServiceException.Code(offset(30), "notification not exists");
+    public static final ServiceException.Code CERTIFICATE_NOT_EXISTS =
+            new ServiceException.Code(offset(40), "certificate not exists");
+    public static final ServiceException.Code CERTIFICATE_FILE_NOT_EXISTS =
+            new ServiceException.Code(offset(50), "certificate file not exists");
+    public static final ServiceException.Code INVALID_PERMISSION_LEVEL =
+            new ServiceException.Code(offset(60), "invalid permission level");
+    public static final ServiceException.Code USER_NOT_PERMITTED_FOR_CERTIFICATE =
+            new ServiceException.Code(offset(70), "user not permitted for certificate");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -48,6 +56,10 @@ public final class ServiceExceptionCodes {
         USER_NOT_EXISTS.setCode(offset(10));
         AVATAR_NOT_EXISTS.setCode(offset(20));
         NOTIFICATION_NOT_EXISTS.setCode(offset(30));
+        CERTIFICATE_NOT_EXISTS.setCode(offset(40));
+        CERTIFICATE_FILE_NOT_EXISTS.setCode(offset(50));
+        INVALID_PERMISSION_LEVEL.setCode(offset(60));
+        USER_NOT_PERMITTED_FOR_CERTIFICATE.setCode(offset(70));
     }
 
     private ServiceExceptionCodes() {
