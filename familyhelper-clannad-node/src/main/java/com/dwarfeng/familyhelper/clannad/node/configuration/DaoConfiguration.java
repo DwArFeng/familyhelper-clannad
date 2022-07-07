@@ -2,14 +2,13 @@ package com.dwarfeng.familyhelper.clannad.node.configuration;
 
 import com.dwarfeng.familyhelper.clannad.impl.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateNicknameKey;
+import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernatePoceKey;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernatePoprKey;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateProfileTypeIndicatorKey;
-import com.dwarfeng.familyhelper.clannad.impl.dao.preset.NicknamePresetCriteriaMaker;
-import com.dwarfeng.familyhelper.clannad.impl.dao.preset.NotificationPresetCriteriaMaker;
-import com.dwarfeng.familyhelper.clannad.impl.dao.preset.PoprPresetCriteriaMaker;
-import com.dwarfeng.familyhelper.clannad.impl.dao.preset.ProfileTypeIndicatorPresetCriteriaMaker;
+import com.dwarfeng.familyhelper.clannad.impl.dao.preset.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
@@ -37,6 +36,9 @@ public class DaoConfiguration {
     private final PoprPresetCriteriaMaker poprPresetCriteriaMaker;
     private final NicknamePresetCriteriaMaker nicknamePresetCriteriaMaker;
     private final NotificationPresetCriteriaMaker notificationPresetCriteriaMaker;
+    private final CertificatePresetCriteriaMaker certificatePresetCriteriaMaker;
+    private final CertificateFileInfoPresetCriteriaMaker certificateFileInfoPresetCriteriaMaker;
+    private final PocePresetCriteriaMaker pocePresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -47,7 +49,10 @@ public class DaoConfiguration {
             ProfileTypeIndicatorPresetCriteriaMaker profileTypeIndicatorPresetCriteriaMaker,
             PoprPresetCriteriaMaker poprPresetCriteriaMaker,
             NicknamePresetCriteriaMaker nicknamePresetCriteriaMaker,
-            NotificationPresetCriteriaMaker notificationPresetCriteriaMaker
+            NotificationPresetCriteriaMaker notificationPresetCriteriaMaker,
+            CertificatePresetCriteriaMaker certificatePresetCriteriaMaker,
+            CertificateFileInfoPresetCriteriaMaker certificateFileInfoPresetCriteriaMaker,
+            PocePresetCriteriaMaker pocePresetCriteriaMaker
     ) {
         this.template = template;
         this.mapper = mapper;
@@ -55,6 +60,9 @@ public class DaoConfiguration {
         this.poprPresetCriteriaMaker = poprPresetCriteriaMaker;
         this.nicknamePresetCriteriaMaker = nicknamePresetCriteriaMaker;
         this.notificationPresetCriteriaMaker = notificationPresetCriteriaMaker;
+        this.certificatePresetCriteriaMaker = certificatePresetCriteriaMaker;
+        this.certificateFileInfoPresetCriteriaMaker = certificateFileInfoPresetCriteriaMaker;
+        this.pocePresetCriteriaMaker = pocePresetCriteriaMaker;
     }
 
     @Bean
@@ -201,6 +209,103 @@ public class DaoConfiguration {
                 new DozerBeanTransformer<>(Notification.class, HibernateNotification.class, mapper),
                 HibernateNotification.class,
                 notificationPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Certificate, HibernateCertificate>
+    certificateHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
+                new DozerBeanTransformer<>(Certificate.class, HibernateCertificate.class, mapper),
+                HibernateCertificate.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<Certificate, HibernateCertificate> certificateHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(Certificate.class, HibernateCertificate.class, mapper),
+                HibernateCertificate.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<Certificate, HibernateCertificate> certificateHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(Certificate.class, HibernateCertificate.class, mapper),
+                HibernateCertificate.class,
+                certificatePresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, CertificateFileInfo, HibernateCertificateFileInfo>
+    certificateFileInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
+                new DozerBeanTransformer<>(CertificateFileInfo.class, HibernateCertificateFileInfo.class, mapper),
+                HibernateCertificateFileInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<CertificateFileInfo, HibernateCertificateFileInfo>
+    certificateFileInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(CertificateFileInfo.class, HibernateCertificateFileInfo.class, mapper),
+                HibernateCertificateFileInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<CertificateFileInfo, HibernateCertificateFileInfo>
+    certificateFileInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(CertificateFileInfo.class, HibernateCertificateFileInfo.class, mapper),
+                HibernateCertificateFileInfo.class,
+                certificateFileInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<PoceKey, HibernatePoceKey, Poce, HibernatePoce> poceHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(PoceKey.class, HibernatePoceKey.class, mapper),
+                new DozerBeanTransformer<>(Poce.class, HibernatePoce.class, mapper),
+                HibernatePoce.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<Poce, HibernatePoce> poceHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(Poce.class, HibernatePoce.class, mapper),
+                HibernatePoce.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<Poce, HibernatePoce> poceHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(Poce.class, HibernatePoce.class, mapper),
+                HibernatePoce.class,
+                pocePresetCriteriaMaker
         );
     }
 }

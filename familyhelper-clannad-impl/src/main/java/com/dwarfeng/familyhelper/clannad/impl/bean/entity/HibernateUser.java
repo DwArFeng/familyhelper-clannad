@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tbl_user")
 public class HibernateUser implements Bean {
 
-    private static final long serialVersionUID = 5471250705596657829L;
+    private static final long serialVersionUID = -825337727274424381L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -44,6 +44,9 @@ public class HibernateUser implements Bean {
 
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateNotification.class, mappedBy = "user")
     private Set<HibernateNotification> notifications = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePoce.class, mappedBy = "user")
+    private Set<HibernatePoce> poces = new HashSet<>();
 
     public HibernateUser() {
     }
@@ -120,6 +123,14 @@ public class HibernateUser implements Bean {
 
     public void setNotifications(Set<HibernateNotification> notifications) {
         this.notifications = notifications;
+    }
+
+    public Set<HibernatePoce> getPoces() {
+        return poces;
+    }
+
+    public void setPoces(Set<HibernatePoce> poces) {
+        this.poces = poces;
     }
 
     @Override

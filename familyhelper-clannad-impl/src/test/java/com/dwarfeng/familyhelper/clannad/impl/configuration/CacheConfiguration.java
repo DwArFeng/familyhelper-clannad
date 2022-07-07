@@ -2,10 +2,12 @@ package com.dwarfeng.familyhelper.clannad.impl.configuration;
 
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.NicknameStringKeyFormatter;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.PoceStringKeyFormatter;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.PoprStringKeyFormatter;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.ProfileTypeIndicatorStringKeyFormatter;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
@@ -40,6 +42,12 @@ public class CacheConfiguration {
     private String avatarInfoPrefix;
     @Value("${cache.prefix.entity.notification}")
     private String notificationPrefix;
+    @Value("${cache.prefix.entity.certificate}")
+    private String certificatePrefix;
+    @Value("${cache.prefix.entity.certificate_file_info}")
+    private String certificateFileInfoPrefix;
+    @Value("${cache.prefix.entity.poce}")
+    private String pocePrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -114,6 +122,37 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonNotification>) template,
                 new LongIdStringKeyFormatter(notificationPrefix),
                 new DozerBeanTransformer<>(Notification.class, FastJsonNotification.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, Certificate, FastJsonCertificate> certificateRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonCertificate>) template,
+                new LongIdStringKeyFormatter(certificatePrefix),
+                new DozerBeanTransformer<>(Certificate.class, FastJsonCertificate.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, CertificateFileInfo, FastJsonCertificateFileInfo>
+    certificateFileInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonCertificateFileInfo>) template,
+                new LongIdStringKeyFormatter(certificateFileInfoPrefix),
+                new DozerBeanTransformer<>(CertificateFileInfo.class, FastJsonCertificateFileInfo.class, mapper)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<PoceKey, Poce, FastJsonPoce> poceRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonPoce>) template,
+                new PoceStringKeyFormatter(pocePrefix),
+                new DozerBeanTransformer<>(Poce.class, FastJsonPoce.class, mapper)
         );
     }
 }

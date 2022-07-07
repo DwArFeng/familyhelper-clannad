@@ -1,16 +1,15 @@
 package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 
 import com.dwarfeng.familyhelper.clannad.impl.util.FtpConstants;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Nickname;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Notification;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Popr;
-import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.cache.*;
 import com.dwarfeng.familyhelper.clannad.stack.dao.*;
 import com.dwarfeng.familyhelper.clannad.stack.service.NicknameMaintainService;
 import com.dwarfeng.familyhelper.clannad.stack.service.NotificationMaintainService;
+import com.dwarfeng.familyhelper.clannad.stack.service.PoceMaintainService;
 import com.dwarfeng.familyhelper.clannad.stack.service.PoprMaintainService;
 import com.dwarfeng.ftp.handler.FtpHandler;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
@@ -45,6 +44,9 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
     private final NotificationDao notificationDao;
     private final NotificationCache notificationCache;
 
+    private final PoceDao poceDao;
+    private final PoceCache poceCache;
+
     private final FtpHandler ftpHandler;
 
     @Value("${cache.timeout.entity.user}")
@@ -57,6 +59,7 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
             ProfileDao profileDao, ProfileCache profileCache,
             AvatarInfoDao avatarInfoDao, AvatarInfoCache avatarInfoCache,
             NotificationDao notificationDao, NotificationCache notificationCache,
+            PoceDao poceDao, PoceCache poceCache,
             FtpHandler ftpHandler
     ) {
         this.userDao = userDao;
@@ -71,6 +74,8 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         this.avatarInfoCache = avatarInfoCache;
         this.notificationDao = notificationDao;
         this.notificationCache = notificationCache;
+        this.poceDao = poceDao;
+        this.poceCache = poceCache;
         this.ftpHandler = ftpHandler;
     }
 
@@ -151,6 +156,12 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         ).stream().map(Notification::getKey).collect(Collectors.toList());
         notificationCache.batchDelete(notificationKeys);
         notificationDao.batchDelete(notificationKeys);
+
+        // 删除与用户相关的证书权限。
+        List<PoceKey> poceKeys = poceDao.lookup(PoceMaintainService.CHILD_FOR_USER, new Object[]{key})
+                .stream().map(Poce::getKey).collect(Collectors.toList());
+        poceCache.batchDelete(poceKeys);
+        poceDao.batchDelete(poceKeys);
 
         // 删除账本实体自身。
         userCache.delete(key);

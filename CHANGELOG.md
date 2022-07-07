@@ -21,6 +21,11 @@
   - 升级 `spring-terminator` 依赖版本为 `1.0.8.a` 以规避漏洞。
   - 升级 `spring-telqos` 依赖版本为 `1.1.3.a` 以规避漏洞。
 
+- 新增实体。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Certificate。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.CertificateFileInfo。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Poce。
+
 #### Bug修复
 
 - (无)

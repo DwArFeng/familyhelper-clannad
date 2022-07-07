@@ -1,20 +1,13 @@
 package com.dwarfeng.familyhelper.clannad.impl.configuration;
 
-import com.dwarfeng.familyhelper.clannad.impl.service.operation.AvatarInfoCrudOperation;
-import com.dwarfeng.familyhelper.clannad.impl.service.operation.ProfileCrudOperation;
-import com.dwarfeng.familyhelper.clannad.impl.service.operation.UserCrudOperation;
+import com.dwarfeng.familyhelper.clannad.impl.service.operation.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
-import com.dwarfeng.familyhelper.clannad.stack.cache.NicknameCache;
-import com.dwarfeng.familyhelper.clannad.stack.cache.NotificationCache;
-import com.dwarfeng.familyhelper.clannad.stack.cache.PoprCache;
-import com.dwarfeng.familyhelper.clannad.stack.cache.ProfileTypeIndicatorCache;
-import com.dwarfeng.familyhelper.clannad.stack.dao.NicknameDao;
-import com.dwarfeng.familyhelper.clannad.stack.dao.NotificationDao;
-import com.dwarfeng.familyhelper.clannad.stack.dao.PoprDao;
-import com.dwarfeng.familyhelper.clannad.stack.dao.ProfileTypeIndicatorDao;
+import com.dwarfeng.familyhelper.clannad.stack.cache.*;
+import com.dwarfeng.familyhelper.clannad.stack.dao.*;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
 import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
 import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
@@ -45,6 +38,12 @@ public class ServiceConfiguration {
     private final AvatarInfoCrudOperation avatarInfoCrudOperation;
     private final NotificationDao notificationDao;
     private final NotificationCache notificationCache;
+    private final CertificateCrudOperation certificateCrudOperation;
+    private final CertificateDao certificateDao;
+    private final CertificateFileInfoCrudOperation certificateFileInfoCrudOperation;
+    private final CertificateFileInfoDao certificateFileInfoDao;
+    private final PoceDao poceDao;
+    private final PoceCache poceCache;
 
     @Value("${cache.timeout.entity.profile_type_indicator}")
     private long profileTypeIndicatorTimeout;
@@ -54,6 +53,8 @@ public class ServiceConfiguration {
     private long nicknameTimeout;
     @Value("${cache.timeout.entity.notification}")
     private long notificationTimeout;
+    @Value("${cache.timeout.entity.poce}")
+    private long poceTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -64,7 +65,10 @@ public class ServiceConfiguration {
             PoprDao poprDao, PoprCache poprCache,
             NicknameDao nicknameDao, NicknameCache nicknameCache,
             AvatarInfoCrudOperation avatarInfoCrudOperation,
-            NotificationDao notificationDao, NotificationCache notificationCache
+            NotificationDao notificationDao, NotificationCache notificationCache,
+            CertificateCrudOperation certificateCrudOperation, CertificateDao certificateDao,
+            CertificateFileInfoCrudOperation certificateFileInfoCrudOperation, CertificateFileInfoDao certificateFileInfoDao,
+            PoceDao poceDao, PoceCache poceCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.profileCrudOperation = profileCrudOperation;
@@ -78,6 +82,12 @@ public class ServiceConfiguration {
         this.avatarInfoCrudOperation = avatarInfoCrudOperation;
         this.notificationDao = notificationDao;
         this.notificationCache = notificationCache;
+        this.certificateCrudOperation = certificateCrudOperation;
+        this.certificateDao = certificateDao;
+        this.certificateFileInfoCrudOperation = certificateFileInfoCrudOperation;
+        this.certificateFileInfoDao = certificateFileInfoDao;
+        this.poceDao = poceDao;
+        this.poceCache = poceCache;
     }
 
     @Bean
@@ -214,6 +224,92 @@ public class ServiceConfiguration {
     public DaoOnlyPresetLookupService<Notification> notificationDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 notificationDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, Certificate> certificateBatchCustomCrudService() {
+        return new CustomBatchCrudService<>(
+                certificateCrudOperation,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Certificate> certificateDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                certificateDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Certificate> certificateDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                certificateDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, CertificateFileInfo> certificateFileInfoBatchCustomCrudService() {
+        return new CustomBatchCrudService<>(
+                certificateFileInfoCrudOperation,
+                longIdKeyKeyFetcher(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<CertificateFileInfo> certificateFileInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                certificateFileInfoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<CertificateFileInfo> certificateFileInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                certificateFileInfoDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<PoceKey, Poce> poceGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                poceDao,
+                poceCache,
+                new ExceptionKeyFetcher<>(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                poceTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Poce> poceDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                poceDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Poce> poceDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                poceDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

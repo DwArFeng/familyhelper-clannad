@@ -31,7 +31,6 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
         this.notificationMaintainService = notificationMaintainService;
     }
 
-
     @Override
     public LongIdKey createNotification(NotificationCreateInfo notificationCreateInfo) throws HandlerException {
         try {
