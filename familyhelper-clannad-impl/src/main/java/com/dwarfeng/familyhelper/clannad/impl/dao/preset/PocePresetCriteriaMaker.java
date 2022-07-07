@@ -23,6 +23,12 @@ public class PocePresetCriteriaMaker implements PresetCriteriaMaker {
             case PoceMaintainService.CHILD_FOR_USER:
                 childForUser(detachedCriteria, objects);
                 break;
+            case PoceMaintainService.CHILD_FOR_CERTIFICATE_PERMISSION_LEVEL_EQUALS:
+                childForCertificatePermissionLevelEquals(detachedCriteria, objects);
+                break;
+            case PoceMaintainService.CHILD_FOR_USER_PERMISSION_LEVEL_EQUALS:
+                childForUserPermissionLevelEquals(detachedCriteria, objects);
+                break;
             default:
                 throw new IllegalArgumentException("无法识别的预设: " + s);
         }
@@ -54,6 +60,42 @@ public class PocePresetCriteriaMaker implements PresetCriteriaMaker {
                         Restrictions.eqOrIsNull("userId", stringIdKey.getStringId())
                 );
             }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForCertificatePermissionLevelEquals(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("certificateId"));
+            } else {
+                LongIdKey longIdKey = (LongIdKey) objects[0];
+                detachedCriteria.add(
+                        Restrictions.eqOrIsNull("certificateId", longIdKey.getLongId())
+                );
+            }
+            int permissionLevel = (int) objects[1];
+            detachedCriteria.add(Restrictions.eq("permissionLevel", permissionLevel));
+        } catch (Exception e) {
+            throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
+        }
+    }
+
+    @SuppressWarnings("DuplicatedCode")
+    private void childForUserPermissionLevelEquals(DetachedCriteria detachedCriteria, Object[] objects) {
+        try {
+            if (Objects.isNull(objects[0])) {
+                detachedCriteria.add(Restrictions.isNull("userId"));
+            } else {
+                StringIdKey stringIdKey = (StringIdKey) objects[0];
+                detachedCriteria.add(
+                        Restrictions.eqOrIsNull("userId", stringIdKey.getStringId())
+                );
+            }
+            int permissionLevel = (int) objects[1];
+            detachedCriteria.add(Restrictions.eq("permissionLevel", permissionLevel));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objects));
         }

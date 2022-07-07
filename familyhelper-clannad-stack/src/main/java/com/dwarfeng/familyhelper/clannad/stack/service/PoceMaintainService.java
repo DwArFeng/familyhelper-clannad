@@ -17,4 +17,6 @@ public interface PoceMaintainService extends BatchCrudService<PoceKey, Poce>, En
 
     String CHILD_FOR_CERTIFICATE = "child_for_certificate";
     String CHILD_FOR_USER = "child_for_user";
+    String CHILD_FOR_CERTIFICATE_PERMISSION_LEVEL_EQUALS = "child_for_certificate_permission_level_equals";
+    String CHILD_FOR_USER_PERMISSION_LEVEL_EQUALS = "child_for_user_permission_level_equals";
 }
