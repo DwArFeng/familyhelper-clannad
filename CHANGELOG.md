@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 插件升级。
+  - 升级 `maven-deploy-plugin` 插件版本为 `2.8.2`。
+
 - 依赖升级。
   - 升级 `junit` 依赖版本为 `4.13.2` 以规避漏洞。
   - 升级 `spring` 依赖版本为 `5.3.20` 以规避漏洞。
@@ -14,12 +17,12 @@
   - 升级 `hibernate` 依赖版本为 `5.4.24.Final` 以规避漏洞。
   - 升级 `hibernate-validator` 依赖版本为 `6.0.21.Final` 以规避漏洞。
   - 升级 `log4j2` 依赖版本为 `2.17.2` 以规避漏洞。
-  - 升级 `dutil` 依赖版本为 `beta-0.3.0.a` 以规避漏洞。
-  - 升级 `snowflake` 依赖版本为 `1.4.7.a` 以规避漏洞。
-  - 升级 `subgrade` 依赖版本为 `1.2.8.a` 以规避漏洞。
-  - 升级 `dwarfeng-ftp` 依赖版本为 `1.0.1.a` 以规避漏洞。
-  - 升级 `spring-terminator` 依赖版本为 `1.0.8.a` 以规避漏洞。
-  - 升级 `spring-telqos` 依赖版本为 `1.1.3.a` 以规避漏洞。
+  - 升级 `dutil` 依赖版本为 `beta-0.3.1.a` 以规避漏洞。
+  - 升级 `snowflake` 依赖版本为 `1.4.9.a` 以规避漏洞。
+  - 升级 `subgrade` 依赖版本为 `1.2.10.a` 以规避漏洞。
+  - 升级 `dwarfeng-ftp` 依赖版本为 `1.0.2.a` 以规避漏洞。
+  - 升级 `spring-terminator` 依赖版本为 `1.0.9.a` 以规避漏洞。
+  - 升级 `spring-telqos` 依赖版本为 `1.1.4.a` 以规避漏洞。
 
 - 新增实体。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Certificate。
@@ -38,7 +41,11 @@
 
 #### 功能移除
 
-- (无)
+- 删除不需要的依赖。
+  - 删除 `joda-time` 依赖。
+  - 删除 `commons-lang3` 依赖。
+  - 删除 `commons-io` 依赖。
+  - 删除 `httpcomponents` 依赖。
 
 ---
 
