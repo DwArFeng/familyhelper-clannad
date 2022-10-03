@@ -30,6 +30,7 @@
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Poce。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifySetting。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyTopic。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyPreference。
 
 - 优化操作服务验证环节的代码结构。
 

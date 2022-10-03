@@ -1,8 +1,13 @@
 package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyPreference;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifySetting;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
+import com.dwarfeng.familyhelper.clannad.stack.cache.NotifyPreferenceCache;
 import com.dwarfeng.familyhelper.clannad.stack.cache.NotifySettingCache;
+import com.dwarfeng.familyhelper.clannad.stack.dao.NotifyPreferenceDao;
 import com.dwarfeng.familyhelper.clannad.stack.dao.NotifySettingDao;
+import com.dwarfeng.familyhelper.clannad.stack.service.NotifyPreferenceMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -11,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class NotifySettingCrudOperation implements BatchCrudOperation<LongIdKey, NotifySetting> {
@@ -18,14 +24,20 @@ public class NotifySettingCrudOperation implements BatchCrudOperation<LongIdKey,
     private final NotifySettingDao notifySettingDao;
     private final NotifySettingCache notifySettingCache;
 
+    private final NotifyPreferenceDao notifyPreferenceDao;
+    private final NotifyPreferenceCache notifyPreferenceCache;
+
     @Value("${cache.timeout.entity.notify_setting}")
     private long notifySettingTimeout;
 
     public NotifySettingCrudOperation(
-            NotifySettingDao notifySettingDao, NotifySettingCache notifySettingCache
+            NotifySettingDao notifySettingDao, NotifySettingCache notifySettingCache,
+            NotifyPreferenceDao notifyPreferenceDao, NotifyPreferenceCache notifyPreferenceCache
     ) {
         this.notifySettingDao = notifySettingDao;
         this.notifySettingCache = notifySettingCache;
+        this.notifyPreferenceDao = notifyPreferenceDao;
+        this.notifyPreferenceCache = notifyPreferenceCache;
     }
 
     @Override
@@ -61,6 +73,13 @@ public class NotifySettingCrudOperation implements BatchCrudOperation<LongIdKey,
 
     @Override
     public void delete(LongIdKey key) throws Exception {
+        // 删除与通知设置相关的通知偏好
+        List<NotifyPreferenceKey> notifyPreferenceKeys = notifyPreferenceDao.lookup(
+                NotifyPreferenceMaintainService.CHILD_FOR_NOTIFY_SETTING, new Object[]{key}
+        ).stream().map(NotifyPreference::getKey).collect(Collectors.toList());
+        notifyPreferenceCache.batchDelete(notifyPreferenceKeys);
+        notifyPreferenceDao.batchDelete(notifyPreferenceKeys);
+
         // 删除通知设置实体本身。
         notifySettingDao.delete(key);
         notifySettingCache.delete(key);

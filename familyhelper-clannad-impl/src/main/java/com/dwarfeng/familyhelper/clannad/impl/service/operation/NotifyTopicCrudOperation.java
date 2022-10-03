@@ -1,8 +1,13 @@
 package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyPreference;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyTopic;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
+import com.dwarfeng.familyhelper.clannad.stack.cache.NotifyPreferenceCache;
 import com.dwarfeng.familyhelper.clannad.stack.cache.NotifyTopicCache;
+import com.dwarfeng.familyhelper.clannad.stack.dao.NotifyPreferenceDao;
 import com.dwarfeng.familyhelper.clannad.stack.dao.NotifyTopicDao;
+import com.dwarfeng.familyhelper.clannad.stack.service.NotifyPreferenceMaintainService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
@@ -11,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class NotifyTopicCrudOperation implements BatchCrudOperation<StringIdKey, NotifyTopic> {
@@ -18,14 +24,20 @@ public class NotifyTopicCrudOperation implements BatchCrudOperation<StringIdKey,
     private final NotifyTopicDao notifyTopicDao;
     private final NotifyTopicCache notifyTopicCache;
 
+    private final NotifyPreferenceDao notifyPreferenceDao;
+    private final NotifyPreferenceCache notifyPreferenceCache;
+
     @Value("${cache.timeout.entity.notify_topic}")
     private long notifyTopicTimeout;
 
     public NotifyTopicCrudOperation(
-            NotifyTopicDao notifyTopicDao, NotifyTopicCache notifyTopicCache
+            NotifyTopicDao notifyTopicDao, NotifyTopicCache notifyTopicCache,
+            NotifyPreferenceDao notifyPreferenceDao, NotifyPreferenceCache notifyPreferenceCache
     ) {
         this.notifyTopicDao = notifyTopicDao;
         this.notifyTopicCache = notifyTopicCache;
+        this.notifyPreferenceDao = notifyPreferenceDao;
+        this.notifyPreferenceCache = notifyPreferenceCache;
     }
 
     @Override
@@ -61,6 +73,13 @@ public class NotifyTopicCrudOperation implements BatchCrudOperation<StringIdKey,
 
     @Override
     public void delete(StringIdKey key) throws Exception {
+        // 删除与通知主题相关的通知偏好
+        List<NotifyPreferenceKey> notifyPreferenceKeys = notifyPreferenceDao.lookup(
+                NotifyPreferenceMaintainService.CHILD_FOR_NOTIFY_TOPIC, new Object[]{key}
+        ).stream().map(NotifyPreference::getKey).collect(Collectors.toList());
+        notifyPreferenceCache.batchDelete(notifyPreferenceKeys);
+        notifyPreferenceDao.batchDelete(notifyPreferenceKeys);
+
         // 删除通知设置实体本身。
         notifyTopicDao.delete(key);
         notifyTopicCache.delete(key);

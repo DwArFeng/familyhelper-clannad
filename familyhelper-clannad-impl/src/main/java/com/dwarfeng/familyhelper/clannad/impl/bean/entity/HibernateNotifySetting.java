@@ -5,14 +5,16 @@ import com.dwarfeng.subgrade.sdk.bean.key.HibernateLongIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @IdClass(HibernateLongIdKey.class)
 @Table(name = "tbl_notify_setting")
 public class HibernateNotifySetting implements Bean {
 
-    private static final long serialVersionUID = 3352467171119983352L;
+    private static final long serialVersionUID = -5984049394429496547L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -22,6 +24,10 @@ public class HibernateNotifySetting implements Bean {
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
+
+    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateNotifyPreference.class, mappedBy = "notifySetting")
+    private Set<HibernateNotifyPreference> notifyPreferences = new HashSet<>();
 
     public HibernateNotifySetting() {
     }
@@ -50,6 +56,14 @@ public class HibernateNotifySetting implements Bean {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Set<HibernateNotifyPreference> getNotifyPreferences() {
+        return notifyPreferences;
+    }
+
+    public void setNotifyPreferences(Set<HibernateNotifyPreference> notifyPreferences) {
+        this.notifyPreferences = notifyPreferences;
     }
 
     @Override

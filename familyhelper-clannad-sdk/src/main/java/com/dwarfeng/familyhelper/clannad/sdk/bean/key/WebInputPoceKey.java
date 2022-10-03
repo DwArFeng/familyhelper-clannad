@@ -37,7 +37,7 @@ public class WebInputPoceKey implements Key {
     @JSONField(name = "user_id")
     @NotEmpty
     @NotNull
-    @Length(max = Constraints.LENGTH_ID)
+    @Length(max = Constraints.LENGTH_USER)
     private String userId;
 
     public WebInputPoceKey() {

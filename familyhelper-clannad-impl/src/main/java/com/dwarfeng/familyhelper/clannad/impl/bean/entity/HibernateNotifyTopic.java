@@ -5,23 +5,29 @@ import com.dwarfeng.subgrade.sdk.bean.key.HibernateStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @IdClass(HibernateStringIdKey.class)
 @Table(name = "tbl_notify_topic")
 public class HibernateNotifyTopic implements Bean {
 
-    private static final long serialVersionUID = -4163466758051547171L;
+    private static final long serialVersionUID = 8013136904146276521L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
-    @Column(name = "id", nullable = false, unique = true)
+    @Column(name = "id", nullable = false, unique = true, length = Constraints.LENGTH_ID)
     private String stringId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
+
+    // -----------------------------------------------------------一对多-----------------------------------------------------------
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateNotifyPreference.class, mappedBy = "notifyTopic")
+    private Set<HibernateNotifyPreference> notifyPreferences = new HashSet<>();
 
     public HibernateNotifyTopic() {
     }
@@ -50,6 +56,14 @@ public class HibernateNotifyTopic implements Bean {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Set<HibernateNotifyPreference> getNotifyPreferences() {
+        return notifyPreferences;
+    }
+
+    public void setNotifyPreferences(Set<HibernateNotifyPreference> notifyPreferences) {
+        this.notifyPreferences = notifyPreferences;
     }
 
     @Override

@@ -2,10 +2,7 @@ package com.dwarfeng.familyhelper.clannad.impl.configuration;
 
 import com.dwarfeng.familyhelper.clannad.impl.service.operation.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.*;
 import com.dwarfeng.familyhelper.clannad.stack.cache.*;
 import com.dwarfeng.familyhelper.clannad.stack.dao.*;
 import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
@@ -48,6 +45,8 @@ public class ServiceConfiguration {
     private final NotifySettingDao notifySettingDao;
     private final NotifyTopicCrudOperation notifyTopicCrudOperation;
     private final NotifyTopicDao notifyTopicDao;
+    private final NotifyPreferenceDao notifyPreferenceDao;
+    private final NotifyPreferenceCache notifyPreferenceCache;
 
     @Value("${cache.timeout.entity.profile_type_indicator}")
     private long profileTypeIndicatorTimeout;
@@ -59,6 +58,8 @@ public class ServiceConfiguration {
     private long notificationTimeout;
     @Value("${cache.timeout.entity.poce}")
     private long poceTimeout;
+    @Value("${cache.timeout.entity.notify_preference}")
+    private long notifyPreferenceTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -74,7 +75,8 @@ public class ServiceConfiguration {
             CertificateFileInfoCrudOperation certificateFileInfoCrudOperation, CertificateFileInfoDao certificateFileInfoDao,
             PoceDao poceDao, PoceCache poceCache,
             NotifySettingCrudOperation notifySettingCrudOperation, NotifySettingDao notifySettingDao,
-            NotifyTopicCrudOperation notifyTopicCrudOperation, NotifyTopicDao notifyTopicDao
+            NotifyTopicCrudOperation notifyTopicCrudOperation, NotifyTopicDao notifyTopicDao,
+            NotifyPreferenceDao notifyPreferenceDao, NotifyPreferenceCache notifyPreferenceCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.profileCrudOperation = profileCrudOperation;
@@ -98,6 +100,8 @@ public class ServiceConfiguration {
         this.notifySettingDao = notifySettingDao;
         this.notifyTopicCrudOperation = notifyTopicCrudOperation;
         this.notifyTopicDao = notifyTopicDao;
+        this.notifyPreferenceDao = notifyPreferenceDao;
+        this.notifyPreferenceCache = notifyPreferenceCache;
     }
 
     @Bean
@@ -358,6 +362,36 @@ public class ServiceConfiguration {
     public DaoOnlyEntireLookupService<NotifyTopic> notifyTopicDaoOnlyEntireLookupService() {
         return new DaoOnlyEntireLookupService<>(
                 notifyTopicDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<NotifyPreferenceKey, NotifyPreference> notifyPreferenceGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                notifyPreferenceDao,
+                notifyPreferenceCache,
+                new ExceptionKeyFetcher<>(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                notifyPreferenceTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<NotifyPreference> notifyPreferenceDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                notifyPreferenceDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<NotifyPreference> notifyPreferenceDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                notifyPreferenceDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
