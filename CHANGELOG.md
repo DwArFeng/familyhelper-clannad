@@ -37,6 +37,7 @@
 - 完成实体的操作服务。
   - com.dwarfeng.familyhelper.clannad.stack.service.CertificateFileOperateService。
   - com.dwarfeng.familyhelper.clannad.stack.service.CertificateOperateService。
+  - com.dwarfeng.familyhelper.clannad.stack.service.NotifyPreferenceOperateService。
 
 #### Bug修复
 
