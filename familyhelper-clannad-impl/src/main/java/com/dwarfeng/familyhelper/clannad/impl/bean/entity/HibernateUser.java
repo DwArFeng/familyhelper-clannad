@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tbl_user")
 public class HibernateUser implements Bean {
 
-    private static final long serialVersionUID = -825337727274424381L;
+    private static final long serialVersionUID = -5582054247225906889L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -47,6 +47,12 @@ public class HibernateUser implements Bean {
 
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePoce.class, mappedBy = "user")
     private Set<HibernatePoce> poces = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateNotifyPreference.class, mappedBy = "user")
+    private Set<HibernateNotifyPreference> notifyPreferences = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateNotifyMeta.class, mappedBy = "user")
+    private Set<HibernateNotifyMeta> notifyMetas = new HashSet<>();
 
     public HibernateUser() {
     }
@@ -131,6 +137,22 @@ public class HibernateUser implements Bean {
 
     public void setPoces(Set<HibernatePoce> poces) {
         this.poces = poces;
+    }
+
+    public Set<HibernateNotifyPreference> getNotifyPreferences() {
+        return notifyPreferences;
+    }
+
+    public void setNotifyPreferences(Set<HibernateNotifyPreference> notifyPreferences) {
+        this.notifyPreferences = notifyPreferences;
+    }
+
+    public Set<HibernateNotifyMeta> getNotifyMetas() {
+        return notifyMetas;
+    }
+
+    public void setNotifyMetas(Set<HibernateNotifyMeta> notifyMetas) {
+        this.notifyMetas = notifyMetas;
     }
 
     @Override

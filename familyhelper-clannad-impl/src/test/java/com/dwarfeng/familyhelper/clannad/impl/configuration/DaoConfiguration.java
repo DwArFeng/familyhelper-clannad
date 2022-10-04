@@ -34,6 +34,7 @@ public class DaoConfiguration {
     private final CertificateFileInfoPresetCriteriaMaker certificateFileInfoPresetCriteriaMaker;
     private final PocePresetCriteriaMaker pocePresetCriteriaMaker;
     private final NotifyPreferencePresetCriteriaMaker notifyPreferencePresetCriteriaMaker;
+    private final NotifyMetaPresetCriteriaMaker notifyMetaPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -48,7 +49,8 @@ public class DaoConfiguration {
             CertificatePresetCriteriaMaker certificatePresetCriteriaMaker,
             CertificateFileInfoPresetCriteriaMaker certificateFileInfoPresetCriteriaMaker,
             PocePresetCriteriaMaker pocePresetCriteriaMaker,
-            NotifyPreferencePresetCriteriaMaker notifyPreferencePresetCriteriaMaker
+            NotifyPreferencePresetCriteriaMaker notifyPreferencePresetCriteriaMaker,
+            NotifyMetaPresetCriteriaMaker notifyMetaPresetCriteriaMaker
     ) {
         this.template = template;
         this.mapper = mapper;
@@ -60,6 +62,7 @@ public class DaoConfiguration {
         this.certificateFileInfoPresetCriteriaMaker = certificateFileInfoPresetCriteriaMaker;
         this.pocePresetCriteriaMaker = pocePresetCriteriaMaker;
         this.notifyPreferencePresetCriteriaMaker = notifyPreferencePresetCriteriaMaker;
+        this.notifyMetaPresetCriteriaMaker = notifyMetaPresetCriteriaMaker;
     }
 
     @Bean
@@ -381,6 +384,40 @@ public class DaoConfiguration {
                 new DozerBeanTransformer<>(NotifyPreference.class, HibernateNotifyPreference.class, mapper),
                 HibernateNotifyPreference.class,
                 notifyPreferencePresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<NotifyNodeKey, HibernateNotifyNodeKey, NotifyMeta,
+            HibernateNotifyMeta> notifyMetaHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new DozerBeanTransformer<>(NotifyNodeKey.class, HibernateNotifyNodeKey.class, mapper),
+                new DozerBeanTransformer<>(NotifyMeta.class, HibernateNotifyMeta.class, mapper),
+                HibernateNotifyMeta.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<NotifyMeta, HibernateNotifyMeta>
+    notifyMetaHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(NotifyMeta.class, HibernateNotifyMeta.class, mapper),
+                HibernateNotifyMeta.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<NotifyMeta, HibernateNotifyMeta>
+    notifyMetaHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new DozerBeanTransformer<>(NotifyMeta.class, HibernateNotifyMeta.class, mapper),
+                HibernateNotifyMeta.class,
+                notifyMetaPresetCriteriaMaker
         );
     }
 }

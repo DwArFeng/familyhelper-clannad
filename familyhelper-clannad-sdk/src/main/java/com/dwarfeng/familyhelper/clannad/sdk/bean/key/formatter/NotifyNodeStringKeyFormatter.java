@@ -12,11 +12,11 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 1.2.3
  */
-public class NotifyPreferenceStringKeyFormatter implements StringKeyFormatter<NotifyNodeKey> {
+public class NotifyNodeStringKeyFormatter implements StringKeyFormatter<NotifyNodeKey> {
 
     private String prefix;
 
-    public NotifyPreferenceStringKeyFormatter(String prefix) {
+    public NotifyNodeStringKeyFormatter(String prefix) {
         this.prefix = prefix;
     }
 
@@ -41,7 +41,7 @@ public class NotifyPreferenceStringKeyFormatter implements StringKeyFormatter<No
 
     @Override
     public String toString() {
-        return "NotifyPreferenceStringKeyFormatter{" +
+        return "NotifyNodeStringKeyFormatter{" +
                 "prefix='" + prefix + '\'' +
                 '}';
     }

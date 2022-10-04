@@ -47,6 +47,8 @@ public class ServiceConfiguration {
     private final NotifyTopicDao notifyTopicDao;
     private final NotifyPreferenceDao notifyPreferenceDao;
     private final NotifyPreferenceCache notifyPreferenceCache;
+    private final NotifyMetaDao notifyMetaDao;
+    private final NotifyMetaCache notifyMetaCache;
 
     @Value("${cache.timeout.entity.profile_type_indicator}")
     private long profileTypeIndicatorTimeout;
@@ -60,6 +62,8 @@ public class ServiceConfiguration {
     private long poceTimeout;
     @Value("${cache.timeout.entity.notify_preference}")
     private long notifyPreferenceTimeout;
+    @Value("${cache.timeout.entity.notify_meta}")
+    private long notifyMetaTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -76,7 +80,8 @@ public class ServiceConfiguration {
             PoceDao poceDao, PoceCache poceCache,
             NotifySettingCrudOperation notifySettingCrudOperation, NotifySettingDao notifySettingDao,
             NotifyTopicCrudOperation notifyTopicCrudOperation, NotifyTopicDao notifyTopicDao,
-            NotifyPreferenceDao notifyPreferenceDao, NotifyPreferenceCache notifyPreferenceCache
+            NotifyPreferenceDao notifyPreferenceDao, NotifyPreferenceCache notifyPreferenceCache,
+            NotifyMetaDao notifyMetaDao, NotifyMetaCache notifyMetaCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.profileCrudOperation = profileCrudOperation;
@@ -102,6 +107,8 @@ public class ServiceConfiguration {
         this.notifyTopicDao = notifyTopicDao;
         this.notifyPreferenceDao = notifyPreferenceDao;
         this.notifyPreferenceCache = notifyPreferenceCache;
+        this.notifyMetaDao = notifyMetaDao;
+        this.notifyMetaCache = notifyMetaCache;
     }
 
     @Bean
@@ -392,6 +399,36 @@ public class ServiceConfiguration {
     public DaoOnlyPresetLookupService<NotifyPreference> notifyPreferenceDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 notifyPreferenceDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<NotifyNodeKey, NotifyMeta> notifyMetaGeneralBatchCrudService() {
+        return new GeneralBatchCrudService<>(
+                notifyMetaDao,
+                notifyMetaCache,
+                new ExceptionKeyFetcher<>(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                notifyMetaTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<NotifyMeta> notifyMetaDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                notifyMetaDao,
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<NotifyMeta> notifyMetaDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                notifyMetaDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
