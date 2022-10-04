@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class FastJsonNotifyPreference implements Bean {
 
-    private static final long serialVersionUID = -2891224214438287683L;
+    private static final long serialVersionUID = 7566463658655275192L;
 
     public static FastJsonNotifyPreference of(NotifyPreference notifyPreference) {
         if (Objects.isNull(notifyPreference)) {
@@ -23,7 +23,7 @@ public class FastJsonNotifyPreference implements Bean {
         } else {
             return new FastJsonNotifyPreference(
                     FastJsonNotifyPreferenceKey.of(notifyPreference.getKey()),
-                    notifyPreference.isPreferred(), notifyPreference.getRemark()
+                    notifyPreference.isPreferred(), notifyPreference.getCoolDown(), notifyPreference.getRemark()
             );
         }
     }
@@ -34,15 +34,21 @@ public class FastJsonNotifyPreference implements Bean {
     @JSONField(name = "preferred", ordinal = 2)
     private boolean preferred;
 
-    @JSONField(name = "remark", ordinal = 3)
+    @JSONField(name = "cool_down", ordinal = 3)
+    private long coolDown;
+
+    @JSONField(name = "remark", ordinal = 4)
     private String remark;
 
     public FastJsonNotifyPreference() {
     }
 
-    public FastJsonNotifyPreference(FastJsonNotifyPreferenceKey key, boolean preferred, String remark) {
+    public FastJsonNotifyPreference(
+            FastJsonNotifyPreferenceKey key, Boolean preferred, Long coolDown, String remark
+    ) {
         this.key = key;
         this.preferred = preferred;
+        this.coolDown = coolDown;
         this.remark = remark;
     }
 
@@ -62,6 +68,14 @@ public class FastJsonNotifyPreference implements Bean {
         this.preferred = preferred;
     }
 
+    public long getCoolDown() {
+        return coolDown;
+    }
+
+    public void setCoolDown(long coolDown) {
+        this.coolDown = coolDown;
+    }
+
     public String getRemark() {
         return remark;
     }
@@ -75,6 +89,7 @@ public class FastJsonNotifyPreference implements Bean {
         return "FastJsonNotifyPreference{" +
                 "key=" + key +
                 ", preferred=" + preferred +
+                ", coolDown=" + coolDown +
                 ", remark='" + remark + '\'' +
                 '}';
     }

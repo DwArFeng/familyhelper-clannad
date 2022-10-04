@@ -4,8 +4,6 @@ import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
-import java.util.List;
-
 /**
  * 通知偏好更新信息。
  *
@@ -14,29 +12,26 @@ import java.util.List;
  */
 public class NotifyPreferenceUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = 4128544607594169585L;
+    private static final long serialVersionUID = -7094629160004424642L;
 
-    private StringIdKey userKey;
     private LongIdKey notifySettingKey;
-    private List<TopicDetail> topicDetails;
+    private StringIdKey notifyTopicKey;
+    private StringIdKey userKey;
+    private boolean preferred;
+    private long coolDown;
 
     public NotifyPreferenceUpdateInfo() {
     }
 
     public NotifyPreferenceUpdateInfo(
-            StringIdKey userKey, LongIdKey notifySettingKey, List<TopicDetail> topicDetails
+            LongIdKey notifySettingKey, StringIdKey notifyTopicKey, StringIdKey userKey, boolean preferred,
+            long coolDown
     ) {
-        this.userKey = userKey;
         this.notifySettingKey = notifySettingKey;
-        this.topicDetails = topicDetails;
-    }
-
-    public StringIdKey getUserKey() {
-        return userKey;
-    }
-
-    public void setUserKey(StringIdKey userKey) {
+        this.notifyTopicKey = notifyTopicKey;
         this.userKey = userKey;
+        this.preferred = preferred;
+        this.coolDown = coolDown;
     }
 
     public LongIdKey getNotifySettingKey() {
@@ -47,60 +42,46 @@ public class NotifyPreferenceUpdateInfo implements Dto {
         this.notifySettingKey = notifySettingKey;
     }
 
-    public List<TopicDetail> getTopicDetails() {
-        return topicDetails;
+    public StringIdKey getNotifyTopicKey() {
+        return notifyTopicKey;
     }
 
-    public void setTopicDetails(List<TopicDetail> topicDetails) {
-        this.topicDetails = topicDetails;
+    public void setNotifyTopicKey(StringIdKey notifyTopicKey) {
+        this.notifyTopicKey = notifyTopicKey;
+    }
+
+    public StringIdKey getUserKey() {
+        return userKey;
+    }
+
+    public void setUserKey(StringIdKey userKey) {
+        this.userKey = userKey;
+    }
+
+    public boolean isPreferred() {
+        return preferred;
+    }
+
+    public void setPreferred(boolean preferred) {
+        this.preferred = preferred;
+    }
+
+    public long getCoolDown() {
+        return coolDown;
+    }
+
+    public void setCoolDown(long coolDown) {
+        this.coolDown = coolDown;
     }
 
     @Override
     public String toString() {
         return "NotifyPreferenceUpdateInfo{" +
-                "userKey=" + userKey +
-                ", notifySettingKey=" + notifySettingKey +
-                ", topicDetails=" + topicDetails +
+                "notifySettingKey=" + notifySettingKey +
+                ", notifyTopicKey=" + notifyTopicKey +
+                ", userKey=" + userKey +
+                ", preferred=" + preferred +
+                ", coolDown=" + coolDown +
                 '}';
-    }
-
-    public static class TopicDetail implements Dto {
-
-        private static final long serialVersionUID = 4020909933546703253L;
-
-        private StringIdKey topicKey;
-        private boolean preferred;
-
-        public TopicDetail() {
-        }
-
-        public TopicDetail(StringIdKey topicKey, boolean preferred) {
-            this.topicKey = topicKey;
-            this.preferred = preferred;
-        }
-
-        public StringIdKey getTopicKey() {
-            return topicKey;
-        }
-
-        public void setTopicKey(StringIdKey topicKey) {
-            this.topicKey = topicKey;
-        }
-
-        public boolean isPreferred() {
-            return preferred;
-        }
-
-        public void setPreferred(boolean preferred) {
-            this.preferred = preferred;
-        }
-
-        @Override
-        public String toString() {
-            return "TopicDetail{" +
-                    "topicKey=" + topicKey +
-                    ", preferred=" + preferred +
-                    '}';
-        }
     }
 }
