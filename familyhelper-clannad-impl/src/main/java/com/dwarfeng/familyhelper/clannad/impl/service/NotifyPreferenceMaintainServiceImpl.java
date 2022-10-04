@@ -1,7 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.impl.service;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyPreference;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyNodeKey;
 import com.dwarfeng.familyhelper.clannad.stack.service.NotifyPreferenceMaintainService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
@@ -19,12 +19,12 @@ import java.util.List;
 @Service
 public class NotifyPreferenceMaintainServiceImpl implements NotifyPreferenceMaintainService {
 
-    private final GeneralBatchCrudService<NotifyPreferenceKey, NotifyPreference> crudService;
+    private final GeneralBatchCrudService<NotifyNodeKey, NotifyPreference> crudService;
     private final DaoOnlyEntireLookupService<NotifyPreference> entireLookupService;
     private final DaoOnlyPresetLookupService<NotifyPreference> presetLookupService;
 
     public NotifyPreferenceMaintainServiceImpl(
-            GeneralBatchCrudService<NotifyPreferenceKey, NotifyPreference> crudService,
+            GeneralBatchCrudService<NotifyNodeKey, NotifyPreference> crudService,
             DaoOnlyEntireLookupService<NotifyPreference> entireLookupService,
             DaoOnlyPresetLookupService<NotifyPreference> presetLookupService
     ) {
@@ -36,21 +36,21 @@ public class NotifyPreferenceMaintainServiceImpl implements NotifyPreferenceMain
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean exists(NotifyPreferenceKey key) throws ServiceException {
+    public boolean exists(NotifyNodeKey key) throws ServiceException {
         return crudService.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public NotifyPreference get(NotifyPreferenceKey key) throws ServiceException {
+    public NotifyPreference get(NotifyNodeKey key) throws ServiceException {
         return crudService.get(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public NotifyPreferenceKey insert(NotifyPreference element) throws ServiceException {
+    public NotifyNodeKey insert(NotifyPreference element) throws ServiceException {
         return crudService.insert(element);
     }
 
@@ -64,21 +64,21 @@ public class NotifyPreferenceMaintainServiceImpl implements NotifyPreferenceMain
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void delete(NotifyPreferenceKey key) throws ServiceException {
+    public void delete(NotifyNodeKey key) throws ServiceException {
         crudService.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public NotifyPreference getIfExists(NotifyPreferenceKey key) throws ServiceException {
+    public NotifyPreference getIfExists(NotifyNodeKey key) throws ServiceException {
         return crudService.getIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public NotifyPreferenceKey insertIfNotExists(NotifyPreference element) throws ServiceException {
+    public NotifyNodeKey insertIfNotExists(NotifyPreference element) throws ServiceException {
         return crudService.insertIfNotExists(element);
     }
 
@@ -92,28 +92,28 @@ public class NotifyPreferenceMaintainServiceImpl implements NotifyPreferenceMain
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void deleteIfExists(NotifyPreferenceKey key) throws ServiceException {
+    public void deleteIfExists(NotifyNodeKey key) throws ServiceException {
         crudService.deleteIfExists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public NotifyPreferenceKey insertOrUpdate(NotifyPreference element) throws ServiceException {
+    public NotifyNodeKey insertOrUpdate(NotifyPreference element) throws ServiceException {
         return crudService.insertOrUpdate(element);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(@SkipRecord List<NotifyPreferenceKey> keys) throws ServiceException {
+    public boolean allExists(@SkipRecord List<NotifyNodeKey> keys) throws ServiceException {
         return crudService.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean nonExists(@SkipRecord List<NotifyPreferenceKey> keys) throws ServiceException {
+    public boolean nonExists(@SkipRecord List<NotifyNodeKey> keys) throws ServiceException {
         return crudService.nonExists(keys);
     }
 
@@ -121,7 +121,7 @@ public class NotifyPreferenceMaintainServiceImpl implements NotifyPreferenceMain
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<NotifyPreference> batchGet(@SkipRecord List<NotifyPreferenceKey> keys) throws ServiceException {
+    public List<NotifyPreference> batchGet(@SkipRecord List<NotifyNodeKey> keys) throws ServiceException {
         return crudService.batchGet(keys);
     }
 
@@ -129,7 +129,7 @@ public class NotifyPreferenceMaintainServiceImpl implements NotifyPreferenceMain
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<NotifyPreferenceKey> batchInsert(@SkipRecord List<NotifyPreference> elements) throws ServiceException {
+    public List<NotifyNodeKey> batchInsert(@SkipRecord List<NotifyPreference> elements) throws ServiceException {
         return crudService.batchInsert(elements);
     }
 
@@ -143,7 +143,7 @@ public class NotifyPreferenceMaintainServiceImpl implements NotifyPreferenceMain
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDelete(@SkipRecord List<NotifyPreferenceKey> keys) throws ServiceException {
+    public void batchDelete(@SkipRecord List<NotifyNodeKey> keys) throws ServiceException {
         crudService.batchDelete(keys);
     }
 
@@ -151,7 +151,7 @@ public class NotifyPreferenceMaintainServiceImpl implements NotifyPreferenceMain
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<NotifyPreference> batchGetIfExists(@SkipRecord List<NotifyPreferenceKey> keys) throws ServiceException {
+    public List<NotifyPreference> batchGetIfExists(@SkipRecord List<NotifyNodeKey> keys) throws ServiceException {
         return crudService.batchGetIfExists(keys);
     }
 
@@ -159,7 +159,7 @@ public class NotifyPreferenceMaintainServiceImpl implements NotifyPreferenceMain
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<NotifyPreferenceKey> batchInsertIfExists(@SkipRecord List<NotifyPreference> elements) throws ServiceException {
+    public List<NotifyNodeKey> batchInsertIfExists(@SkipRecord List<NotifyPreference> elements) throws ServiceException {
         return crudService.batchInsertIfExists(elements);
     }
 
@@ -173,7 +173,7 @@ public class NotifyPreferenceMaintainServiceImpl implements NotifyPreferenceMain
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDeleteIfExists(@SkipRecord List<NotifyPreferenceKey> keys) throws ServiceException {
+    public void batchDeleteIfExists(@SkipRecord List<NotifyNodeKey> keys) throws ServiceException {
         crudService.batchDeleteIfExists(keys);
     }
 
@@ -181,7 +181,7 @@ public class NotifyPreferenceMaintainServiceImpl implements NotifyPreferenceMain
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<NotifyPreferenceKey> batchInsertOrUpdate(@SkipRecord List<NotifyPreference> elements) throws ServiceException {
+    public List<NotifyNodeKey> batchInsertOrUpdate(@SkipRecord List<NotifyPreference> elements) throws ServiceException {
         return crudService.batchInsertOrUpdate(elements);
     }
 

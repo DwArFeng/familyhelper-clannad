@@ -351,11 +351,11 @@ public class DaoConfiguration {
     }
 
     @Bean
-    public HibernateBatchBaseDao<NotifyPreferenceKey, HibernateNotifyPreferenceKey, NotifyPreference,
+    public HibernateBatchBaseDao<NotifyNodeKey, HibernateNotifyNodeKey, NotifyPreference,
             HibernateNotifyPreference> notifyPreferenceHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 template,
-                new DozerBeanTransformer<>(NotifyPreferenceKey.class, HibernateNotifyPreferenceKey.class, mapper),
+                new DozerBeanTransformer<>(NotifyNodeKey.class, HibernateNotifyNodeKey.class, mapper),
                 new DozerBeanTransformer<>(NotifyPreference.class, HibernateNotifyPreference.class, mapper),
                 HibernateNotifyPreference.class,
                 new DefaultDeletionMod<>(),

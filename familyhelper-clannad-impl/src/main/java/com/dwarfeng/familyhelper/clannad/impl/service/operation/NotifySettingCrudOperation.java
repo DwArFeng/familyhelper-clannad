@@ -2,7 +2,7 @@ package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyPreference;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifySetting;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyNodeKey;
 import com.dwarfeng.familyhelper.clannad.stack.cache.NotifyPreferenceCache;
 import com.dwarfeng.familyhelper.clannad.stack.cache.NotifySettingCache;
 import com.dwarfeng.familyhelper.clannad.stack.dao.NotifyPreferenceDao;
@@ -74,11 +74,11 @@ public class NotifySettingCrudOperation implements BatchCrudOperation<LongIdKey,
     @Override
     public void delete(LongIdKey key) throws Exception {
         // 删除与通知设置相关的通知偏好
-        List<NotifyPreferenceKey> notifyPreferenceKeys = notifyPreferenceDao.lookup(
+        List<NotifyNodeKey> notifyNodeKeys = notifyPreferenceDao.lookup(
                 NotifyPreferenceMaintainService.CHILD_FOR_NOTIFY_SETTING, new Object[]{key}
         ).stream().map(NotifyPreference::getKey).collect(Collectors.toList());
-        notifyPreferenceCache.batchDelete(notifyPreferenceKeys);
-        notifyPreferenceDao.batchDelete(notifyPreferenceKeys);
+        notifyPreferenceCache.batchDelete(notifyNodeKeys);
+        notifyPreferenceDao.batchDelete(notifyNodeKeys);
 
         // 删除通知设置实体本身。
         notifySettingDao.delete(key);

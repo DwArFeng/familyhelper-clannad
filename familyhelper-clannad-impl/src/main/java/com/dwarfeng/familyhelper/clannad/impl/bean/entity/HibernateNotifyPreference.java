@@ -1,6 +1,6 @@
 package com.dwarfeng.familyhelper.clannad.impl.bean.entity;
 
-import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateNotifyPreferenceKey;
+import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateNotifyNodeKey;
 import com.dwarfeng.familyhelper.clannad.sdk.util.Constraints;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@IdClass(HibernateNotifyPreferenceKey.class)
+@IdClass(HibernateNotifyNodeKey.class)
 @Table(name = "tbl_notify_preference")
 public class HibernateNotifyPreference implements Bean {
 
@@ -60,11 +60,11 @@ public class HibernateNotifyPreference implements Bean {
     }
 
     // -----------------------------------------------------------映射用属性区-----------------------------------------------------------
-    public HibernateNotifyPreferenceKey getKey() {
-        return new HibernateNotifyPreferenceKey(notifySettingId, notifyTopicId, userId);
+    public HibernateNotifyNodeKey getKey() {
+        return new HibernateNotifyNodeKey(notifySettingId, notifyTopicId, userId);
     }
 
-    public void setKey(HibernateNotifyPreferenceKey key) {
+    public void setKey(HibernateNotifyNodeKey key) {
         if (Objects.isNull(key)) {
             this.notifySettingId = null;
             this.notifyTopicId = null;

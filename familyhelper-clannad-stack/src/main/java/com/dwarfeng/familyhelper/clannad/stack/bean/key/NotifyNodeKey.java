@@ -5,23 +5,23 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import java.util.Objects;
 
 /**
- * 通知偏好主键。
+ * 通知节点主键。
  *
  * @author DwArFeng
  * @since 1.2.3
  */
-public class NotifyPreferenceKey implements Key {
+public class NotifyNodeKey implements Key {
 
-    private static final long serialVersionUID = -7776557150605680425L;
+    private static final long serialVersionUID = -6668144109843831689L;
 
     private Long notifySettingId;
     private String notifyTopicId;
     private String userId;
 
-    public NotifyPreferenceKey() {
+    public NotifyNodeKey() {
     }
 
-    public NotifyPreferenceKey(Long notifySettingId, String notifyTopicId, String userId) {
+    public NotifyNodeKey(Long notifySettingId, String notifyTopicId, String userId) {
         this.notifySettingId = notifySettingId;
         this.notifyTopicId = notifyTopicId;
         this.userId = userId;
@@ -56,7 +56,7 @@ public class NotifyPreferenceKey implements Key {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        NotifyPreferenceKey that = (NotifyPreferenceKey) o;
+        NotifyNodeKey that = (NotifyNodeKey) o;
 
         if (!Objects.equals(notifySettingId, that.notifySettingId))
             return false;
@@ -75,7 +75,7 @@ public class NotifyPreferenceKey implements Key {
 
     @Override
     public String toString() {
-        return "NotifyPreferenceKey{" +
+        return "NotifyNodeKey{" +
                 "notifySettingId=" + notifySettingId +
                 ", notifyTopicId='" + notifyTopicId + '\'' +
                 ", userId='" + userId + '\'' +

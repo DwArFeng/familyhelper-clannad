@@ -1,34 +1,33 @@
 package com.dwarfeng.familyhelper.clannad.sdk.bean.key;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.alibaba.fastjson.serializer.ToStringSerializer;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyNodeKey;
 import com.dwarfeng.subgrade.stack.bean.key.Key;
 
 import java.util.Objects;
 
 /**
- * JSFixed FastJson 通知偏好主键。
+ * FastJson 通知节点主键。
  *
  * @author DwArFeng
  * @since 1.2.3
  */
-public class JSFixedFastJsonNotifyPreferenceKey implements Key {
+public class FastJsonNotifyNodeKey implements Key {
 
-    private static final long serialVersionUID = -6960126495416099784L;
+    private static final long serialVersionUID = -9119381083635964516L;
 
-    public static JSFixedFastJsonNotifyPreferenceKey of(NotifyPreferenceKey notifyPreferenceKey) {
-        if (Objects.isNull(notifyPreferenceKey)) {
+    public static FastJsonNotifyNodeKey of(NotifyNodeKey notifyNodeKey) {
+        if (Objects.isNull(notifyNodeKey)) {
             return null;
         } else {
-            return new JSFixedFastJsonNotifyPreferenceKey(
-                    notifyPreferenceKey.getNotifySettingId(), notifyPreferenceKey.getNotifyTopicId(),
-                    notifyPreferenceKey.getUserId()
+            return new FastJsonNotifyNodeKey(
+                    notifyNodeKey.getNotifySettingId(), notifyNodeKey.getNotifyTopicId(),
+                    notifyNodeKey.getUserId()
             );
         }
     }
 
-    @JSONField(name = "notify_setting_id", ordinal = 1, serializeUsing = ToStringSerializer.class)
+    @JSONField(name = "notify_setting_id", ordinal = 1)
     private Long notifySettingId;
 
     @JSONField(name = "notify_topic_id", ordinal = 2)
@@ -37,10 +36,10 @@ public class JSFixedFastJsonNotifyPreferenceKey implements Key {
     @JSONField(name = "userId", ordinal = 3)
     private String userId;
 
-    public JSFixedFastJsonNotifyPreferenceKey() {
+    public FastJsonNotifyNodeKey() {
     }
 
-    public JSFixedFastJsonNotifyPreferenceKey(Long notifySettingId, String notifyTopicId, String userId) {
+    public FastJsonNotifyNodeKey(Long notifySettingId, String notifyTopicId, String userId) {
         this.notifySettingId = notifySettingId;
         this.notifyTopicId = notifyTopicId;
         this.userId = userId;
@@ -72,7 +71,7 @@ public class JSFixedFastJsonNotifyPreferenceKey implements Key {
 
     @Override
     public String toString() {
-        return "JSFixedFastJsonNotifyPreferenceKey{" +
+        return "FastJsonNotifyNodeKey{" +
                 "notifySettingId=" + notifySettingId +
                 ", notifyTopicId='" + notifyTopicId + '\'' +
                 ", userId='" + userId + '\'' +

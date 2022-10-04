@@ -3,7 +3,7 @@ package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 import com.dwarfeng.familyhelper.clannad.impl.util.FtpConstants;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyNodeKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.cache.*;
@@ -168,11 +168,11 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         poceDao.batchDelete(poceKeys);
 
         // 删除与用户相关的通知偏好
-        List<NotifyPreferenceKey> notifyPreferenceKeys = notifyPreferenceDao.lookup(
+        List<NotifyNodeKey> notifyNodeKeys = notifyPreferenceDao.lookup(
                 NotifyPreferenceMaintainService.CHILD_FOR_USER, new Object[]{key}
         ).stream().map(NotifyPreference::getKey).collect(Collectors.toList());
-        notifyPreferenceCache.batchDelete(notifyPreferenceKeys);
-        notifyPreferenceDao.batchDelete(notifyPreferenceKeys);
+        notifyPreferenceCache.batchDelete(notifyNodeKeys);
+        notifyPreferenceDao.batchDelete(notifyNodeKeys);
 
         // 删除账本实体自身。
         userCache.delete(key);

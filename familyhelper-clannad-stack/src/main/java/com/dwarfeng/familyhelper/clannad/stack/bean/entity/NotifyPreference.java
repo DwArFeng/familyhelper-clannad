@@ -1,6 +1,6 @@
 package com.dwarfeng.familyhelper.clannad.stack.bean.entity;
 
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyNodeKey;
 import com.dwarfeng.subgrade.stack.bean.entity.Entity;
 
 /**
@@ -9,11 +9,11 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
  * @author DwArFeng
  * @since 1.2.3
  */
-public class NotifyPreference implements Entity<NotifyPreferenceKey> {
+public class NotifyPreference implements Entity<NotifyNodeKey> {
 
     private static final long serialVersionUID = 4859027145609947413L;
 
-    private NotifyPreferenceKey key;
+    private NotifyNodeKey key;
     private boolean preferred;
     private long coolDown;
     private String remark;
@@ -21,7 +21,7 @@ public class NotifyPreference implements Entity<NotifyPreferenceKey> {
     public NotifyPreference() {
     }
 
-    public NotifyPreference(NotifyPreferenceKey key, boolean preferred, long coolDown, String remark) {
+    public NotifyPreference(NotifyNodeKey key, boolean preferred, long coolDown, String remark) {
         this.key = key;
         this.preferred = preferred;
         this.coolDown = coolDown;
@@ -29,12 +29,12 @@ public class NotifyPreference implements Entity<NotifyPreferenceKey> {
     }
 
     @Override
-    public NotifyPreferenceKey getKey() {
+    public NotifyNodeKey getKey() {
         return key;
     }
 
     @Override
-    public void setKey(NotifyPreferenceKey key) {
+    public void setKey(NotifyNodeKey key) {
         this.key = key;
     }
 

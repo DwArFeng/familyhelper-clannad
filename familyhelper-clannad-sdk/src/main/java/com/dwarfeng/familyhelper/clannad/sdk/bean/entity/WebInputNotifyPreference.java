@@ -1,7 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.key.WebInputNotifyPreferenceKey;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.WebInputNotifyNodeKey;
 import com.dwarfeng.familyhelper.clannad.sdk.util.Constraints;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyPreference;
 import com.dwarfeng.subgrade.stack.bean.Bean;
@@ -27,7 +27,7 @@ public class WebInputNotifyPreference implements Bean {
             return null;
         } else {
             return new NotifyPreference(
-                    WebInputNotifyPreferenceKey.toStackBean(webInputNotifyPreference.getKey()),
+                    WebInputNotifyNodeKey.toStackBean(webInputNotifyPreference.getKey()),
                     webInputNotifyPreference.isPreferred(), webInputNotifyPreference.getCoolDown(),
                     webInputNotifyPreference.getRemark()
             );
@@ -37,7 +37,7 @@ public class WebInputNotifyPreference implements Bean {
     @JSONField(name = "key")
     @Valid
     @NotNull
-    private WebInputNotifyPreferenceKey key;
+    private WebInputNotifyNodeKey key;
 
     @JSONField(name = "preferred")
     private boolean preferred;
@@ -53,11 +53,11 @@ public class WebInputNotifyPreference implements Bean {
     public WebInputNotifyPreference() {
     }
 
-    public WebInputNotifyPreferenceKey getKey() {
+    public WebInputNotifyNodeKey getKey() {
         return key;
     }
 
-    public void setKey(WebInputNotifyPreferenceKey key) {
+    public void setKey(WebInputNotifyNodeKey key) {
         this.key = key;
     }
 

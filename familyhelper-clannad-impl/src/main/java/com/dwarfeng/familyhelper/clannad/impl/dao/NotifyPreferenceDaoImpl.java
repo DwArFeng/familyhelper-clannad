@@ -1,9 +1,9 @@
 package com.dwarfeng.familyhelper.clannad.impl.dao;
 
 import com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateNotifyPreference;
-import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateNotifyPreferenceKey;
+import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateNotifyNodeKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyPreference;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyNodeKey;
 import com.dwarfeng.familyhelper.clannad.stack.dao.NotifyPreferenceDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
@@ -20,13 +20,13 @@ import java.util.List;
 @Repository
 public class NotifyPreferenceDaoImpl implements NotifyPreferenceDao {
 
-    private final HibernateBatchBaseDao<NotifyPreferenceKey, HibernateNotifyPreferenceKey, NotifyPreference,
+    private final HibernateBatchBaseDao<NotifyNodeKey, HibernateNotifyNodeKey, NotifyPreference,
             HibernateNotifyPreference> batchBaseDao;
     private final HibernateEntireLookupDao<NotifyPreference, HibernateNotifyPreference> entireLookupDao;
     private final HibernatePresetLookupDao<NotifyPreference, HibernateNotifyPreference> presetLookupDao;
 
     public NotifyPreferenceDaoImpl(
-            HibernateBatchBaseDao<NotifyPreferenceKey, HibernateNotifyPreferenceKey, NotifyPreference,
+            HibernateBatchBaseDao<NotifyNodeKey, HibernateNotifyNodeKey, NotifyPreference,
                     HibernateNotifyPreference> batchBaseDao,
             HibernateEntireLookupDao<NotifyPreference, HibernateNotifyPreference> entireLookupDao,
             HibernatePresetLookupDao<NotifyPreference, HibernateNotifyPreference> presetLookupDao
@@ -39,7 +39,7 @@ public class NotifyPreferenceDaoImpl implements NotifyPreferenceDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public NotifyPreferenceKey insert(NotifyPreference element) throws DaoException {
+    public NotifyNodeKey insert(NotifyPreference element) throws DaoException {
         return batchBaseDao.insert(element);
     }
 
@@ -53,21 +53,21 @@ public class NotifyPreferenceDaoImpl implements NotifyPreferenceDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void delete(NotifyPreferenceKey key) throws DaoException {
+    public void delete(NotifyNodeKey key) throws DaoException {
         batchBaseDao.delete(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean exists(NotifyPreferenceKey key) throws DaoException {
+    public boolean exists(NotifyNodeKey key) throws DaoException {
         return batchBaseDao.exists(key);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public NotifyPreference get(NotifyPreferenceKey key) throws DaoException {
+    public NotifyPreference get(NotifyNodeKey key) throws DaoException {
         return batchBaseDao.get(key);
     }
 
@@ -75,7 +75,7 @@ public class NotifyPreferenceDaoImpl implements NotifyPreferenceDao {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<NotifyPreferenceKey> batchInsert(@SkipRecord List<NotifyPreference> elements) throws DaoException {
+    public List<NotifyNodeKey> batchInsert(@SkipRecord List<NotifyPreference> elements) throws DaoException {
         return batchBaseDao.batchInsert(elements);
     }
 
@@ -89,21 +89,21 @@ public class NotifyPreferenceDaoImpl implements NotifyPreferenceDao {
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDelete(@SkipRecord List<NotifyPreferenceKey> keys) throws DaoException {
+    public void batchDelete(@SkipRecord List<NotifyNodeKey> keys) throws DaoException {
         batchBaseDao.batchDelete(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(@SkipRecord List<NotifyPreferenceKey> keys) throws DaoException {
+    public boolean allExists(@SkipRecord List<NotifyNodeKey> keys) throws DaoException {
         return batchBaseDao.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean nonExists(@SkipRecord List<NotifyPreferenceKey> keys) throws DaoException {
+    public boolean nonExists(@SkipRecord List<NotifyNodeKey> keys) throws DaoException {
         return batchBaseDao.nonExists(keys);
     }
 
@@ -111,7 +111,7 @@ public class NotifyPreferenceDaoImpl implements NotifyPreferenceDao {
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<NotifyPreference> batchGet(@SkipRecord List<NotifyPreferenceKey> keys) throws DaoException {
+    public List<NotifyPreference> batchGet(@SkipRecord List<NotifyNodeKey> keys) throws DaoException {
         return batchBaseDao.batchGet(keys);
     }
 
