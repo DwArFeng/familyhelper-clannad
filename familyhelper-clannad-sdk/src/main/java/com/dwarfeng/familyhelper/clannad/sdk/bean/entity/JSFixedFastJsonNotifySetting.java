@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class JSFixedFastJsonNotifySetting implements Bean {
 
-    private static final long serialVersionUID = 2436242602660422210L;
+    private static final long serialVersionUID = 7536492591559922569L;
 
     public static JSFixedFastJsonNotifySetting of(NotifySetting notifySetting) {
         if (Objects.isNull(notifySetting)) {
@@ -23,7 +23,7 @@ public class JSFixedFastJsonNotifySetting implements Bean {
         } else {
             return new JSFixedFastJsonNotifySetting(
                     JSFixedFastJsonLongIdKey.of(notifySetting.getKey()),
-                    notifySetting.getRemark()
+                    notifySetting.getRemark(), notifySetting.getRequiredPermission()
             );
         }
     }
@@ -34,12 +34,16 @@ public class JSFixedFastJsonNotifySetting implements Bean {
     @JSONField(name = "remark", ordinal = 2)
     private String remark;
 
+    @JSONField(name = "required_permission", ordinal = 3)
+    private String requiredPermission;
+
     public JSFixedFastJsonNotifySetting() {
     }
 
-    public JSFixedFastJsonNotifySetting(JSFixedFastJsonLongIdKey key, String remark) {
+    public JSFixedFastJsonNotifySetting(JSFixedFastJsonLongIdKey key, String remark, String requiredPermission) {
         this.key = key;
         this.remark = remark;
+        this.requiredPermission = requiredPermission;
     }
 
     public JSFixedFastJsonLongIdKey getKey() {
@@ -58,11 +62,20 @@ public class JSFixedFastJsonNotifySetting implements Bean {
         this.remark = remark;
     }
 
+    public String getRequiredPermission() {
+        return requiredPermission;
+    }
+
+    public void setRequiredPermission(String requiredPermission) {
+        this.requiredPermission = requiredPermission;
+    }
+
     @Override
     public String toString() {
         return "JSFixedFastJsonNotifySetting{" +
                 "key=" + key +
                 ", remark='" + remark + '\'' +
+                ", requiredPermission='" + requiredPermission + '\'' +
                 '}';
     }
 }

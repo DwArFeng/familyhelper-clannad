@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tbl_notify_setting")
 public class HibernateNotifySetting implements Bean {
 
-    private static final long serialVersionUID = 2886892967080780372L;
+    private static final long serialVersionUID = 4324902048633390424L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -24,6 +24,9 @@ public class HibernateNotifySetting implements Bean {
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
+
+    @Column(name = "required_permission", length = Constraints.LENGTH_ID)
+    private String requiredPermission;
 
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateNotifyPreference.class, mappedBy = "notifySetting")
@@ -61,6 +64,14 @@ public class HibernateNotifySetting implements Bean {
         this.remark = remark;
     }
 
+    public String getRequiredPermission() {
+        return requiredPermission;
+    }
+
+    public void setRequiredPermission(String requiredPermission) {
+        this.requiredPermission = requiredPermission;
+    }
+
     public Set<HibernateNotifyPreference> getNotifyPreferences() {
         return notifyPreferences;
     }
@@ -81,6 +92,7 @@ public class HibernateNotifySetting implements Bean {
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "longId = " + longId + ", " +
-                "remark = " + remark + ")";
+                "remark = " + remark + ", " +
+                "requiredPermission = " + requiredPermission + ")";
     }
 }

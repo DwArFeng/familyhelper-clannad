@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class FastJsonNotifySetting implements Bean {
 
-    private static final long serialVersionUID = 5641349921931960508L;
+    private static final long serialVersionUID = 2844876846786455914L;
 
     public static FastJsonNotifySetting of(NotifySetting notifySetting) {
         if (Objects.isNull(notifySetting)) {
@@ -23,7 +23,7 @@ public class FastJsonNotifySetting implements Bean {
         } else {
             return new FastJsonNotifySetting(
                     FastJsonLongIdKey.of(notifySetting.getKey()),
-                    notifySetting.getRemark()
+                    notifySetting.getRemark(), notifySetting.getRequiredPermission()
             );
         }
     }
@@ -34,12 +34,16 @@ public class FastJsonNotifySetting implements Bean {
     @JSONField(name = "remark", ordinal = 2)
     private String remark;
 
+    @JSONField(name = "required_permission", ordinal = 3)
+    private String requiredPermission;
+
     public FastJsonNotifySetting() {
     }
 
-    public FastJsonNotifySetting(FastJsonLongIdKey key, String remark) {
+    public FastJsonNotifySetting(FastJsonLongIdKey key, String remark, String requiredPermission) {
         this.key = key;
         this.remark = remark;
+        this.requiredPermission = requiredPermission;
     }
 
     public FastJsonLongIdKey getKey() {
@@ -58,11 +62,20 @@ public class FastJsonNotifySetting implements Bean {
         this.remark = remark;
     }
 
+    public String getRequiredPermission() {
+        return requiredPermission;
+    }
+
+    public void setRequiredPermission(String requiredPermission) {
+        this.requiredPermission = requiredPermission;
+    }
+
     @Override
     public String toString() {
         return "FastJsonNotifySetting{" +
                 "key=" + key +
                 ", remark='" + remark + '\'' +
+                ", requiredPermission='" + requiredPermission + '\'' +
                 '}';
     }
 }
