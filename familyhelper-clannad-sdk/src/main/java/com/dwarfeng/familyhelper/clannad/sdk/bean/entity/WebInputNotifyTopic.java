@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 public class WebInputNotifyTopic implements Bean {
 
-    private static final long serialVersionUID = -2727122054568868817L;
+    private static final long serialVersionUID = 1375191548557551866L;
 
     public static NotifyTopic toStackBean(WebInputNotifyTopic webInputNotifyTopic) {
         if (Objects.isNull(webInputNotifyTopic)) {
@@ -27,7 +27,8 @@ public class WebInputNotifyTopic implements Bean {
         } else {
             return new NotifyTopic(
                     WebInputStringIdKey.toStackBean(webInputNotifyTopic.getKey()),
-                    webInputNotifyTopic.getRemark()
+                    webInputNotifyTopic.getRemark(), webInputNotifyTopic.isPreferred(),
+                    webInputNotifyTopic.getCoolDownDuration()
             );
         }
     }
@@ -40,6 +41,12 @@ public class WebInputNotifyTopic implements Bean {
     @JSONField(name = "remark")
     @Length(max = Constraints.LENGTH_REMARK)
     private String remark;
+
+    @JSONField(name = "preferred", ordinal = 3)
+    private boolean preferred;
+
+    @JSONField(name = "cool_down_duration", ordinal = 4)
+    private long coolDownDuration;
 
     public WebInputNotifyTopic() {
     }
@@ -60,11 +67,29 @@ public class WebInputNotifyTopic implements Bean {
         this.remark = remark;
     }
 
+    public boolean isPreferred() {
+        return preferred;
+    }
+
+    public void setPreferred(boolean preferred) {
+        this.preferred = preferred;
+    }
+
+    public long getCoolDownDuration() {
+        return coolDownDuration;
+    }
+
+    public void setCoolDownDuration(long coolDownDuration) {
+        this.coolDownDuration = coolDownDuration;
+    }
+
     @Override
     public String toString() {
         return "WebInputNotifyTopic{" +
                 "key=" + key +
                 ", remark='" + remark + '\'' +
+                ", preferred=" + preferred +
+                ", coolDownDuration=" + coolDownDuration +
                 '}';
     }
 }
