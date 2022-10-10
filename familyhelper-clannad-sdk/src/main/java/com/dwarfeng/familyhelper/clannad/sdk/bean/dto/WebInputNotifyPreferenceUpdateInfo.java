@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 public class WebInputNotifyPreferenceUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = 987136805497074707L;
+    private static final long serialVersionUID = -5881393465079483527L;
 
     public static NotifyPreferenceUpdateInfo toStackBean(WebInputNotifyPreferenceUpdateInfo webInput) {
         if (Objects.isNull(webInput)) {
@@ -29,7 +29,7 @@ public class WebInputNotifyPreferenceUpdateInfo implements Dto {
                     WebInputLongIdKey.toStackBean(webInput.getNotifySettingKey()),
                     WebInputStringIdKey.toStackBean(webInput.getNotifyTopicKey()),
                     WebInputStringIdKey.toStackBean(webInput.getUserKey()),
-                    webInput.isPreferred(), webInput.getCoolDown()
+                    webInput.isPreferred(), webInput.getCoolDownDuration()
             );
         }
     }
@@ -52,9 +52,9 @@ public class WebInputNotifyPreferenceUpdateInfo implements Dto {
     @JSONField(name = "preferred")
     private boolean preferred;
 
-    @JSONField(name = "cool_down")
+    @JSONField(name = "cool_down_duration")
     @PositiveOrZero
-    private long coolDown;
+    private long coolDownDuration;
 
     public WebInputNotifyPreferenceUpdateInfo() {
     }
@@ -91,12 +91,12 @@ public class WebInputNotifyPreferenceUpdateInfo implements Dto {
         this.preferred = preferred;
     }
 
-    public long getCoolDown() {
-        return coolDown;
+    public long getCoolDownDuration() {
+        return coolDownDuration;
     }
 
-    public void setCoolDown(long coolDown) {
-        this.coolDown = coolDown;
+    public void setCoolDownDuration(long coolDownDuration) {
+        this.coolDownDuration = coolDownDuration;
     }
 
     @Override
@@ -106,7 +106,7 @@ public class WebInputNotifyPreferenceUpdateInfo implements Dto {
                 ", notifyTopicKey=" + notifyTopicKey +
                 ", userKey=" + userKey +
                 ", preferred=" + preferred +
-                ", coolDown=" + coolDown +
+                ", coolDownDuration=" + coolDownDuration +
                 '}';
     }
 }

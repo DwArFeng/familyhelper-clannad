@@ -63,6 +63,7 @@ public class HibernateNotifyMeta implements Bean {
         return new HibernateNotifyNodeKey(notifySettingId, notifyTopicId, userId);
     }
 
+    @SuppressWarnings("DuplicatedCode")
     public void setKey(HibernateNotifyNodeKey key) {
         if (Objects.isNull(key)) {
             this.notifySettingId = null;
