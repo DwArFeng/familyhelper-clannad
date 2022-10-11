@@ -48,7 +48,9 @@ public class NotifyPreferenceMaintainServiceImplTest {
     @Before
     public void setUp() {
         notifySetting = new NotifySetting(new LongIdKey(NOTE_SETTING_ID), "remark", "requiredPermission");
-        notifyTopic = new NotifyTopic(new StringIdKey(NOTE_TOPIC_ID), "remark", true, 12450);
+        notifyTopic = new NotifyTopic(
+                new StringIdKey(NOTE_TOPIC_ID), "remark", true, 12450, "executorType", "executorParam"
+        );
         user = new User(new StringIdKey(USER_ID), "remark");
         notifyPreference = new NotifyPreference(
                 new NotifyNodeKey(NOTE_SETTING_ID, NOTE_TOPIC_ID, USER_ID), true, 12450L, "remark"
