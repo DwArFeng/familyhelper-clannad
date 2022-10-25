@@ -28,10 +28,6 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(60), "invalid permission level");
     public static final ServiceException.Code USER_NOT_PERMITTED_FOR_CERTIFICATE =
             new ServiceException.Code(offset(70), "user not permitted for certificate");
-    public static final ServiceException.Code NOTIFY_SETTING_NOT_EXISTS =
-            new ServiceException.Code(offset(80), "notify setting not exists");
-    public static final ServiceException.Code NOTIFY_TOPIC_NOT_EXISTS =
-            new ServiceException.Code(offset(90), "notify topic not exists");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -64,8 +60,6 @@ public final class ServiceExceptionCodes {
         CERTIFICATE_FILE_NOT_EXISTS.setCode(offset(50));
         INVALID_PERMISSION_LEVEL.setCode(offset(60));
         USER_NOT_PERMITTED_FOR_CERTIFICATE.setCode(offset(70));
-        NOTIFY_SETTING_NOT_EXISTS.setCode(offset(80));
-        NOTIFY_TOPIC_NOT_EXISTS.setCode(offset(90));
     }
 
     private ServiceExceptionCodes() {

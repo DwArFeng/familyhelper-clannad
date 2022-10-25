@@ -32,8 +32,6 @@ public class OperateHandlerValidator {
     private final CertificateMaintainService certificateMaintainService;
     private final PoceMaintainService poceMaintainService;
     private final CertificateFileInfoMaintainService certificateFileInfoMaintainService;
-    private final NotifySettingMaintainService notifySettingMaintainService;
-    private final NotifyTopicMaintainService notifyTopicMaintainService;
 
     public OperateHandlerValidator(
             UserMaintainService userMaintainService,
@@ -42,9 +40,7 @@ public class OperateHandlerValidator {
             ProfileMaintainService profileMaintainService,
             CertificateMaintainService certificateMaintainService,
             PoceMaintainService poceMaintainService,
-            CertificateFileInfoMaintainService certificateFileInfoMaintainService,
-            NotifySettingMaintainService notifySettingMaintainService,
-            NotifyTopicMaintainService notifyTopicMaintainService
+            CertificateFileInfoMaintainService certificateFileInfoMaintainService
     ) {
         this.userMaintainService = userMaintainService;
         this.avatarInfoMaintainService = avatarInfoMaintainService;
@@ -53,8 +49,6 @@ public class OperateHandlerValidator {
         this.certificateMaintainService = certificateMaintainService;
         this.poceMaintainService = poceMaintainService;
         this.certificateFileInfoMaintainService = certificateFileInfoMaintainService;
-        this.notifySettingMaintainService = notifySettingMaintainService;
-        this.notifyTopicMaintainService = notifyTopicMaintainService;
     }
 
     public void makeSureUserExists(StringIdKey userKey) throws HandlerException {
@@ -168,26 +162,6 @@ public class OperateHandlerValidator {
         try {
             if (!certificateFileInfoMaintainService.exists(certificateFileKey)) {
                 throw new CertificateFileNotExistsException(certificateFileKey);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    public void makeSureNotifySettingExists(LongIdKey notifySettingKey) throws HandlerException {
-        try {
-            if (!notifySettingMaintainService.exists(notifySettingKey)) {
-                throw new NotifySettingNotExistsException(notifySettingKey);
-            }
-        } catch (ServiceException e) {
-            throw new HandlerException(e);
-        }
-    }
-
-    public void makeSureNotifyTopicExists(StringIdKey notifyTopicKey) throws HandlerException {
-        try {
-            if (!notifyTopicMaintainService.exists(notifyTopicKey)) {
-                throw new NotifyTopicNotExistsException(notifyTopicKey);
             }
         } catch (ServiceException e) {
             throw new HandlerException(e);
