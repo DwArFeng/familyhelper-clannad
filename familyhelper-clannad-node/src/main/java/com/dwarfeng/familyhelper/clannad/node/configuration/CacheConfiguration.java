@@ -48,8 +48,6 @@ public class CacheConfiguration {
     private String notifyTopicPrefix;
     @Value("${cache.prefix.entity.notify_preference}")
     private String notifyPreferencePrefix;
-    @Value("${cache.prefix.entity.notify_meta}")
-    private String notifyMetaPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -184,19 +182,8 @@ public class CacheConfiguration {
     notifyPreferenceRedisBatchBaseCache() {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonNotifyPreference>) template,
-                new NotifyNodeStringKeyFormatter(notifyPreferencePrefix),
+                new NotifyPreferenceStringKeyFormatter(notifyPreferencePrefix),
                 new DozerBeanTransformer<>(NotifyPreference.class, FastJsonNotifyPreference.class, mapper)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<NotifyNodeKey, NotifyMeta, FastJsonNotifyMeta>
-    notifyMetaRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonNotifyMeta>) template,
-                new NotifyNodeStringKeyFormatter(notifyMetaPrefix),
-                new DozerBeanTransformer<>(NotifyMeta.class, FastJsonNotifyMeta.class, mapper)
         );
     }
 }

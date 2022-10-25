@@ -48,9 +48,6 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
     private final NotifyPreferenceDao notifyPreferenceDao;
     private final NotifyPreferenceCache notifyPreferenceCache;
 
-    private final NotifyMetaDao notifyMetaDao;
-    private final NotifyMetaCache notifyMetaCache;
-
     private final FtpHandler ftpHandler;
 
     @Value("${cache.timeout.entity.user}")
@@ -65,7 +62,6 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
             NotificationDao notificationDao, NotificationCache notificationCache,
             PoceDao poceDao, PoceCache poceCache,
             NotifyPreferenceDao notifyPreferenceDao, NotifyPreferenceCache notifyPreferenceCache,
-            NotifyMetaDao notifyMetaDao, NotifyMetaCache notifyMetaCache,
             FtpHandler ftpHandler
     ) {
         this.userDao = userDao;
@@ -84,8 +80,6 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         this.poceCache = poceCache;
         this.notifyPreferenceDao = notifyPreferenceDao;
         this.notifyPreferenceCache = notifyPreferenceCache;
-        this.notifyMetaDao = notifyMetaDao;
-        this.notifyMetaCache = notifyMetaCache;
         this.ftpHandler = ftpHandler;
     }
 
@@ -179,13 +173,6 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         ).stream().map(NotifyPreference::getKey).collect(Collectors.toList());
         notifyPreferenceCache.batchDelete(notifyNodeKeys);
         notifyPreferenceDao.batchDelete(notifyNodeKeys);
-
-        // 删除与用户相关的通知元数据
-        notifyNodeKeys = notifyMetaDao.lookup(
-                NotifyMetaMaintainService.CHILD_FOR_USER, new Object[]{key}
-        ).stream().map(NotifyMeta::getKey).collect(Collectors.toList());
-        notifyMetaCache.batchDelete(notifyNodeKeys);
-        notifyMetaDao.batchDelete(notifyNodeKeys);
 
         // 删除账本实体自身。
         userCache.delete(key);
