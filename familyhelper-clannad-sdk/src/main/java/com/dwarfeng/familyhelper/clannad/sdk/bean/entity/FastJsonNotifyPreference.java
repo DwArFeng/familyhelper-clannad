@@ -1,7 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.sdk.bean.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonNotifyNodeKey;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonNotifyPreferenceKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyPreference;
 import com.dwarfeng.subgrade.stack.bean.Bean;
 
@@ -22,14 +22,14 @@ public class FastJsonNotifyPreference implements Bean {
             return null;
         } else {
             return new FastJsonNotifyPreference(
-                    FastJsonNotifyNodeKey.of(notifyPreference.getKey()),
+                    FastJsonNotifyPreferenceKey.of(notifyPreference.getKey()),
                     notifyPreference.isPreferred(), notifyPreference.getCoolDown(), notifyPreference.getRemark()
             );
         }
     }
 
     @JSONField(name = "key", ordinal = 1)
-    private FastJsonNotifyNodeKey key;
+    private FastJsonNotifyPreferenceKey key;
 
     @JSONField(name = "preferred", ordinal = 2)
     private boolean preferred;
@@ -44,7 +44,7 @@ public class FastJsonNotifyPreference implements Bean {
     }
 
     public FastJsonNotifyPreference(
-            FastJsonNotifyNodeKey key, Boolean preferred, Long coolDown, String remark
+            FastJsonNotifyPreferenceKey key, Boolean preferred, Long coolDown, String remark
     ) {
         this.key = key;
         this.preferred = preferred;
@@ -52,11 +52,11 @@ public class FastJsonNotifyPreference implements Bean {
         this.remark = remark;
     }
 
-    public FastJsonNotifyNodeKey getKey() {
+    public FastJsonNotifyPreferenceKey getKey() {
         return key;
     }
 
-    public void setKey(FastJsonNotifyNodeKey key) {
+    public void setKey(FastJsonNotifyPreferenceKey key) {
         this.key = key;
     }
 

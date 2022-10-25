@@ -2,7 +2,7 @@ package com.dwarfeng.familyhelper.clannad.impl.handler;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.NotifyPreferenceUpdateInfo;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyPreference;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyNodeKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
 import com.dwarfeng.familyhelper.clannad.stack.handler.NotifyPreferenceOperateHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.NotifyPreferenceMaintainService;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -42,7 +42,7 @@ public class NotifyPreferenceOperateHandlerImpl implements NotifyPreferenceOpera
 
             // 将 NotifyPreferenceUpdateInfo 转化为 NotifyPreference 实体。
             NotifyPreference notifyPreference = new NotifyPreference(
-                    new NotifyNodeKey(
+                    new NotifyPreferenceKey(
                             notifySettingKey.getLongId(), notifyTopicKey.getStringId(), userKey.getStringId()
                     ),
                     notifyPreferenceUpdateInfo.isPreferred(),

@@ -178,7 +178,7 @@ public class CacheConfiguration {
 
     @Bean
     @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<NotifyNodeKey, NotifyPreference, FastJsonNotifyPreference>
+    public RedisBatchBaseCache<NotifyPreferenceKey, NotifyPreference, FastJsonNotifyPreference>
     notifyPreferenceRedisBatchBaseCache() {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonNotifyPreference>) template,

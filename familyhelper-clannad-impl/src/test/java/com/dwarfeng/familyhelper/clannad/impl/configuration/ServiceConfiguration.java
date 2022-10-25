@@ -368,7 +368,7 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public GeneralBatchCrudService<NotifyNodeKey, NotifyPreference> notifyPreferenceGeneralBatchCrudService() {
+    public GeneralBatchCrudService<NotifyPreferenceKey, NotifyPreference> notifyPreferenceGeneralBatchCrudService() {
         return new GeneralBatchCrudService<>(
                 notifyPreferenceDao,
                 notifyPreferenceCache,

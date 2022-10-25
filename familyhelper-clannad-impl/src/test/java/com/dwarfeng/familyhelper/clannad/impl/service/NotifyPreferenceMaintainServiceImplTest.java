@@ -4,7 +4,7 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyPreference;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifySetting;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyTopic;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.User;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyNodeKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
 import com.dwarfeng.familyhelper.clannad.stack.service.NotifyPreferenceMaintainService;
 import com.dwarfeng.familyhelper.clannad.stack.service.NotifySettingMaintainService;
 import com.dwarfeng.familyhelper.clannad.stack.service.NotifyTopicMaintainService;
@@ -51,7 +51,7 @@ public class NotifyPreferenceMaintainServiceImplTest {
         notifyTopic = new NotifyTopic(new StringIdKey(NOTE_TOPIC_ID), "remark");
         user = new User(new StringIdKey(USER_ID), "remark");
         notifyPreference = new NotifyPreference(
-                new NotifyNodeKey(NOTE_SETTING_ID, NOTE_TOPIC_ID, USER_ID), true, 12450L, "remark"
+                new NotifyPreferenceKey(NOTE_SETTING_ID, NOTE_TOPIC_ID, USER_ID), true, 12450L, "remark"
         );
     }
 

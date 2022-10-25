@@ -1,7 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.stack.service;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.NotifyPreference;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyNodeKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
 import com.dwarfeng.subgrade.stack.service.BatchCrudService;
 import com.dwarfeng.subgrade.stack.service.EntireLookupService;
 import com.dwarfeng.subgrade.stack.service.PresetLookupService;
@@ -12,7 +12,7 @@ import com.dwarfeng.subgrade.stack.service.PresetLookupService;
  * @author DwArFeng
  * @since 1.2.3
  */
-public interface NotifyPreferenceMaintainService extends BatchCrudService<NotifyNodeKey, NotifyPreference>,
+public interface NotifyPreferenceMaintainService extends BatchCrudService<NotifyPreferenceKey, NotifyPreference>,
         EntireLookupService<NotifyPreference>, PresetLookupService<NotifyPreference> {
 
     String CHILD_FOR_NOTIFY_SETTING = "child_for_notify_setting";

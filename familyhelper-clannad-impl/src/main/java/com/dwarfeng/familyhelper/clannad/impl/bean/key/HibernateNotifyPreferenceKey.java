@@ -5,23 +5,23 @@ import com.dwarfeng.subgrade.stack.bean.key.Key;
 import java.util.Objects;
 
 /**
- * Hibernate 通知节点主键。
+ * Hibernate 通知偏好主键。
  *
  * @author DwArFeng
  * @since 1.2.3
  */
-public class HibernateNotifyNodeKey implements Key {
+public class HibernateNotifyPreferenceKey implements Key {
 
-    private static final long serialVersionUID = 9099497954063774605L;
+    private static final long serialVersionUID = -414780443147594735L;
 
     private Long notifySettingId;
     private String notifyTopicId;
     private String userId;
 
-    public HibernateNotifyNodeKey() {
+    public HibernateNotifyPreferenceKey() {
     }
 
-    public HibernateNotifyNodeKey(Long notifySettingId, String notifyTopicId, String userId) {
+    public HibernateNotifyPreferenceKey(Long notifySettingId, String notifyTopicId, String userId) {
         this.notifySettingId = notifySettingId;
         this.notifyTopicId = notifyTopicId;
         this.userId = userId;
@@ -56,7 +56,7 @@ public class HibernateNotifyNodeKey implements Key {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        HibernateNotifyNodeKey that = (HibernateNotifyNodeKey) o;
+        HibernateNotifyPreferenceKey that = (HibernateNotifyPreferenceKey) o;
 
         if (!Objects.equals(notifySettingId, that.notifySettingId))
             return false;
@@ -75,7 +75,7 @@ public class HibernateNotifyNodeKey implements Key {
 
     @Override
     public String toString() {
-        return "NotifyNodeKey{" +
+        return "NotifyPreferenceKey{" +
                 "notifySettingId=" + notifySettingId +
                 ", notifyTopicId='" + notifyTopicId + '\'' +
                 ", userId='" + userId + '\'' +
