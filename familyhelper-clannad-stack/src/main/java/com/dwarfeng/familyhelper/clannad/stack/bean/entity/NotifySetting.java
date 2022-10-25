@@ -11,19 +11,17 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
  */
 public class NotifySetting implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = 5349161383487624958L;
-    
+    private static final long serialVersionUID = 4240982135332434640L;
+
     private LongIdKey key;
     private String remark;
-    private String requiredPermission;
 
     public NotifySetting() {
     }
 
-    public NotifySetting(LongIdKey key, String remark, String requiredPermission) {
+    public NotifySetting(LongIdKey key, String remark) {
         this.key = key;
         this.remark = remark;
-        this.requiredPermission = requiredPermission;
     }
 
     @Override
@@ -44,20 +42,11 @@ public class NotifySetting implements Entity<LongIdKey> {
         this.remark = remark;
     }
 
-    public String getRequiredPermission() {
-        return requiredPermission;
-    }
-
-    public void setRequiredPermission(String requiredPermission) {
-        this.requiredPermission = requiredPermission;
-    }
-
     @Override
     public String toString() {
         return "NotifySetting{" +
                 "key=" + key +
                 ", remark='" + remark + '\'' +
-                ", requiredPermission='" + requiredPermission + '\'' +
                 '}';
     }
 }
