@@ -50,9 +50,7 @@ public class NotifyMetaMaintainServiceImplTest {
     @Before
     public void setUp() {
         notifySetting = new NotifySetting(new LongIdKey(NOTE_SETTING_ID), "remark", "requiredPermission");
-        notifyTopic = new NotifyTopic(
-                new StringIdKey(NOTE_TOPIC_ID), "remark", true, 12450, "executorType", "executorParam"
-        );
+        notifyTopic = new NotifyTopic(new StringIdKey(NOTE_TOPIC_ID), "remark", true, 12450);
         user = new User(new StringIdKey(USER_ID), "remark");
         notifyMeta = new NotifyMeta(
                 new NotifyNodeKey(NOTE_SETTING_ID, NOTE_TOPIC_ID, USER_ID), new Date(), "remark"

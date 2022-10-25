@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class FastJsonNotifyTopic implements Bean {
 
-    private static final long serialVersionUID = -2220155431494827268L;
+    private static final long serialVersionUID = -9140255108605173561L;
 
     public static FastJsonNotifyTopic of(NotifyTopic notifyTopic) {
         if (Objects.isNull(notifyTopic)) {
@@ -23,8 +23,7 @@ public class FastJsonNotifyTopic implements Bean {
         } else {
             return new FastJsonNotifyTopic(
                     FastJsonStringIdKey.of(notifyTopic.getKey()),
-                    notifyTopic.getRemark(), notifyTopic.isPreferred(), notifyTopic.getCoolDownDuration(),
-                    notifyTopic.getExecutorType(), notifyTopic.getExecutorParam()
+                    notifyTopic.getRemark(), notifyTopic.isPreferred(), notifyTopic.getCoolDownDuration()
             );
         }
     }
@@ -41,25 +40,14 @@ public class FastJsonNotifyTopic implements Bean {
     @JSONField(name = "cool_down_duration", ordinal = 4)
     private long coolDownDuration;
 
-    @JSONField(name = "executor_type", ordinal = 5)
-    private String executorType;
-
-    @JSONField(name = "executor_param", ordinal = 6)
-    private String executorParam;
-
     public FastJsonNotifyTopic() {
     }
 
-    public FastJsonNotifyTopic(
-            FastJsonStringIdKey key, String remark, boolean preferred, long coolDownDuration, String executorType,
-            String executorParam
-    ) {
+    public FastJsonNotifyTopic(FastJsonStringIdKey key, String remark, boolean preferred, long coolDownDuration) {
         this.key = key;
         this.remark = remark;
         this.preferred = preferred;
         this.coolDownDuration = coolDownDuration;
-        this.executorType = executorType;
-        this.executorParam = executorParam;
     }
 
     public FastJsonStringIdKey getKey() {
@@ -94,22 +82,6 @@ public class FastJsonNotifyTopic implements Bean {
         this.coolDownDuration = coolDownDuration;
     }
 
-    public String getExecutorType() {
-        return executorType;
-    }
-
-    public void setExecutorType(String executorType) {
-        this.executorType = executorType;
-    }
-
-    public String getExecutorParam() {
-        return executorParam;
-    }
-
-    public void setExecutorParam(String executorParam) {
-        this.executorParam = executorParam;
-    }
-
     @Override
     public String toString() {
         return "FastJsonNotifyTopic{" +
@@ -117,8 +89,6 @@ public class FastJsonNotifyTopic implements Bean {
                 ", remark='" + remark + '\'' +
                 ", preferred=" + preferred +
                 ", coolDownDuration=" + coolDownDuration +
-                ", executorType='" + executorType + '\'' +
-                ", executorParam='" + executorParam + '\'' +
                 '}';
     }
 }

@@ -30,8 +30,7 @@ public class NotifyTopicMaintainServiceImplTest {
     public void setUp() {
         for (int i = 0; i < 5; i++) {
             NotifyTopic notifyTopic = new NotifyTopic(
-                    new StringIdKey("test.notify_topic." + (i + 1)), "remark", true, 12450, "executorType",
-                    "executorParam"
+                    new StringIdKey("test.notify_topic." + (i + 1)), "remark", true, 12450
             );
             notifyTopics.add(notifyTopic);
         }

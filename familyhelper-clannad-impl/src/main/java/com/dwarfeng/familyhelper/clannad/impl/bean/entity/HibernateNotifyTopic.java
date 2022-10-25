@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tbl_notify_topic")
 public class HibernateNotifyTopic implements Bean {
 
-    private static final long serialVersionUID = -2527530264605078033L;
+    private static final long serialVersionUID = -4534741387207823044L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -30,12 +30,6 @@ public class HibernateNotifyTopic implements Bean {
 
     @Column(name = "cool_down_duration")
     private long coolDownDuration;
-
-    @Column(name = "executor_type", length = Constraints.LENGTH_TYPE)
-    private String executorType;
-
-    @Column(name = "executor_param", columnDefinition = "TEXT")
-    private String executorParam;
 
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateNotifyPreference.class, mappedBy = "notifyTopic")
@@ -89,22 +83,6 @@ public class HibernateNotifyTopic implements Bean {
         this.coolDownDuration = coolDownDuration;
     }
 
-    public String getExecutorType() {
-        return executorType;
-    }
-
-    public void setExecutorType(String executorType) {
-        this.executorType = executorType;
-    }
-
-    public String getExecutorParam() {
-        return executorParam;
-    }
-
-    public void setExecutorParam(String executorParam) {
-        this.executorParam = executorParam;
-    }
-
     public Set<HibernateNotifyPreference> getNotifyPreferences() {
         return notifyPreferences;
     }
@@ -127,8 +105,6 @@ public class HibernateNotifyTopic implements Bean {
                 "stringId = " + stringId + ", " +
                 "remark = " + remark + ", " +
                 "preferred = " + preferred + ", " +
-                "coolDownDuration = " + coolDownDuration + ", " +
-                "executorType = " + executorType + ", " +
-                "executorParam = " + executorParam + ")";
+                "coolDownDuration = " + coolDownDuration + ")";
     }
 }

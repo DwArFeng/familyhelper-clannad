@@ -8,7 +8,6 @@ import com.dwarfeng.subgrade.stack.bean.Bean;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -20,7 +19,7 @@ import java.util.Objects;
  */
 public class WebInputNotifyTopic implements Bean {
 
-    private static final long serialVersionUID = 772884240756723983L;
+    private static final long serialVersionUID = 1375191548557551866L;
 
     public static NotifyTopic toStackBean(WebInputNotifyTopic webInputNotifyTopic) {
         if (Objects.isNull(webInputNotifyTopic)) {
@@ -29,8 +28,7 @@ public class WebInputNotifyTopic implements Bean {
             return new NotifyTopic(
                     WebInputStringIdKey.toStackBean(webInputNotifyTopic.getKey()),
                     webInputNotifyTopic.getRemark(), webInputNotifyTopic.isPreferred(),
-                    webInputNotifyTopic.getCoolDownDuration(), webInputNotifyTopic.getExecutorType(),
-                    webInputNotifyTopic.getExecutorParam()
+                    webInputNotifyTopic.getCoolDownDuration()
             );
         }
     }
@@ -44,20 +42,11 @@ public class WebInputNotifyTopic implements Bean {
     @Length(max = Constraints.LENGTH_REMARK)
     private String remark;
 
-    @JSONField(name = "preferred")
+    @JSONField(name = "preferred", ordinal = 3)
     private boolean preferred;
 
-    @JSONField(name = "cool_down_duration")
+    @JSONField(name = "cool_down_duration", ordinal = 4)
     private long coolDownDuration;
-
-    @JSONField(name = "executor_type")
-    @NotNull
-    @NotEmpty
-    @Length(max = Constraints.LENGTH_TYPE)
-    private String executorType;
-
-    @JSONField(name = "executor_param")
-    private String executorParam;
 
     public WebInputNotifyTopic() {
     }
@@ -94,22 +83,6 @@ public class WebInputNotifyTopic implements Bean {
         this.coolDownDuration = coolDownDuration;
     }
 
-    public String getExecutorType() {
-        return executorType;
-    }
-
-    public void setExecutorType(String executorType) {
-        this.executorType = executorType;
-    }
-
-    public String getExecutorParam() {
-        return executorParam;
-    }
-
-    public void setExecutorParam(String executorParam) {
-        this.executorParam = executorParam;
-    }
-
     @Override
     public String toString() {
         return "WebInputNotifyTopic{" +
@@ -117,8 +90,6 @@ public class WebInputNotifyTopic implements Bean {
                 ", remark='" + remark + '\'' +
                 ", preferred=" + preferred +
                 ", coolDownDuration=" + coolDownDuration +
-                ", executorType='" + executorType + '\'' +
-                ", executorParam='" + executorParam + '\'' +
                 '}';
     }
 }
