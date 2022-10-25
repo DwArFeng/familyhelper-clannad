@@ -3,7 +3,7 @@ package com.dwarfeng.familyhelper.clannad.sdk.bean.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonPoceKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Poce;
-import com.dwarfeng.subgrade.stack.bean.Bean;
+import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 
 import java.util.Objects;
 
@@ -13,7 +13,7 @@ import java.util.Objects;
  * @author DwArFeng
  * @since 1.2.3
  */
-public class FastJsonPoce implements Bean {
+public class FastJsonPoce implements Dto {
 
     private static final long serialVersionUID = -4791805416590447264L;
 

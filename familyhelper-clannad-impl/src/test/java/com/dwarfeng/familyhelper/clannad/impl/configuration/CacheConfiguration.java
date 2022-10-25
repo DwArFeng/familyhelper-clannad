@@ -1,9 +1,15 @@
 package com.dwarfeng.familyhelper.clannad.impl.configuration;
 
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.*;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.NicknameStringKeyFormatter;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.PoceStringKeyFormatter;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.PoprStringKeyFormatter;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.ProfileTypeIndicatorStringKeyFormatter;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.*;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
@@ -46,8 +52,6 @@ public class CacheConfiguration {
     private String notifySettingPrefix;
     @Value("${cache.prefix.entity.notify_topic}")
     private String notifyTopicPrefix;
-    @Value("${cache.prefix.entity.notify_preference}")
-    private String notifyPreferencePrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -173,17 +177,6 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonNotifyTopic>) template,
                 new StringIdStringKeyFormatter(notifyTopicPrefix),
                 new DozerBeanTransformer<>(NotifyTopic.class, FastJsonNotifyTopic.class, mapper)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<NotifyPreferenceKey, NotifyPreference, FastJsonNotifyPreference>
-    notifyPreferenceRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonNotifyPreference>) template,
-                new NotifyPreferenceStringKeyFormatter(notifyPreferencePrefix),
-                new DozerBeanTransformer<>(NotifyPreference.class, FastJsonNotifyPreference.class, mapper)
         );
     }
 }

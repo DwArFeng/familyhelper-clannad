@@ -1,10 +1,16 @@
 package com.dwarfeng.familyhelper.clannad.node.configuration;
 
 import com.dwarfeng.familyhelper.clannad.impl.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.impl.bean.key.*;
+import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateNicknameKey;
+import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernatePoceKey;
+import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernatePoprKey;
+import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateProfileTypeIndicatorKey;
 import com.dwarfeng.familyhelper.clannad.impl.dao.preset.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.*;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
 import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
@@ -33,7 +39,6 @@ public class DaoConfiguration {
     private final CertificatePresetCriteriaMaker certificatePresetCriteriaMaker;
     private final CertificateFileInfoPresetCriteriaMaker certificateFileInfoPresetCriteriaMaker;
     private final PocePresetCriteriaMaker pocePresetCriteriaMaker;
-    private final NotifyPreferencePresetCriteriaMaker notifyPreferencePresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -47,8 +52,7 @@ public class DaoConfiguration {
             NotificationPresetCriteriaMaker notificationPresetCriteriaMaker,
             CertificatePresetCriteriaMaker certificatePresetCriteriaMaker,
             CertificateFileInfoPresetCriteriaMaker certificateFileInfoPresetCriteriaMaker,
-            PocePresetCriteriaMaker pocePresetCriteriaMaker,
-            NotifyPreferencePresetCriteriaMaker notifyPreferencePresetCriteriaMaker
+            PocePresetCriteriaMaker pocePresetCriteriaMaker
     ) {
         this.template = template;
         this.mapper = mapper;
@@ -59,7 +63,6 @@ public class DaoConfiguration {
         this.certificatePresetCriteriaMaker = certificatePresetCriteriaMaker;
         this.certificateFileInfoPresetCriteriaMaker = certificateFileInfoPresetCriteriaMaker;
         this.pocePresetCriteriaMaker = pocePresetCriteriaMaker;
-        this.notifyPreferencePresetCriteriaMaker = notifyPreferencePresetCriteriaMaker;
     }
 
     @Bean
@@ -347,40 +350,6 @@ public class DaoConfiguration {
                 template,
                 new DozerBeanTransformer<>(NotifyTopic.class, HibernateNotifyTopic.class, mapper),
                 HibernateNotifyTopic.class
-        );
-    }
-
-    @Bean
-    public HibernateBatchBaseDao<NotifyPreferenceKey, HibernateNotifyPreferenceKey, NotifyPreference,
-            HibernateNotifyPreference> notifyPreferenceHibernateBatchBaseDao() {
-        return new HibernateBatchBaseDao<>(
-                template,
-                new DozerBeanTransformer<>(NotifyPreferenceKey.class, HibernateNotifyPreferenceKey.class, mapper),
-                new DozerBeanTransformer<>(NotifyPreference.class, HibernateNotifyPreference.class, mapper),
-                HibernateNotifyPreference.class,
-                new DefaultDeletionMod<>(),
-                batchSize
-        );
-    }
-
-    @Bean
-    public HibernateEntireLookupDao<NotifyPreference, HibernateNotifyPreference>
-    notifyPreferenceHibernateEntireLookupDao() {
-        return new HibernateEntireLookupDao<>(
-                template,
-                new DozerBeanTransformer<>(NotifyPreference.class, HibernateNotifyPreference.class, mapper),
-                HibernateNotifyPreference.class
-        );
-    }
-
-    @Bean
-    public HibernatePresetLookupDao<NotifyPreference, HibernateNotifyPreference>
-    notifyPreferenceHibernatePresetLookupDao() {
-        return new HibernatePresetLookupDao<>(
-                template,
-                new DozerBeanTransformer<>(NotifyPreference.class, HibernateNotifyPreference.class, mapper),
-                HibernateNotifyPreference.class,
-                notifyPreferencePresetCriteriaMaker
         );
     }
 }

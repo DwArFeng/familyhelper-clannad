@@ -3,12 +3,14 @@ package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 import com.dwarfeng.familyhelper.clannad.impl.util.FtpConstants;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NotifyPreferenceKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.cache.*;
 import com.dwarfeng.familyhelper.clannad.stack.dao.*;
-import com.dwarfeng.familyhelper.clannad.stack.service.*;
+import com.dwarfeng.familyhelper.clannad.stack.service.NicknameMaintainService;
+import com.dwarfeng.familyhelper.clannad.stack.service.NotificationMaintainService;
+import com.dwarfeng.familyhelper.clannad.stack.service.PoceMaintainService;
+import com.dwarfeng.familyhelper.clannad.stack.service.PoprMaintainService;
 import com.dwarfeng.ftp.handler.FtpHandler;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
@@ -45,9 +47,6 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
     private final PoceDao poceDao;
     private final PoceCache poceCache;
 
-    private final NotifyPreferenceDao notifyPreferenceDao;
-    private final NotifyPreferenceCache notifyPreferenceCache;
-
     private final FtpHandler ftpHandler;
 
     @Value("${cache.timeout.entity.user}")
@@ -61,7 +60,6 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
             AvatarInfoDao avatarInfoDao, AvatarInfoCache avatarInfoCache,
             NotificationDao notificationDao, NotificationCache notificationCache,
             PoceDao poceDao, PoceCache poceCache,
-            NotifyPreferenceDao notifyPreferenceDao, NotifyPreferenceCache notifyPreferenceCache,
             FtpHandler ftpHandler
     ) {
         this.userDao = userDao;
@@ -78,8 +76,6 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         this.notificationCache = notificationCache;
         this.poceDao = poceDao;
         this.poceCache = poceCache;
-        this.notifyPreferenceDao = notifyPreferenceDao;
-        this.notifyPreferenceCache = notifyPreferenceCache;
         this.ftpHandler = ftpHandler;
     }
 
@@ -166,13 +162,6 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
                 .stream().map(Poce::getKey).collect(Collectors.toList());
         poceCache.batchDelete(poceKeys);
         poceDao.batchDelete(poceKeys);
-
-        // 删除与用户相关的通知偏好
-        List<NotifyPreferenceKey> notifyPreferenceKeys = notifyPreferenceDao.lookup(
-                NotifyPreferenceMaintainService.CHILD_FOR_USER, new Object[]{key}
-        ).stream().map(NotifyPreference::getKey).collect(Collectors.toList());
-        notifyPreferenceCache.batchDelete(notifyPreferenceKeys);
-        notifyPreferenceDao.batchDelete(notifyPreferenceKeys);
 
         // 删除账本实体自身。
         userCache.delete(key);
