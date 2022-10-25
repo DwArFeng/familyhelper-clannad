@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class FastJsonNotifyPreference implements Bean {
 
-    private static final long serialVersionUID = -7722345955325529257L;
+    private static final long serialVersionUID = 7566463658655275192L;
 
     public static FastJsonNotifyPreference of(NotifyPreference notifyPreference) {
         if (Objects.isNull(notifyPreference)) {
@@ -23,7 +23,7 @@ public class FastJsonNotifyPreference implements Bean {
         } else {
             return new FastJsonNotifyPreference(
                     FastJsonNotifyNodeKey.of(notifyPreference.getKey()),
-                    notifyPreference.isPreferred(), notifyPreference.getCoolDownDuration(), notifyPreference.getRemark()
+                    notifyPreference.isPreferred(), notifyPreference.getCoolDown(), notifyPreference.getRemark()
             );
         }
     }
@@ -34,8 +34,8 @@ public class FastJsonNotifyPreference implements Bean {
     @JSONField(name = "preferred", ordinal = 2)
     private boolean preferred;
 
-    @JSONField(name = "cool_down_duration", ordinal = 3)
-    private long coolDownDuration;
+    @JSONField(name = "cool_down", ordinal = 3)
+    private long coolDown;
 
     @JSONField(name = "remark", ordinal = 4)
     private String remark;
@@ -44,11 +44,11 @@ public class FastJsonNotifyPreference implements Bean {
     }
 
     public FastJsonNotifyPreference(
-            FastJsonNotifyNodeKey key, Boolean preferred, Long coolDownDuration, String remark
+            FastJsonNotifyNodeKey key, Boolean preferred, Long coolDown, String remark
     ) {
         this.key = key;
         this.preferred = preferred;
-        this.coolDownDuration = coolDownDuration;
+        this.coolDown = coolDown;
         this.remark = remark;
     }
 
@@ -68,12 +68,12 @@ public class FastJsonNotifyPreference implements Bean {
         this.preferred = preferred;
     }
 
-    public long getCoolDownDuration() {
-        return coolDownDuration;
+    public long getCoolDown() {
+        return coolDown;
     }
 
-    public void setCoolDownDuration(long coolDownDuration) {
-        this.coolDownDuration = coolDownDuration;
+    public void setCoolDown(long coolDown) {
+        this.coolDown = coolDown;
     }
 
     public String getRemark() {
@@ -89,7 +89,7 @@ public class FastJsonNotifyPreference implements Bean {
         return "FastJsonNotifyPreference{" +
                 "key=" + key +
                 ", preferred=" + preferred +
-                ", coolDownDuration=" + coolDownDuration +
+                ", coolDown=" + coolDown +
                 ", remark='" + remark + '\'' +
                 '}';
     }

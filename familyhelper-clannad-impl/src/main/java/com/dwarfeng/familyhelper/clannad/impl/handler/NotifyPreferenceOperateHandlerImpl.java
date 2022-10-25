@@ -46,7 +46,7 @@ public class NotifyPreferenceOperateHandlerImpl implements NotifyPreferenceOpera
                             notifySettingKey.getLongId(), notifyTopicKey.getStringId(), userKey.getStringId()
                     ),
                     notifyPreferenceUpdateInfo.isPreferred(),
-                    notifyPreferenceUpdateInfo.getCoolDownDuration(),
+                    notifyPreferenceUpdateInfo.getCoolDown(),
                     "通过 familyhelper-clannad 服务插入/更新通知偏好"
             );
 

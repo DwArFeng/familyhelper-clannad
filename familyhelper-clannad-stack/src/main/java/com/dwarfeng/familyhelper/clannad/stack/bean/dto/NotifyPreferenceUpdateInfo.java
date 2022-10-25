@@ -12,26 +12,26 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
  */
 public class NotifyPreferenceUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = 5236573183727055243L;
+    private static final long serialVersionUID = -7094629160004424642L;
 
     private LongIdKey notifySettingKey;
     private StringIdKey notifyTopicKey;
     private StringIdKey userKey;
     private boolean preferred;
-    private long coolDownDuration;
+    private long coolDown;
 
     public NotifyPreferenceUpdateInfo() {
     }
 
     public NotifyPreferenceUpdateInfo(
             LongIdKey notifySettingKey, StringIdKey notifyTopicKey, StringIdKey userKey, boolean preferred,
-            long coolDownDuration
+            long coolDown
     ) {
         this.notifySettingKey = notifySettingKey;
         this.notifyTopicKey = notifyTopicKey;
         this.userKey = userKey;
         this.preferred = preferred;
-        this.coolDownDuration = coolDownDuration;
+        this.coolDown = coolDown;
     }
 
     public LongIdKey getNotifySettingKey() {
@@ -66,12 +66,12 @@ public class NotifyPreferenceUpdateInfo implements Dto {
         this.preferred = preferred;
     }
 
-    public long getCoolDownDuration() {
-        return coolDownDuration;
+    public long getCoolDown() {
+        return coolDown;
     }
 
-    public void setCoolDownDuration(long coolDownDuration) {
-        this.coolDownDuration = coolDownDuration;
+    public void setCoolDown(long coolDown) {
+        this.coolDown = coolDown;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class NotifyPreferenceUpdateInfo implements Dto {
                 ", notifyTopicKey=" + notifyTopicKey +
                 ", userKey=" + userKey +
                 ", preferred=" + preferred +
-                ", coolDownDuration=" + coolDownDuration +
+                ", coolDown=" + coolDown +
                 '}';
     }
 }

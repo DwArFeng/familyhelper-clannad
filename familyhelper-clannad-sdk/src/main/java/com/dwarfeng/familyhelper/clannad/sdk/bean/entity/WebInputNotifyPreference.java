@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class WebInputNotifyPreference implements Bean {
 
-    private static final long serialVersionUID = -285556433908669969L;
+    private static final long serialVersionUID = 6392403795349369110L;
 
     public static NotifyPreference toStackBean(WebInputNotifyPreference webInputNotifyPreference) {
         if (Objects.isNull(webInputNotifyPreference)) {
@@ -28,7 +28,7 @@ public class WebInputNotifyPreference implements Bean {
         } else {
             return new NotifyPreference(
                     WebInputNotifyNodeKey.toStackBean(webInputNotifyPreference.getKey()),
-                    webInputNotifyPreference.isPreferred(), webInputNotifyPreference.getCoolDownDuration(),
+                    webInputNotifyPreference.isPreferred(), webInputNotifyPreference.getCoolDown(),
                     webInputNotifyPreference.getRemark()
             );
         }
@@ -42,9 +42,9 @@ public class WebInputNotifyPreference implements Bean {
     @JSONField(name = "preferred")
     private boolean preferred;
 
-    @JSONField(name = "cool_down_duration")
+    @JSONField(name = "cool_down")
     @PositiveOrZero
-    private long coolDownDuration;
+    private long coolDown;
 
     @JSONField(name = "remark")
     @Length(max = Constraints.LENGTH_REMARK)
@@ -69,12 +69,12 @@ public class WebInputNotifyPreference implements Bean {
         this.preferred = preferred;
     }
 
-    public long getCoolDownDuration() {
-        return coolDownDuration;
+    public long getCoolDown() {
+        return coolDown;
     }
 
-    public void setCoolDownDuration(long coolDownDuration) {
-        this.coolDownDuration = coolDownDuration;
+    public void setCoolDown(long coolDown) {
+        this.coolDown = coolDown;
     }
 
     public String getRemark() {
@@ -90,7 +90,7 @@ public class WebInputNotifyPreference implements Bean {
         return "WebInputNotifyPreference{" +
                 "key=" + key +
                 ", preferred=" + preferred +
-                ", coolDownDuration=" + coolDownDuration +
+                ", coolDown=" + coolDown +
                 ", remark='" + remark + '\'' +
                 '}';
     }

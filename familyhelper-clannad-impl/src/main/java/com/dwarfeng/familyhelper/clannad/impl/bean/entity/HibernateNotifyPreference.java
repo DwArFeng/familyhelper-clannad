@@ -12,7 +12,7 @@ import java.util.Objects;
 @Table(name = "tbl_notify_preference")
 public class HibernateNotifyPreference implements Bean {
 
-    private static final long serialVersionUID = 6198995220792828532L;
+    private static final long serialVersionUID = 7968827570020603290L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -31,8 +31,8 @@ public class HibernateNotifyPreference implements Bean {
     @Column(name = "preferred")
     private boolean preferred;
 
-    @Column(name = "cool_down_duration")
-    private long coolDownDuration;
+    @Column(name = "cool_down")
+    private long coolDown;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
@@ -64,7 +64,6 @@ public class HibernateNotifyPreference implements Bean {
         return new HibernateNotifyNodeKey(notifySettingId, notifyTopicId, userId);
     }
 
-    @SuppressWarnings("DuplicatedCode")
     public void setKey(HibernateNotifyNodeKey key) {
         if (Objects.isNull(key)) {
             this.notifySettingId = null;
@@ -110,12 +109,12 @@ public class HibernateNotifyPreference implements Bean {
         this.preferred = preferred;
     }
 
-    public long getCoolDownDuration() {
-        return coolDownDuration;
+    public long getCoolDown() {
+        return coolDown;
     }
 
-    public void setCoolDownDuration(long coolDownDuration) {
-        this.coolDownDuration = coolDownDuration;
+    public void setCoolDown(long coolDown) {
+        this.coolDown = coolDown;
     }
 
     public String getRemark() {
@@ -157,7 +156,7 @@ public class HibernateNotifyPreference implements Bean {
                 "notifyTopicId = " + notifyTopicId + ", " +
                 "userId = " + userId + ", " +
                 "preferred = " + preferred + ", " +
-                "coolDownDuration = " + coolDownDuration + ", " +
+                "coolDown = " + coolDown + ", " +
                 "remark = " + remark + ", " +
                 "notifySetting = " + notifySetting + ", " +
                 "notifyTopic = " + notifyTopic + ", " +
