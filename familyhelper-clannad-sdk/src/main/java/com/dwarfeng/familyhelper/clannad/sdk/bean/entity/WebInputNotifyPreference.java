@@ -9,7 +9,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 /**
@@ -20,7 +19,7 @@ import java.util.Objects;
  */
 public class WebInputNotifyPreference implements Bean {
 
-    private static final long serialVersionUID = 6392403795349369110L;
+    private static final long serialVersionUID = -5097835723768791039L;
 
     public static NotifyPreference toStackBean(WebInputNotifyPreference webInputNotifyPreference) {
         if (Objects.isNull(webInputNotifyPreference)) {
@@ -28,8 +27,7 @@ public class WebInputNotifyPreference implements Bean {
         } else {
             return new NotifyPreference(
                     WebInputNotifyPreferenceKey.toStackBean(webInputNotifyPreference.getKey()),
-                    webInputNotifyPreference.isPreferred(), webInputNotifyPreference.getCoolDown(),
-                    webInputNotifyPreference.getRemark()
+                    webInputNotifyPreference.isPreferred(), webInputNotifyPreference.getRemark()
             );
         }
     }
@@ -41,10 +39,6 @@ public class WebInputNotifyPreference implements Bean {
 
     @JSONField(name = "preferred")
     private boolean preferred;
-
-    @JSONField(name = "cool_down")
-    @PositiveOrZero
-    private long coolDown;
 
     @JSONField(name = "remark")
     @Length(max = Constraints.LENGTH_REMARK)
@@ -69,14 +63,6 @@ public class WebInputNotifyPreference implements Bean {
         this.preferred = preferred;
     }
 
-    public long getCoolDown() {
-        return coolDown;
-    }
-
-    public void setCoolDown(long coolDown) {
-        this.coolDown = coolDown;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -90,7 +76,6 @@ public class WebInputNotifyPreference implements Bean {
         return "WebInputNotifyPreference{" +
                 "key=" + key +
                 ", preferred=" + preferred +
-                ", coolDown=" + coolDown +
                 ", remark='" + remark + '\'' +
                 '}';
     }

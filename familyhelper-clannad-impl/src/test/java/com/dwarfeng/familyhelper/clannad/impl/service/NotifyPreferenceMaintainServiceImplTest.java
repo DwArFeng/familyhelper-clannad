@@ -51,7 +51,7 @@ public class NotifyPreferenceMaintainServiceImplTest {
         notifyTopic = new NotifyTopic(new StringIdKey(NOTE_TOPIC_ID), "remark");
         user = new User(new StringIdKey(USER_ID), "remark");
         notifyPreference = new NotifyPreference(
-                new NotifyPreferenceKey(NOTE_SETTING_ID, NOTE_TOPIC_ID, USER_ID), true, 12450L, "remark"
+                new NotifyPreferenceKey(NOTE_SETTING_ID, NOTE_TOPIC_ID, USER_ID), true, "remark"
         );
     }
 

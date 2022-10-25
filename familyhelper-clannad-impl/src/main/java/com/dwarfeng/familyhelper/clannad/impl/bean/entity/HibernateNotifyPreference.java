@@ -12,7 +12,7 @@ import java.util.Objects;
 @Table(name = "tbl_notify_preference")
 public class HibernateNotifyPreference implements Bean {
 
-    private static final long serialVersionUID = 7968827570020603290L;
+    private static final long serialVersionUID = 4988927435871913132L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -30,9 +30,6 @@ public class HibernateNotifyPreference implements Bean {
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "preferred")
     private boolean preferred;
-
-    @Column(name = "cool_down")
-    private long coolDown;
 
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
@@ -109,14 +106,6 @@ public class HibernateNotifyPreference implements Bean {
         this.preferred = preferred;
     }
 
-    public long getCoolDown() {
-        return coolDown;
-    }
-
-    public void setCoolDown(long coolDown) {
-        this.coolDown = coolDown;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -156,7 +145,6 @@ public class HibernateNotifyPreference implements Bean {
                 "notifyTopicId = " + notifyTopicId + ", " +
                 "userId = " + userId + ", " +
                 "preferred = " + preferred + ", " +
-                "coolDown = " + coolDown + ", " +
                 "remark = " + remark + ", " +
                 "notifySetting = " + notifySetting + ", " +
                 "notifyTopic = " + notifyTopic + ", " +

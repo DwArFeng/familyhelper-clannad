@@ -11,20 +11,18 @@ import com.dwarfeng.subgrade.stack.bean.entity.Entity;
  */
 public class NotifyPreference implements Entity<NotifyPreferenceKey> {
 
-    private static final long serialVersionUID = 4859027145609947413L;
+    private static final long serialVersionUID = 7619300314999245270L;
 
     private NotifyPreferenceKey key;
     private boolean preferred;
-    private long coolDown;
     private String remark;
 
     public NotifyPreference() {
     }
 
-    public NotifyPreference(NotifyPreferenceKey key, boolean preferred, long coolDown, String remark) {
+    public NotifyPreference(NotifyPreferenceKey key, boolean preferred, String remark) {
         this.key = key;
         this.preferred = preferred;
-        this.coolDown = coolDown;
         this.remark = remark;
     }
 
@@ -46,14 +44,6 @@ public class NotifyPreference implements Entity<NotifyPreferenceKey> {
         this.preferred = preferred;
     }
 
-    public long getCoolDown() {
-        return coolDown;
-    }
-
-    public void setCoolDown(long coolDown) {
-        this.coolDown = coolDown;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -67,7 +57,6 @@ public class NotifyPreference implements Entity<NotifyPreferenceKey> {
         return "NotifyPreference{" +
                 "key=" + key +
                 ", preferred=" + preferred +
-                ", coolDown=" + coolDown +
                 ", remark='" + remark + '\'' +
                 '}';
     }

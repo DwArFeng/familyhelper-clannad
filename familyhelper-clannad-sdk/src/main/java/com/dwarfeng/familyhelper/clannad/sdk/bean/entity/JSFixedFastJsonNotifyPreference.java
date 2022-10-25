@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class JSFixedFastJsonNotifyPreference implements Bean {
 
-    private static final long serialVersionUID = -1160213313347746267L;
+    private static final long serialVersionUID = -6252460742799750915L;
 
     public static JSFixedFastJsonNotifyPreference of(NotifyPreference notifyPreference) {
         if (Objects.isNull(notifyPreference)) {
@@ -23,7 +23,7 @@ public class JSFixedFastJsonNotifyPreference implements Bean {
         } else {
             return new JSFixedFastJsonNotifyPreference(
                     JSFixedFastJsonNotifyPreferenceKey.of(notifyPreference.getKey()),
-                    notifyPreference.isPreferred(), notifyPreference.getCoolDown(), notifyPreference.getRemark()
+                    notifyPreference.isPreferred(), notifyPreference.getRemark()
             );
         }
     }
@@ -34,21 +34,15 @@ public class JSFixedFastJsonNotifyPreference implements Bean {
     @JSONField(name = "preferred", ordinal = 2)
     private boolean preferred;
 
-    @JSONField(name = "cool_down", ordinal = 3)
-    private long coolDown;
-
-    @JSONField(name = "remark", ordinal = 4)
+    @JSONField(name = "remark", ordinal = 3)
     private String remark;
 
     public JSFixedFastJsonNotifyPreference() {
     }
 
-    public JSFixedFastJsonNotifyPreference(
-            JSFixedFastJsonNotifyPreferenceKey key, boolean preferred, long coolDown, String remark
-    ) {
+    public JSFixedFastJsonNotifyPreference(JSFixedFastJsonNotifyPreferenceKey key, boolean preferred, String remark) {
         this.key = key;
         this.preferred = preferred;
-        this.coolDown = coolDown;
         this.remark = remark;
     }
 
@@ -68,14 +62,6 @@ public class JSFixedFastJsonNotifyPreference implements Bean {
         this.preferred = preferred;
     }
 
-    public long getCoolDown() {
-        return coolDown;
-    }
-
-    public void setCoolDown(long coolDown) {
-        this.coolDown = coolDown;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -89,7 +75,6 @@ public class JSFixedFastJsonNotifyPreference implements Bean {
         return "JSFixedFastJsonNotifyPreference{" +
                 "key=" + key +
                 ", preferred=" + preferred +
-                ", coolDown=" + coolDown +
                 ", remark='" + remark + '\'' +
                 '}';
     }

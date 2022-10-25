@@ -4,6 +4,8 @@ import com.dwarfeng.subgrade.stack.bean.dto.Dto;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 
+import java.util.List;
+
 /**
  * 通知偏好更新信息。
  *
@@ -12,42 +14,21 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
  */
 public class NotifyPreferenceUpdateInfo implements Dto {
 
-    private static final long serialVersionUID = -7094629160004424642L;
+    private static final long serialVersionUID = 4128544607594169585L;
 
-    private LongIdKey notifySettingKey;
-    private StringIdKey notifyTopicKey;
     private StringIdKey userKey;
-    private boolean preferred;
-    private long coolDown;
+    private LongIdKey notifySettingKey;
+    private List<TopicDetail> topicDetails;
 
     public NotifyPreferenceUpdateInfo() {
     }
 
     public NotifyPreferenceUpdateInfo(
-            LongIdKey notifySettingKey, StringIdKey notifyTopicKey, StringIdKey userKey, boolean preferred,
-            long coolDown
+            StringIdKey userKey, LongIdKey notifySettingKey, List<TopicDetail> topicDetails
     ) {
-        this.notifySettingKey = notifySettingKey;
-        this.notifyTopicKey = notifyTopicKey;
         this.userKey = userKey;
-        this.preferred = preferred;
-        this.coolDown = coolDown;
-    }
-
-    public LongIdKey getNotifySettingKey() {
-        return notifySettingKey;
-    }
-
-    public void setNotifySettingKey(LongIdKey notifySettingKey) {
         this.notifySettingKey = notifySettingKey;
-    }
-
-    public StringIdKey getNotifyTopicKey() {
-        return notifyTopicKey;
-    }
-
-    public void setNotifyTopicKey(StringIdKey notifyTopicKey) {
-        this.notifyTopicKey = notifyTopicKey;
+        this.topicDetails = topicDetails;
     }
 
     public StringIdKey getUserKey() {
@@ -58,30 +39,68 @@ public class NotifyPreferenceUpdateInfo implements Dto {
         this.userKey = userKey;
     }
 
-    public boolean isPreferred() {
-        return preferred;
+    public LongIdKey getNotifySettingKey() {
+        return notifySettingKey;
     }
 
-    public void setPreferred(boolean preferred) {
-        this.preferred = preferred;
+    public void setNotifySettingKey(LongIdKey notifySettingKey) {
+        this.notifySettingKey = notifySettingKey;
     }
 
-    public long getCoolDown() {
-        return coolDown;
+    public List<TopicDetail> getTopicDetails() {
+        return topicDetails;
     }
 
-    public void setCoolDown(long coolDown) {
-        this.coolDown = coolDown;
+    public void setTopicDetails(List<TopicDetail> topicDetails) {
+        this.topicDetails = topicDetails;
     }
 
     @Override
     public String toString() {
         return "NotifyPreferenceUpdateInfo{" +
-                "notifySettingKey=" + notifySettingKey +
-                ", notifyTopicKey=" + notifyTopicKey +
-                ", userKey=" + userKey +
-                ", preferred=" + preferred +
-                ", coolDown=" + coolDown +
+                "userKey=" + userKey +
+                ", notifySettingKey=" + notifySettingKey +
+                ", topicDetails=" + topicDetails +
                 '}';
+    }
+
+    public static class TopicDetail implements Dto {
+
+        private static final long serialVersionUID = 4020909933546703253L;
+
+        private StringIdKey topicKey;
+        private boolean preferred;
+
+        public TopicDetail() {
+        }
+
+        public TopicDetail(StringIdKey topicKey, boolean preferred) {
+            this.topicKey = topicKey;
+            this.preferred = preferred;
+        }
+
+        public StringIdKey getTopicKey() {
+            return topicKey;
+        }
+
+        public void setTopicKey(StringIdKey topicKey) {
+            this.topicKey = topicKey;
+        }
+
+        public boolean isPreferred() {
+            return preferred;
+        }
+
+        public void setPreferred(boolean preferred) {
+            this.preferred = preferred;
+        }
+
+        @Override
+        public String toString() {
+            return "TopicDetail{" +
+                    "topicKey=" + topicKey +
+                    ", preferred=" + preferred +
+                    '}';
+        }
     }
 }
