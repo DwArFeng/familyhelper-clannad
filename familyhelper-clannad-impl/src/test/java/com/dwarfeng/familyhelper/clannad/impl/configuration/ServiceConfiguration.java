@@ -44,10 +44,6 @@ public class ServiceConfiguration {
     private final CertificateFileInfoDao certificateFileInfoDao;
     private final PoceDao poceDao;
     private final PoceCache poceCache;
-    private final NotifySettingCrudOperation notifySettingCrudOperation;
-    private final NotifySettingDao notifySettingDao;
-    private final NotifyTopicCrudOperation notifyTopicCrudOperation;
-    private final NotifyTopicDao notifyTopicDao;
 
     @Value("${cache.timeout.entity.profile_type_indicator}")
     private long profileTypeIndicatorTimeout;
@@ -72,9 +68,7 @@ public class ServiceConfiguration {
             NotificationDao notificationDao, NotificationCache notificationCache,
             CertificateCrudOperation certificateCrudOperation, CertificateDao certificateDao,
             CertificateFileInfoCrudOperation certificateFileInfoCrudOperation, CertificateFileInfoDao certificateFileInfoDao,
-            PoceDao poceDao, PoceCache poceCache,
-            NotifySettingCrudOperation notifySettingCrudOperation, NotifySettingDao notifySettingDao,
-            NotifyTopicCrudOperation notifyTopicCrudOperation, NotifyTopicDao notifyTopicDao
+            PoceDao poceDao, PoceCache poceCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.profileCrudOperation = profileCrudOperation;
@@ -94,10 +88,6 @@ public class ServiceConfiguration {
         this.certificateFileInfoDao = certificateFileInfoDao;
         this.poceDao = poceDao;
         this.poceCache = poceCache;
-        this.notifySettingCrudOperation = notifySettingCrudOperation;
-        this.notifySettingDao = notifySettingDao;
-        this.notifyTopicCrudOperation = notifyTopicCrudOperation;
-        this.notifyTopicDao = notifyTopicDao;
     }
 
     @Bean
@@ -320,44 +310,6 @@ public class ServiceConfiguration {
     public DaoOnlyPresetLookupService<Poce> poceDaoOnlyPresetLookupService() {
         return new DaoOnlyPresetLookupService<>(
                 poceDao,
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
-        );
-    }
-
-    @Bean
-    public CustomBatchCrudService<LongIdKey, NotifySetting> notifySettingCustomBatchCrudService() {
-        return new CustomBatchCrudService<>(
-                notifySettingCrudOperation,
-                longIdKeyKeyFetcher(),
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
-        );
-    }
-
-    @Bean
-    public DaoOnlyEntireLookupService<NotifySetting> notifySettingDaoOnlyEntireLookupService() {
-        return new DaoOnlyEntireLookupService<>(
-                notifySettingDao,
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
-        );
-    }
-
-    @Bean
-    public CustomBatchCrudService<StringIdKey, NotifyTopic> notifyTopicCustomBatchCrudService() {
-        return new CustomBatchCrudService<>(
-                notifyTopicCrudOperation,
-                new ExceptionKeyFetcher<>(),
-                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
-                LogLevel.WARN
-        );
-    }
-
-    @Bean
-    public DaoOnlyEntireLookupService<NotifyTopic> notifyTopicDaoOnlyEntireLookupService() {
-        return new DaoOnlyEntireLookupService<>(
-                notifyTopicDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

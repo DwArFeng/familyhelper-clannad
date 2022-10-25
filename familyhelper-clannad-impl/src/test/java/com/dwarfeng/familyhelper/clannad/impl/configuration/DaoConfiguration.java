@@ -308,48 +308,4 @@ public class DaoConfiguration {
                 pocePresetCriteriaMaker
         );
     }
-
-    @Bean
-    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, NotifySetting, HibernateNotifySetting>
-    notifySettingHibernateBatchBaseDao() {
-        return new HibernateBatchBaseDao<>(
-                template,
-                new DozerBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, mapper),
-                new DozerBeanTransformer<>(NotifySetting.class, HibernateNotifySetting.class, mapper),
-                HibernateNotifySetting.class,
-                new DefaultDeletionMod<>(),
-                batchSize
-        );
-    }
-
-    @Bean
-    public HibernateEntireLookupDao<NotifySetting, HibernateNotifySetting> notifySettingHibernateEntireLookupDao() {
-        return new HibernateEntireLookupDao<>(
-                template,
-                new DozerBeanTransformer<>(NotifySetting.class, HibernateNotifySetting.class, mapper),
-                HibernateNotifySetting.class
-        );
-    }
-
-    @Bean
-    public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, NotifyTopic, HibernateNotifyTopic>
-    notifyTopicHibernateBatchBaseDao() {
-        return new HibernateBatchBaseDao<>(
-                template,
-                new DozerBeanTransformer<>(StringIdKey.class, HibernateStringIdKey.class, mapper),
-                new DozerBeanTransformer<>(NotifyTopic.class, HibernateNotifyTopic.class, mapper),
-                HibernateNotifyTopic.class,
-                new DefaultDeletionMod<>(),
-                batchSize
-        );
-    }
-
-    @Bean
-    public HibernateEntireLookupDao<NotifyTopic, HibernateNotifyTopic> notifyTopicHibernateEntireLookupDao() {
-        return new HibernateEntireLookupDao<>(
-                template,
-                new DozerBeanTransformer<>(NotifyTopic.class, HibernateNotifyTopic.class, mapper),
-                HibernateNotifyTopic.class
-        );
-    }
 }

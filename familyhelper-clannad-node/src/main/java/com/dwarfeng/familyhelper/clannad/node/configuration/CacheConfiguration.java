@@ -48,10 +48,6 @@ public class CacheConfiguration {
     private String certificateFileInfoPrefix;
     @Value("${cache.prefix.entity.poce}")
     private String pocePrefix;
-    @Value("${cache.prefix.entity.notify_setting}")
-    private String notifySettingPrefix;
-    @Value("${cache.prefix.entity.notify_topic}")
-    private String notifyTopicPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
         this.template = template;
@@ -157,26 +153,6 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonPoce>) template,
                 new PoceStringKeyFormatter(pocePrefix),
                 new DozerBeanTransformer<>(Poce.class, FastJsonPoce.class, mapper)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<LongIdKey, NotifySetting, FastJsonNotifySetting> notifySettingRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonNotifySetting>) template,
-                new LongIdStringKeyFormatter(notifySettingPrefix),
-                new DozerBeanTransformer<>(NotifySetting.class, FastJsonNotifySetting.class, mapper)
-        );
-    }
-
-    @Bean
-    @SuppressWarnings("unchecked")
-    public RedisBatchBaseCache<StringIdKey, NotifyTopic, FastJsonNotifyTopic> notifyTopicRedisBatchBaseCache() {
-        return new RedisBatchBaseCache<>(
-                (RedisTemplate<String, FastJsonNotifyTopic>) template,
-                new StringIdStringKeyFormatter(notifyTopicPrefix),
-                new DozerBeanTransformer<>(NotifyTopic.class, FastJsonNotifyTopic.class, mapper)
         );
     }
 }
