@@ -39,7 +39,6 @@
   - com.dwarfeng.familyhelper.clannad.stack.service.CertificateFileOperateService。
   - com.dwarfeng.familyhelper.clannad.stack.service.CertificateOperateService。
   - com.dwarfeng.familyhelper.clannad.stack.service.NotifyPreferenceOperateService。
-  - com.dwarfeng.familyhelper.clannad.stack.service.NotifyMetaOperateService。
 
 #### Bug修复
 

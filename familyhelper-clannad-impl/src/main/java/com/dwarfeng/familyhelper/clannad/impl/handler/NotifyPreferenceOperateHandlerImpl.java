@@ -50,7 +50,7 @@ public class NotifyPreferenceOperateHandlerImpl implements NotifyPreferenceOpera
                     "通过 familyhelper-clannad 服务插入/更新通知偏好"
             );
 
-            // 调用维护服务插入或更新。
+            // 调用维护服务批量插入或更新。
             notifyPreferenceMaintainService.insertOrUpdate(notifyPreference);
         } catch (HandlerException e) {
             throw e;
