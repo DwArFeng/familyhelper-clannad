@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "tbl_notify_topic")
 public class HibernateNotifyTopic implements Bean {
 
-    private static final long serialVersionUID = -4534741387207823044L;
+    private static final long serialVersionUID = -7370610103234388427L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -24,12 +24,6 @@ public class HibernateNotifyTopic implements Bean {
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
-
-    @Column(name = "preferred")
-    private boolean preferred;
-
-    @Column(name = "cool_down_duration")
-    private long coolDownDuration;
 
     // -----------------------------------------------------------一对多-----------------------------------------------------------
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateNotifyPreference.class, mappedBy = "notifyTopic")
@@ -67,22 +61,6 @@ public class HibernateNotifyTopic implements Bean {
         this.remark = remark;
     }
 
-    public boolean isPreferred() {
-        return preferred;
-    }
-
-    public void setPreferred(boolean preferred) {
-        this.preferred = preferred;
-    }
-
-    public long getCoolDownDuration() {
-        return coolDownDuration;
-    }
-
-    public void setCoolDownDuration(long coolDownDuration) {
-        this.coolDownDuration = coolDownDuration;
-    }
-
     public Set<HibernateNotifyPreference> getNotifyPreferences() {
         return notifyPreferences;
     }
@@ -103,8 +81,6 @@ public class HibernateNotifyTopic implements Bean {
     public String toString() {
         return getClass().getSimpleName() + "(" +
                 "stringId = " + stringId + ", " +
-                "remark = " + remark + ", " +
-                "preferred = " + preferred + ", " +
-                "coolDownDuration = " + coolDownDuration + ")";
+                "remark = " + remark + ")";
     }
 }

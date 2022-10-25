@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 public class FastJsonNotifyTopic implements Bean {
 
-    private static final long serialVersionUID = -9140255108605173561L;
+    private static final long serialVersionUID = 3693318437329687039L;
 
     public static FastJsonNotifyTopic of(NotifyTopic notifyTopic) {
         if (Objects.isNull(notifyTopic)) {
@@ -23,7 +23,7 @@ public class FastJsonNotifyTopic implements Bean {
         } else {
             return new FastJsonNotifyTopic(
                     FastJsonStringIdKey.of(notifyTopic.getKey()),
-                    notifyTopic.getRemark(), notifyTopic.isPreferred(), notifyTopic.getCoolDownDuration()
+                    notifyTopic.getRemark()
             );
         }
     }
@@ -34,20 +34,12 @@ public class FastJsonNotifyTopic implements Bean {
     @JSONField(name = "remark", ordinal = 2)
     private String remark;
 
-    @JSONField(name = "preferred", ordinal = 3)
-    private boolean preferred;
-
-    @JSONField(name = "cool_down_duration", ordinal = 4)
-    private long coolDownDuration;
-
     public FastJsonNotifyTopic() {
     }
 
-    public FastJsonNotifyTopic(FastJsonStringIdKey key, String remark, boolean preferred, long coolDownDuration) {
+    public FastJsonNotifyTopic(FastJsonStringIdKey key, String remark) {
         this.key = key;
         this.remark = remark;
-        this.preferred = preferred;
-        this.coolDownDuration = coolDownDuration;
     }
 
     public FastJsonStringIdKey getKey() {
@@ -66,29 +58,11 @@ public class FastJsonNotifyTopic implements Bean {
         this.remark = remark;
     }
 
-    public boolean isPreferred() {
-        return preferred;
-    }
-
-    public void setPreferred(boolean preferred) {
-        this.preferred = preferred;
-    }
-
-    public long getCoolDownDuration() {
-        return coolDownDuration;
-    }
-
-    public void setCoolDownDuration(long coolDownDuration) {
-        this.coolDownDuration = coolDownDuration;
-    }
-
     @Override
     public String toString() {
         return "FastJsonNotifyTopic{" +
                 "key=" + key +
                 ", remark='" + remark + '\'' +
-                ", preferred=" + preferred +
-                ", coolDownDuration=" + coolDownDuration +
                 '}';
     }
 }
