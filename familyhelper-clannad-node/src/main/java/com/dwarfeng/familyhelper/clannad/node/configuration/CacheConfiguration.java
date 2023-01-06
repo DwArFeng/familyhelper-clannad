@@ -10,13 +10,12 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
-import com.dwarfeng.subgrade.impl.bean.DozerBeanTransformer;
+import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
 import com.dwarfeng.subgrade.sdk.redis.formatter.StringIdStringKeyFormatter;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +25,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 public class CacheConfiguration {
 
     private final RedisTemplate<String, ?> template;
-    private final Mapper mapper;
 
     @Value("${cache.prefix.entity.profile}")
     private String profilePrefix;
@@ -49,9 +47,8 @@ public class CacheConfiguration {
     @Value("${cache.prefix.entity.poce}")
     private String pocePrefix;
 
-    public CacheConfiguration(RedisTemplate<String, ?> template, Mapper mapper) {
+    public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
-        this.mapper = mapper;
     }
 
     @Bean
@@ -60,7 +57,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonProfile>) template,
                 new StringIdStringKeyFormatter(profilePrefix),
-                new DozerBeanTransformer<>(Profile.class, FastJsonProfile.class, mapper)
+                new MapStructBeanTransformer<>(Profile.class, FastJsonProfile.class, FastJsonMapper.class)
         );
     }
 
@@ -70,7 +67,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonUser>) template,
                 new StringIdStringKeyFormatter(userPrefix),
-                new DozerBeanTransformer<>(User.class, FastJsonUser.class, mapper)
+                new MapStructBeanTransformer<>(User.class, FastJsonUser.class, FastJsonMapper.class)
         );
     }
 
@@ -81,7 +78,9 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonProfileTypeIndicator>) template,
                 new ProfileTypeIndicatorStringKeyFormatter(profileTypeIndicatorPrefix),
-                new DozerBeanTransformer<>(ProfileTypeIndicator.class, FastJsonProfileTypeIndicator.class, mapper)
+                new MapStructBeanTransformer<>(
+                        ProfileTypeIndicator.class, FastJsonProfileTypeIndicator.class, FastJsonMapper.class
+                )
         );
     }
 
@@ -91,7 +90,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonPopr>) template,
                 new PoprStringKeyFormatter(poprPrefix),
-                new DozerBeanTransformer<>(Popr.class, FastJsonPopr.class, mapper)
+                new MapStructBeanTransformer<>(Popr.class, FastJsonPopr.class, FastJsonMapper.class)
         );
     }
 
@@ -101,7 +100,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonNickname>) template,
                 new NicknameStringKeyFormatter(nicknamePrefix),
-                new DozerBeanTransformer<>(Nickname.class, FastJsonNickname.class, mapper)
+                new MapStructBeanTransformer<>(Nickname.class, FastJsonNickname.class, FastJsonMapper.class)
         );
     }
 
@@ -111,7 +110,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonAvatarInfo>) template,
                 new StringIdStringKeyFormatter(avatarInfoPrefix),
-                new DozerBeanTransformer<>(AvatarInfo.class, FastJsonAvatarInfo.class, mapper)
+                new MapStructBeanTransformer<>(AvatarInfo.class, FastJsonAvatarInfo.class, FastJsonMapper.class)
         );
     }
 
@@ -121,7 +120,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonNotification>) template,
                 new LongIdStringKeyFormatter(notificationPrefix),
-                new DozerBeanTransformer<>(Notification.class, FastJsonNotification.class, mapper)
+                new MapStructBeanTransformer<>(Notification.class, FastJsonNotification.class, FastJsonMapper.class)
         );
     }
 
@@ -131,7 +130,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonCertificate>) template,
                 new LongIdStringKeyFormatter(certificatePrefix),
-                new DozerBeanTransformer<>(Certificate.class, FastJsonCertificate.class, mapper)
+                new MapStructBeanTransformer<>(Certificate.class, FastJsonCertificate.class, FastJsonMapper.class)
         );
     }
 
@@ -142,7 +141,9 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonCertificateFileInfo>) template,
                 new LongIdStringKeyFormatter(certificateFileInfoPrefix),
-                new DozerBeanTransformer<>(CertificateFileInfo.class, FastJsonCertificateFileInfo.class, mapper)
+                new MapStructBeanTransformer<>(
+                        CertificateFileInfo.class, FastJsonCertificateFileInfo.class, FastJsonMapper.class
+                )
         );
     }
 
@@ -152,7 +153,7 @@ public class CacheConfiguration {
         return new RedisBatchBaseCache<>(
                 (RedisTemplate<String, FastJsonPoce>) template,
                 new PoceStringKeyFormatter(pocePrefix),
-                new DozerBeanTransformer<>(Poce.class, FastJsonPoce.class, mapper)
+                new MapStructBeanTransformer<>(Poce.class, FastJsonPoce.class, FastJsonMapper.class)
         );
     }
 }
