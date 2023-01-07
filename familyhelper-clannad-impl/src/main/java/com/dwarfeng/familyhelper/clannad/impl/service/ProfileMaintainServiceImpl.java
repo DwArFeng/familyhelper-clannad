@@ -3,8 +3,11 @@ package com.dwarfeng.familyhelper.clannad.impl.service;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
 import com.dwarfeng.familyhelper.clannad.stack.service.ProfileMaintainService;
 import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
+import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
+import com.dwarfeng.subgrade.stack.bean.dto.PagedData;
+import com.dwarfeng.subgrade.stack.bean.dto.PagingInfo;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Service;
@@ -16,11 +19,14 @@ import java.util.List;
 public class ProfileMaintainServiceImpl implements ProfileMaintainService {
 
     private final CustomBatchCrudService<StringIdKey, Profile> crudService;
+    private final DaoOnlyEntireLookupService<Profile> entireLookupService;
 
     public ProfileMaintainServiceImpl(
-            CustomBatchCrudService<StringIdKey, Profile> crudService
+            CustomBatchCrudService<StringIdKey, Profile> crudService,
+            DaoOnlyEntireLookupService<Profile> entireLookupService
     ) {
         this.crudService = crudService;
+        this.entireLookupService = entireLookupService;
     }
 
     @Override
@@ -173,5 +179,21 @@ public class ProfileMaintainServiceImpl implements ProfileMaintainService {
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
     public List<StringIdKey> batchInsertOrUpdate(@SkipRecord List<Profile> elements) throws ServiceException {
         return crudService.batchInsertOrUpdate(elements);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public PagedData<Profile> lookup() throws ServiceException {
+        return entireLookupService.lookup();
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public PagedData<Profile> lookup(PagingInfo pagingInfo) throws ServiceException {
+        return entireLookupService.lookup(pagingInfo);
     }
 }

@@ -27,6 +27,7 @@ public class ServiceConfiguration {
 
     private final ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
 
+    private final ProfileDao profileDao;
     private final ProfileCrudOperation profileCrudOperation;
     private final UserCrudOperation userCrudOperation;
     private final ProfileTypeIndicatorDao profileTypeIndicatorDao;
@@ -58,7 +59,7 @@ public class ServiceConfiguration {
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
-            ProfileCrudOperation profileCrudOperation,
+            ProfileDao profileDao, ProfileCrudOperation profileCrudOperation,
             UserCrudOperation userCrudOperation,
             ProfileTypeIndicatorDao profileTypeIndicatorDao,
             ProfileTypeIndicatorCache profileTypeIndicatorCache,
@@ -71,6 +72,7 @@ public class ServiceConfiguration {
             PoceDao poceDao, PoceCache poceCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
+        this.profileDao = profileDao;
         this.profileCrudOperation = profileCrudOperation;
         this.userCrudOperation = userCrudOperation;
         this.profileTypeIndicatorDao = profileTypeIndicatorDao;
@@ -100,6 +102,15 @@ public class ServiceConfiguration {
         return new CustomBatchCrudService<>(
                 profileCrudOperation,
                 new ExceptionKeyFetcher<>(),
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Profile> profileDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                profileDao,
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );

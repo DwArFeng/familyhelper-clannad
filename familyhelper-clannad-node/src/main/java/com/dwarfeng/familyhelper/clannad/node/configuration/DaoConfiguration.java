@@ -75,6 +75,17 @@ public class DaoConfiguration {
     }
 
     @Bean
+    public HibernateEntireLookupDao<Profile, HibernateProfile> profileHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        Profile.class, HibernateProfile.class, HibernateMapper.class
+                ),
+                HibernateProfile.class
+        );
+    }
+
+    @Bean
     public HibernateBatchBaseDao<StringIdKey, HibernateStringIdKey, User, HibernateUser> userHibernateBatchBaseDao() {
         return new HibernateBatchBaseDao<>(
                 template,

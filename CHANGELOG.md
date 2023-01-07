@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- 为 `Profile` 实体增加全体查询功能。
+
 - 使用 `MapStruct` 重构 `BeanTransformer`。
 
 - 增加依赖。
