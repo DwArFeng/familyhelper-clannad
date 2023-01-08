@@ -60,3 +60,23 @@ buildNumber.properties
 #################
 /familyhelper-clannad-impl/conf/
 /familyhelper-clannad-node/conf/
+
+#################
+## Libext Files
+#################
+/familyhelper-clannad-node/libext/
+
+#################
+## Opt Files
+#################
+/familyhelper-clannad-node/opt/
+
+#################
+## Optext Files
+#################
+/familyhelper-clannad-node/optext/
+
+#################
+## Confext Files
+#################
+/familyhelper-clannad-node/confext/

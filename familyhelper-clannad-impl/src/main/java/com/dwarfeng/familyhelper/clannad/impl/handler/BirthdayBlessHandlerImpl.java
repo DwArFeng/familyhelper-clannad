@@ -1,7 +1,9 @@
 package com.dwarfeng.familyhelper.clannad.impl.handler;
 
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.BirthdayBlessInfo;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Profile;
 import com.dwarfeng.familyhelper.clannad.stack.handler.BirthdayBlessHandler;
+import com.dwarfeng.familyhelper.clannad.stack.handler.PushHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.ProfileMaintainService;
 import com.dwarfeng.subgrade.impl.handler.CuratorDistributedLockHandler;
 import com.dwarfeng.subgrade.impl.handler.Worker;
@@ -22,7 +24,6 @@ import org.springframework.stereotype.Component;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ScheduledFuture;
 import java.util.stream.Collectors;
 
@@ -98,6 +99,8 @@ public class BirthdayBlessHandlerImpl implements BirthdayBlessHandler {
 
         private final ProfileMaintainService profileMaintainService;
 
+        private final PushHandler pushHandler;
+
         private final ThreadPoolTaskScheduler scheduler;
 
         @Value("${birthday_bless.task.cron}")
@@ -108,10 +111,12 @@ public class BirthdayBlessHandlerImpl implements BirthdayBlessHandler {
         public BirthdayBlessWorker(
                 ApplicationContext ctx,
                 ProfileMaintainService profileMaintainService,
+                PushHandler pushHandler,
                 ThreadPoolTaskScheduler scheduler
         ) {
             this.ctx = ctx;
             this.profileMaintainService = profileMaintainService;
+            this.pushHandler = pushHandler;
             this.scheduler = scheduler;
         }
 
@@ -149,9 +154,10 @@ public class BirthdayBlessHandlerImpl implements BirthdayBlessHandler {
                     // 过滤出所有今天是生日的用户信息。
                     profiles = profiles.stream().filter(this::birthdayFilter).collect(Collectors.toList());
 
-                    // TODO 将消息打印在日志中。
-                    LOGGER.info("生日祝福: ");
-                    profiles.forEach(p -> LOGGER.info(Objects.toString(p)));
+                    // 将消息发送到推送器中。
+                    List<BirthdayBlessInfo> birthdayBlessInfos = profiles.stream().map(this::birthdayMapper)
+                            .collect(Collectors.toList());
+                    pushHandler.birthdayBlessHappened(birthdayBlessInfos);
                 } catch (Exception e) {
                     LOGGER.warn("生日祝福计划执行时发生异常, 计划中止, 异常信息如下: ", e);
                 }
@@ -233,6 +239,27 @@ public class BirthdayBlessHandlerImpl implements BirthdayBlessHandler {
                 }
 
                 return true;
+            }
+
+            private BirthdayBlessInfo birthdayMapper(Profile profile) {
+                // 获取生日字符串。
+                // 格式: 1992-12-18。
+                // 此处的字符串经过前方法过滤，保证是有效的，且保证生日年份小于等于当前年份。
+                String birthday = profile.getBirthday();
+
+                // 获取生日年份，用于计算用户年龄。
+                int year = Integer.parseInt(birthday.split(BIRTHDAY_DELIMITER)[0]);
+
+                // 获取当前日历。
+                GregorianCalendar current = (GregorianCalendar) GregorianCalendar.getInstance();
+                // 获取当前年份。
+                int currentYear = current.get(Calendar.YEAR);
+
+                // 此处的数字大于等于 0 。
+                int age = currentYear - year;
+
+                // 返回生日祝福信息。
+                return new BirthdayBlessInfo(profile.getKey(), profile.getBirthday(), age);
             }
         }
     }

@@ -4,8 +4,15 @@
 
 #### 功能构建
 
+- 实现推送机制，并开发预设推送器。
+  - com.dwarfeng.familyhelper.clannad.impl.handler.pusher.AbstractPusher。
+  - com.dwarfeng.familyhelper.clannad.impl.handler.pusher.DrainPusher。
+  - com.dwarfeng.familyhelper.clannad.impl.handler.pusher.LogPusher。
+  - com.dwarfeng.familyhelper.clannad.impl.handler.pusher.MultiPusher。
+
 - 实现生日祝福服务。
   - 实现生日祝福定时判断任务及其判断逻辑。
+  - 实现生日祝福的推送机制。
 
 - 为 `Profile` 实体增加全体查询功能。
 
