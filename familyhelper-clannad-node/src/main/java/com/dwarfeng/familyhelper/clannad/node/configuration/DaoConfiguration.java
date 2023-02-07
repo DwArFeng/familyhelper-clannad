@@ -1,5 +1,6 @@
 package com.dwarfeng.familyhelper.clannad.node.configuration;
 
+import com.dwarfeng.familyhelper.clannad.impl.bean.HibernateMapper;
 import com.dwarfeng.familyhelper.clannad.impl.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateNicknameKey;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernatePoceKey;

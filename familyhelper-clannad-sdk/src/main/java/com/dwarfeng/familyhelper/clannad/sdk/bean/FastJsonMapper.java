@@ -1,5 +1,6 @@
-package com.dwarfeng.familyhelper.clannad.sdk.bean.entity;
+package com.dwarfeng.familyhelper.clannad.sdk.bean;
 
+import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonNicknameKey;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonPoceKey;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonPoprKey;

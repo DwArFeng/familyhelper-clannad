@@ -1,5 +1,6 @@
 package com.dwarfeng.familyhelper.clannad.node.configuration;
 
+import com.dwarfeng.familyhelper.clannad.sdk.bean.FastJsonMapper;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.NicknameStringKeyFormatter;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.PoceStringKeyFormatter;

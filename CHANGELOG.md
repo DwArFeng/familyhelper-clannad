@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- 优化 `MapStruct` 实体映射 `Mapper` 接口的路径。
+
 - 优化实体字段。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Notification。
 

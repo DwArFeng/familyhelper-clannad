@@ -1,5 +1,6 @@
-package com.dwarfeng.familyhelper.clannad.impl.bean.entity;
+package com.dwarfeng.familyhelper.clannad.impl.bean;
 
+import com.dwarfeng.familyhelper.clannad.impl.bean.entity.*;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateNicknameKey;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernatePoceKey;
 import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernatePoprKey;
