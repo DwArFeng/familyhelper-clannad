@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 优化实体字段。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Notification。
 
 #### Bug修复
 

@@ -39,7 +39,7 @@ public class NotificationMaintainServiceImplTest {
         notifications = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Notification notification = new Notification(
-                    null, null, "message", "remark", new Date(), new Date(), false
+                    null, null, "remark", new Date(), new Date(), false, "subject", "body"
             );
             notifications.add(notification);
         }

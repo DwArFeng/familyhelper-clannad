@@ -14,30 +14,40 @@ import java.util.Date;
  */
 public class Notification implements Entity<LongIdKey> {
 
-    private static final long serialVersionUID = 8915233654160727L;
+    private static final long serialVersionUID = -333833693720802907L;
 
     private LongIdKey key;
     private StringIdKey userKey;
-    private String message;
     private String remark;
     private Date notifiedDate;
     private Date readDate;
     private boolean readFlag;
 
+    /**
+     * @since 1.3.0
+     */
+    public String subject;
+
+    /**
+     * @since 1.3.0
+     */
+    public String body;
+
     public Notification() {
     }
 
     public Notification(
-            LongIdKey key, StringIdKey userKey, String message, String remark, Date notifiedDate, Date readDate,
-            boolean readFlag
+            LongIdKey key, StringIdKey userKey, String remark, Date notifiedDate, Date readDate, boolean readFlag,
+            String subject, String body
     ) {
         this.key = key;
         this.userKey = userKey;
-        this.message = message;
         this.remark = remark;
         this.notifiedDate = notifiedDate;
         this.readDate = readDate;
         this.readFlag = readFlag;
+        this.subject = subject;
+        this.body = body;
     }
 
     @Override
@@ -56,14 +66,6 @@ public class Notification implements Entity<LongIdKey> {
 
     public void setUserKey(StringIdKey userKey) {
         this.userKey = userKey;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getRemark() {
@@ -98,16 +100,33 @@ public class Notification implements Entity<LongIdKey> {
         this.readFlag = readFlag;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
     @Override
     public String toString() {
         return "Notification{" +
                 "key=" + key +
                 ", userKey=" + userKey +
-                ", message='" + message + '\'' +
                 ", remark='" + remark + '\'' +
                 ", notifiedDate=" + notifiedDate +
                 ", readDate=" + readDate +
                 ", readFlag=" + readFlag +
+                ", subject='" + subject + '\'' +
+                ", body='" + body + '\'' +
                 '}';
     }
 }

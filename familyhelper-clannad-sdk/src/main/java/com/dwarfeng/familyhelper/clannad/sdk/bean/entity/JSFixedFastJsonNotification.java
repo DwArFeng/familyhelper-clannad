@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class JSFixedFastJsonNotification implements Bean {
 
-    private static final long serialVersionUID = 30611166552055199L;
+    private static final long serialVersionUID = -5435116320179663794L;
 
     public static JSFixedFastJsonNotification of(Notification notification) {
         if (Objects.isNull(notification)) {
@@ -26,8 +26,8 @@ public class JSFixedFastJsonNotification implements Bean {
             return new JSFixedFastJsonNotification(
                     JSFixedFastJsonLongIdKey.of(notification.getKey()),
                     FastJsonStringIdKey.of(notification.getUserKey()),
-                    notification.getMessage(), notification.getRemark(), notification.getNotifiedDate(),
-                    notification.getReadDate(), notification.isReadFlag()
+                    notification.getRemark(), notification.getNotifiedDate(), notification.getReadDate(),
+                    notification.isReadFlag(), notification.getSubject(), notification.getBody()
             );
         }
     }
@@ -38,35 +38,39 @@ public class JSFixedFastJsonNotification implements Bean {
     @JSONField(name = "user_key", ordinal = 2)
     private FastJsonStringIdKey userKey;
 
-    @JSONField(name = "message", ordinal = 3)
-    private String message;
-
-    @JSONField(name = "remark", ordinal = 4)
+    @JSONField(name = "remark", ordinal = 3)
     private String remark;
 
-    @JSONField(name = "notified_date", ordinal = 5)
+    @JSONField(name = "notified_date", ordinal = 4)
     private Date notifiedDate;
 
-    @JSONField(name = "read_date", ordinal = 6)
+    @JSONField(name = "read_date", ordinal = 5)
     private Date readDate;
 
-    @JSONField(name = "read_flag", ordinal = 7)
+    @JSONField(name = "read_flag", ordinal = 6)
     private boolean readFlag;
+
+    @JSONField(name = "subject", ordinal = 7)
+    private String subject;
+
+    @JSONField(name = "body", ordinal = 8)
+    private String body;
 
     public JSFixedFastJsonNotification() {
     }
 
     public JSFixedFastJsonNotification(
-            JSFixedFastJsonLongIdKey key, FastJsonStringIdKey userKey, String message, String remark, Date notifiedDate,
-            Date readDate, boolean readFlag
+            JSFixedFastJsonLongIdKey key, FastJsonStringIdKey userKey, String remark, Date notifiedDate,
+            Date readDate, boolean readFlag, String subject, String body
     ) {
         this.key = key;
         this.userKey = userKey;
-        this.message = message;
         this.remark = remark;
         this.notifiedDate = notifiedDate;
         this.readDate = readDate;
         this.readFlag = readFlag;
+        this.subject = subject;
+        this.body = body;
     }
 
     public JSFixedFastJsonLongIdKey getKey() {
@@ -83,14 +87,6 @@ public class JSFixedFastJsonNotification implements Bean {
 
     public void setUserKey(FastJsonStringIdKey userKey) {
         this.userKey = userKey;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getRemark() {
@@ -125,16 +121,33 @@ public class JSFixedFastJsonNotification implements Bean {
         this.readFlag = readFlag;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
     @Override
     public String toString() {
         return "JSFixedFastJsonNotification{" +
                 "key=" + key +
                 ", userKey=" + userKey +
-                ", message='" + message + '\'' +
                 ", remark='" + remark + '\'' +
                 ", notifiedDate=" + notifiedDate +
                 ", readDate=" + readDate +
                 ", readFlag=" + readFlag +
+                ", subject='" + subject + '\'' +
+                ", body='" + body + '\'' +
                 '}';
     }
 }

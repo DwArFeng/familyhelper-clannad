@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public class WebInputNotification implements Bean {
 
-    private static final long serialVersionUID = 7479750983633944168L;
+    private static final long serialVersionUID = -3194625858919918185L;
 
     public static Notification toStackBean(WebInputNotification webInputNotification) {
         if (Objects.isNull(webInputNotification)) {
@@ -29,9 +29,9 @@ public class WebInputNotification implements Bean {
             return new Notification(
                     WebInputLongIdKey.toStackBean(webInputNotification.getKey()),
                     WebInputStringIdKey.toStackBean(webInputNotification.getUserKey()),
-                    webInputNotification.getMessage(), webInputNotification.getRemark(),
-                    webInputNotification.getNotifiedDate(), webInputNotification.getReadDate(),
-                    webInputNotification.isReadFlag()
+                    webInputNotification.getRemark(), webInputNotification.getNotifiedDate(),
+                    webInputNotification.getReadDate(), webInputNotification.isReadFlag(),
+                    webInputNotification.getSubject(), webInputNotification.getBody()
             );
         }
     }
@@ -43,10 +43,6 @@ public class WebInputNotification implements Bean {
     @JSONField(name = "user_key")
     @Valid
     private WebInputStringIdKey userKey;
-
-    @JSONField(name = "message")
-    @Length(max = Constraints.LENGTH_MESSAGE)
-    private String message;
 
     @JSONField(name = "remark")
     @Length(max = Constraints.LENGTH_REMARK)
@@ -60,6 +56,13 @@ public class WebInputNotification implements Bean {
 
     @JSONField(name = "read_flag")
     private boolean readFlag;
+
+    @JSONField(name = "subject")
+    @Length(max = Constraints.LENGTH_SUBJECT)
+    private String subject;
+
+    @JSONField(name = "body")
+    private String body;
 
     public WebInputNotification() {
     }
@@ -78,14 +81,6 @@ public class WebInputNotification implements Bean {
 
     public void setUserKey(WebInputStringIdKey userKey) {
         this.userKey = userKey;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getRemark() {
@@ -120,16 +115,33 @@ public class WebInputNotification implements Bean {
         this.readFlag = readFlag;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
     @Override
     public String toString() {
         return "WebInputNotification{" +
                 "key=" + key +
                 ", userKey=" + userKey +
-                ", message='" + message + '\'' +
                 ", remark='" + remark + '\'' +
                 ", notifiedDate=" + notifiedDate +
                 ", readDate=" + readDate +
                 ", readFlag=" + readFlag +
+                ", subject='" + subject + '\'' +
+                ", body='" + body + '\'' +
                 '}';
     }
 }

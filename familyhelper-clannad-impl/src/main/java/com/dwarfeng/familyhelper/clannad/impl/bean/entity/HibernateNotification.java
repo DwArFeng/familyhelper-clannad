@@ -14,7 +14,7 @@ import java.util.Optional;
 @Table(name = "tbl_notification")
 public class HibernateNotification implements Bean {
 
-    private static final long serialVersionUID = -9045804918985566563L;
+    private static final long serialVersionUID = -864373911554347964L;
 
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
@@ -26,10 +26,6 @@ public class HibernateNotification implements Bean {
     private String userStringId;
 
     // -----------------------------------------------------------主属性字段-----------------------------------------------------------
-    @SuppressWarnings("DefaultAnnotationParam")
-    @Column(name = "message", length = Constraints.LENGTH_MESSAGE, nullable = false)
-    private String message;
-
     @Column(name = "remark", length = Constraints.LENGTH_REMARK)
     private String remark;
 
@@ -43,6 +39,12 @@ public class HibernateNotification implements Bean {
 
     @Column(name = "read_flag")
     private boolean readFlag;
+
+    @Column(name = "subject", length = Constraints.LENGTH_SUBJECT)
+    private String subject;
+
+    @Column(name = "body", columnDefinition = "TEXT")
+    private String body;
 
     // -----------------------------------------------------------多对一-----------------------------------------------------------
     @ManyToOne(targetEntity = HibernateUser.class)
@@ -88,14 +90,6 @@ public class HibernateNotification implements Bean {
         this.userStringId = userStringId;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -128,6 +122,22 @@ public class HibernateNotification implements Bean {
         this.readFlag = readFlag;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
     public HibernateUser getUser() {
         return user;
     }
@@ -141,11 +151,12 @@ public class HibernateNotification implements Bean {
         return getClass().getSimpleName() + "(" +
                 "longId = " + longId + ", " +
                 "userStringId = " + userStringId + ", " +
-                "message = " + message + ", " +
                 "remark = " + remark + ", " +
                 "notifiedDate = " + notifiedDate + ", " +
                 "readDate = " + readDate + ", " +
                 "readFlag = " + readFlag + ", " +
+                "subject = " + subject + ", " +
+                "body = " + body + ", " +
                 "user = " + user + ")";
     }
 }

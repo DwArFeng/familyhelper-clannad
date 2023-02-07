@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 public class WebInputNotificationCreateInfo implements Dto {
 
-    private static final long serialVersionUID = 600403195325854204L;
+    private static final long serialVersionUID = -1983505091972692090L;
 
     public static NotificationCreateInfo toStackBean(WebInputNotificationCreateInfo webInputNotificationCreateInfo) {
         if (Objects.isNull(webInputNotificationCreateInfo)) {
@@ -26,7 +26,8 @@ public class WebInputNotificationCreateInfo implements Dto {
         } else {
             return new NotificationCreateInfo(
                     WebInputStringIdKey.toStackBean(webInputNotificationCreateInfo.getUserKey()),
-                    webInputNotificationCreateInfo.getMessage(), webInputNotificationCreateInfo.getRemark()
+                    webInputNotificationCreateInfo.getRemark(), webInputNotificationCreateInfo.getSubject(),
+                    webInputNotificationCreateInfo.getBody()
             );
         }
     }
@@ -35,13 +36,16 @@ public class WebInputNotificationCreateInfo implements Dto {
     @Valid
     private WebInputStringIdKey userKey;
 
-    @JSONField(name = "message")
-    @Length(max = Constraints.LENGTH_MESSAGE)
-    private String message;
-
     @JSONField(name = "remark")
     @Length(max = Constraints.LENGTH_REMARK)
     private String remark;
+
+    @JSONField(name = "subject")
+    @Length(max = Constraints.LENGTH_SUBJECT)
+    private String subject;
+
+    @JSONField(name = "body")
+    private String body;
 
     public WebInputNotificationCreateInfo() {
     }
@@ -54,14 +58,6 @@ public class WebInputNotificationCreateInfo implements Dto {
         this.userKey = userKey;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -70,12 +66,29 @@ public class WebInputNotificationCreateInfo implements Dto {
         this.remark = remark;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
     @Override
     public String toString() {
         return "WebInputNotificationCreateInfo{" +
                 "userKey=" + userKey +
-                ", message='" + message + '\'' +
                 ", remark='" + remark + '\'' +
+                ", subject='" + subject + '\'' +
+                ", body='" + body + '\'' +
                 '}';
     }
 }

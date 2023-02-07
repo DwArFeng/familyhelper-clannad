@@ -39,8 +39,8 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
             // 2. 根据 notificationCreateInfo 以及创建的规则组合通知实体。
             Date currentDate = new Date();
             Notification notification = new Notification(
-                    null, userKey, notificationCreateInfo.getMessage(), notificationCreateInfo.getRemark(),
-                    currentDate, null, false
+                    null, userKey, notificationCreateInfo.getRemark(), currentDate, null, false,
+                    notificationCreateInfo.getSubject(), notificationCreateInfo.getBody()
             );
 
             // 3. 插入通知实体，并返回生成的主键。

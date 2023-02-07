@@ -11,19 +11,29 @@ import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
  */
 public class NotificationCreateInfo implements Dto {
 
-    private static final long serialVersionUID = 1129640692143864310L;
+    private static final long serialVersionUID = 5752791004646882499L;
 
     private StringIdKey userKey;
-    private String message;
     private String remark;
+
+    /**
+     * @since 1.3.0
+     */
+    public String subject;
+
+    /**
+     * @since 1.3.0
+     */
+    public String body;
 
     public NotificationCreateInfo() {
     }
 
-    public NotificationCreateInfo(StringIdKey userKey, String message, String remark) {
+    public NotificationCreateInfo(StringIdKey userKey, String remark, String subject, String body) {
         this.userKey = userKey;
-        this.message = message;
         this.remark = remark;
+        this.subject = subject;
+        this.body = body;
     }
 
     public StringIdKey getUserKey() {
@@ -34,14 +44,6 @@ public class NotificationCreateInfo implements Dto {
         this.userKey = userKey;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -50,12 +52,29 @@ public class NotificationCreateInfo implements Dto {
         this.remark = remark;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
     @Override
     public String toString() {
         return "NotificationCreateInfo{" +
                 "userKey=" + userKey +
-                ", message='" + message + '\'' +
                 ", remark='" + remark + '\'' +
+                ", subject='" + subject + '\'' +
+                ", body='" + body + '\'' +
                 '}';
     }
 }
