@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 public class WebInputNotificationCreateInfo implements Dto {
 
-    private static final long serialVersionUID = -1983505091972692090L;
+    private static final long serialVersionUID = -3275872095989262076L;
 
     public static NotificationCreateInfo toStackBean(WebInputNotificationCreateInfo webInputNotificationCreateInfo) {
         if (Objects.isNull(webInputNotificationCreateInfo)) {
@@ -36,10 +36,6 @@ public class WebInputNotificationCreateInfo implements Dto {
     @Valid
     private WebInputStringIdKey userKey;
 
-    @JSONField(name = "remark")
-    @Length(max = Constraints.LENGTH_REMARK)
-    private String remark;
-
     @JSONField(name = "subject")
     @Length(max = Constraints.LENGTH_SUBJECT)
     private String subject;
@@ -47,7 +43,18 @@ public class WebInputNotificationCreateInfo implements Dto {
     @JSONField(name = "body")
     private String body;
 
+    @JSONField(name = "remark")
+    @Length(max = Constraints.LENGTH_REMARK)
+    private String remark;
+
     public WebInputNotificationCreateInfo() {
+    }
+
+    public WebInputNotificationCreateInfo(WebInputStringIdKey userKey, String subject, String body, String remark) {
+        this.userKey = userKey;
+        this.subject = subject;
+        this.body = body;
+        this.remark = remark;
     }
 
     public WebInputStringIdKey getUserKey() {
@@ -56,14 +63,6 @@ public class WebInputNotificationCreateInfo implements Dto {
 
     public void setUserKey(WebInputStringIdKey userKey) {
         this.userKey = userKey;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
     }
 
     public String getSubject() {
@@ -82,13 +81,21 @@ public class WebInputNotificationCreateInfo implements Dto {
         this.body = body;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     @Override
     public String toString() {
         return "WebInputNotificationCreateInfo{" +
                 "userKey=" + userKey +
-                ", remark='" + remark + '\'' +
                 ", subject='" + subject + '\'' +
                 ", body='" + body + '\'' +
+                ", remark='" + remark + '\'' +
                 '}';
     }
 }

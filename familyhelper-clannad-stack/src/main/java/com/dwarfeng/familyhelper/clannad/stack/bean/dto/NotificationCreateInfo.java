@@ -14,7 +14,6 @@ public class NotificationCreateInfo implements Dto {
     private static final long serialVersionUID = 5752791004646882499L;
 
     private StringIdKey userKey;
-    private String remark;
 
     /**
      * @since 1.3.0
@@ -26,14 +25,16 @@ public class NotificationCreateInfo implements Dto {
      */
     public String body;
 
+    private String remark;
+
     public NotificationCreateInfo() {
     }
 
-    public NotificationCreateInfo(StringIdKey userKey, String remark, String subject, String body) {
+    public NotificationCreateInfo(StringIdKey userKey, String subject, String body, String remark) {
         this.userKey = userKey;
-        this.remark = remark;
         this.subject = subject;
         this.body = body;
+        this.remark = remark;
     }
 
     public StringIdKey getUserKey() {
@@ -42,14 +43,6 @@ public class NotificationCreateInfo implements Dto {
 
     public void setUserKey(StringIdKey userKey) {
         this.userKey = userKey;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
     }
 
     public String getSubject() {
@@ -68,13 +61,21 @@ public class NotificationCreateInfo implements Dto {
         this.body = body;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     @Override
     public String toString() {
         return "NotificationCreateInfo{" +
                 "userKey=" + userKey +
-                ", remark='" + remark + '\'' +
                 ", subject='" + subject + '\'' +
                 ", body='" + body + '\'' +
+                ", remark='" + remark + '\'' +
                 '}';
     }
 }
