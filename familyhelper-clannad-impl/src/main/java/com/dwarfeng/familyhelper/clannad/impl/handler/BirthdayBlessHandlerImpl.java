@@ -228,7 +228,7 @@ public class BirthdayBlessHandlerImpl implements BirthdayBlessHandler {
                  *
                  * 上述条件任何一个不满足，返回 false。
                  */
-                if (!(month == 2) && (day == 29)) {
+                if (!((month == 2) && (day == 29))) {
                     return false;
                 }
                 if (current.isLeapYear(currentYear)) {
