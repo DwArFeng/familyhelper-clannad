@@ -11,6 +11,7 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
 import com.dwarfeng.familyhelper.clannad.stack.handler.CertificateOperateHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.CertificateMaintainService;
 import com.dwarfeng.familyhelper.clannad.stack.service.PoceMaintainService;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -61,10 +62,8 @@ public class CertificateOperateHandlerImpl implements CertificateOperateHandler 
 
             // 5. 返回生成的主键。
             return certificateKey;
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -90,10 +89,8 @@ public class CertificateOperateHandlerImpl implements CertificateOperateHandler 
 
             // 5. 更新账本实体。
             certificateMaintainService.update(certificate);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -111,10 +108,8 @@ public class CertificateOperateHandlerImpl implements CertificateOperateHandler 
 
             // 4. 删除指定主键的账本。
             certificateMaintainService.delete(certificateKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -163,10 +158,8 @@ public class CertificateOperateHandlerImpl implements CertificateOperateHandler 
                     "赋予用户 " + targetUserKey.getStringId() + " " + permissionLabel + "权限"
             );
             poceMaintainService.insertOrUpdate(poce);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -196,10 +189,8 @@ public class CertificateOperateHandlerImpl implements CertificateOperateHandler 
             // 5. 通过入口信息组合权限实体主键，并进行存在删除操作。
             PoceKey poceKey = new PoceKey(certificateKey.getLongId(), targetUserKey.getStringId());
             poceMaintainService.deleteIfExists(poceKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }

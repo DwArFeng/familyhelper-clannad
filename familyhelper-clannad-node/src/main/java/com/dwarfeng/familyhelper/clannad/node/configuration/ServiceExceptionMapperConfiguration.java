@@ -25,6 +25,6 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(CertificateFileNotExistsException.class, ServiceExceptionCodes.CERTIFICATE_FILE_NOT_EXISTS);
         destination.put(InvalidPermissionLevelException.class, ServiceExceptionCodes.INVALID_PERMISSION_LEVEL);
         destination.put(UserNotPermittedForCertificateException.class, ServiceExceptionCodes.USER_NOT_PERMITTED_FOR_CERTIFICATE);
-        return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINE);
+        return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }

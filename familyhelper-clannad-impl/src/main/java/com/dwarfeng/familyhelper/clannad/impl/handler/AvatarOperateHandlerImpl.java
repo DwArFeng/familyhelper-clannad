@@ -7,6 +7,7 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.entity.AvatarInfo;
 import com.dwarfeng.familyhelper.clannad.stack.handler.AvatarOperateHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.AvatarInfoMaintainService;
 import com.dwarfeng.ftp.handler.FtpHandler;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.stereotype.Component;
@@ -44,14 +45,12 @@ public class AvatarOperateHandlerImpl implements AvatarOperateHandler {
             AvatarInfo avatarInfo = avatarInfoMaintainService.get(userKey);
 
             // 4. 下载头像。
-            byte[] content = ftpHandler.getFileContent(new String[]{FtpConstants.PATH_AVATAR}, userKey.getStringId());
+            byte[] content = ftpHandler.retrieveFile(new String[]{FtpConstants.PATH_AVATAR}, userKey.getStringId());
 
             // 5. 拼接 Avatar 并返回。
             return new Avatar(avatarInfo.getOriginName(), content);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -71,10 +70,8 @@ public class AvatarOperateHandlerImpl implements AvatarOperateHandler {
                     "由 familyhelper-clannad 微服务进行上传"
             );
             avatarInfoMaintainService.insertOrUpdate(avatarInfo);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -91,10 +88,8 @@ public class AvatarOperateHandlerImpl implements AvatarOperateHandler {
 
             // 3. 如果存在 AvatarInfo 实体，则删除。
             avatarInfoMaintainService.deleteIfExists(userKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }

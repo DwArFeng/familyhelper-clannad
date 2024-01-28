@@ -29,7 +29,7 @@ public class ProfileOperateServiceImpl implements ProfileOperateService {
         try {
             profileOperateHandler.updateProfile(userKey, profileUpdateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新个人设置时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("更新个人设置时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -38,7 +38,7 @@ public class ProfileOperateServiceImpl implements ProfileOperateService {
         try {
             profileOperateHandler.addGuestPermission(ownerUserKey, guestUserKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("添加个人设置的访客权限时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("添加个人设置的访客权限时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -47,7 +47,7 @@ public class ProfileOperateServiceImpl implements ProfileOperateService {
         try {
             profileOperateHandler.removeGuestPermission(ownerUserKey, guestUserKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("移除个人设置的访客权限时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("移除个人设置的访客权限时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -57,7 +57,7 @@ public class ProfileOperateServiceImpl implements ProfileOperateService {
         try {
             profileOperateHandler.resetGuestPermission(ownerUserKey, guestUserKeys);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("重置个人设置的访客权限时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("重置个人设置的访客权限时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

@@ -4,6 +4,7 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.dto.NotificationCreateInfo;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Notification;
 import com.dwarfeng.familyhelper.clannad.stack.handler.NotificationOperateHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.NotificationMaintainService;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -45,10 +46,8 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
 
             // 3. 插入通知实体，并返回生成的主键。
             return notificationMaintainService.insert(notification);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -66,10 +65,8 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
 
             // 3. 更新通知实体。
             notificationMaintainService.update(notification);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -93,10 +90,8 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
 
             // 4. 更新通知实体。
             notificationMaintainService.batchUpdate(notifications);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -113,10 +108,8 @@ public class NotificationOperateHandlerImpl implements NotificationOperateHandle
 
             // 3. 删除通知实体。
             notificationMaintainService.batchDelete(notificationKeys);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }

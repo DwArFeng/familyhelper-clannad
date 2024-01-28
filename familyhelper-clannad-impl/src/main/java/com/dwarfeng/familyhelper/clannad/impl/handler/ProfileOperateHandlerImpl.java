@@ -7,6 +7,7 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.handler.ProfileOperateHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.PoprMaintainService;
 import com.dwarfeng.familyhelper.clannad.stack.service.ProfileMaintainService;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.stereotype.Component;
@@ -56,10 +57,8 @@ public class ProfileOperateHandlerImpl implements ProfileOperateHandler {
 
             // 3. 插入或更新个人简介实体。
             profileMaintainService.insertOrUpdate(profile);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -84,10 +83,8 @@ public class ProfileOperateHandlerImpl implements ProfileOperateHandler {
                     "赋予用户 " + guestUserKey.getStringId() + " 访客权限"
             );
             poprMaintainService.insertOrUpdate(popr);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -109,10 +106,8 @@ public class ProfileOperateHandlerImpl implements ProfileOperateHandler {
             // 5. 通过入口信息组合权限实体主键，并进行存在删除操作。
             PoprKey poprKey = new PoprKey(ownerUserKey.getStringId(), guestUserKey.getStringId());
             poprMaintainService.deleteIfExists(poprKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -148,10 +143,8 @@ public class ProfileOperateHandlerImpl implements ProfileOperateHandler {
                 return;
             }
             poprMaintainService.batchInsert(poprs);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 }

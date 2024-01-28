@@ -33,7 +33,7 @@ public class CertificateFileOperateServiceImpl implements CertificateFileOperate
         try {
             return certificateFileOperateHandler.downloadCertificateFile(userKey, certificateFileKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("下载证件文件时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("下载证件文件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -43,7 +43,7 @@ public class CertificateFileOperateServiceImpl implements CertificateFileOperate
         try {
             certificateFileOperateHandler.uploadCertificateFile(userKey, certificateFileUploadInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("上传证件文件时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("上传证件文件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -52,7 +52,7 @@ public class CertificateFileOperateServiceImpl implements CertificateFileOperate
         try {
             certificateFileOperateHandler.removeCertificateFile(userKey, certificateFileKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除证件文件时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("删除证件文件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

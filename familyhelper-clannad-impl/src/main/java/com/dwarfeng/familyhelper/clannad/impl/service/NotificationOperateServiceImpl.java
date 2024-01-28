@@ -30,7 +30,7 @@ public class NotificationOperateServiceImpl implements NotificationOperateServic
         try {
             return notificationOperateHandler.createNotification(notificationCreateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("创建通知时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("创建通知时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -39,7 +39,7 @@ public class NotificationOperateServiceImpl implements NotificationOperateServic
         try {
             notificationOperateHandler.readNotification(notificationKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("阅读通知时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("阅读通知时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -48,7 +48,7 @@ public class NotificationOperateServiceImpl implements NotificationOperateServic
         try {
             notificationOperateHandler.readAllNotification(userKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("阅读用户的所有通知时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("阅读用户的所有通知时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -57,7 +57,7 @@ public class NotificationOperateServiceImpl implements NotificationOperateServic
         try {
             notificationOperateHandler.removeAllNotification(userKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("清除用户的所有通知时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("清除用户的所有通知时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

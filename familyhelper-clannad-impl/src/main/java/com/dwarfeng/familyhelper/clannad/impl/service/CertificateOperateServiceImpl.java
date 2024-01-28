@@ -34,7 +34,7 @@ public class CertificateOperateServiceImpl implements CertificateOperateService 
         try {
             return certificateOperateHandler.createCertificate(userKey, certificateCreateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("创建证件时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("创建证件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -44,7 +44,7 @@ public class CertificateOperateServiceImpl implements CertificateOperateService 
         try {
             certificateOperateHandler.updateCertificate(userKey, certificateUpdateInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("更新证件时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("更新证件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -53,7 +53,7 @@ public class CertificateOperateServiceImpl implements CertificateOperateService 
         try {
             certificateOperateHandler.removeCertificate(userKey, certificateKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("删除证件时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("删除证件时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -64,7 +64,7 @@ public class CertificateOperateServiceImpl implements CertificateOperateService 
         try {
             certificateOperateHandler.upsertPermission(ownerUserKey, certificatePermissionUpsertInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("添加证件的访客权限时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("添加证件的访客权限时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -75,7 +75,7 @@ public class CertificateOperateServiceImpl implements CertificateOperateService 
         try {
             certificateOperateHandler.removePermission(ownerUserKey, certificatePermissionRemoveInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("移除证件的访客权限时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("移除证件的访客权限时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

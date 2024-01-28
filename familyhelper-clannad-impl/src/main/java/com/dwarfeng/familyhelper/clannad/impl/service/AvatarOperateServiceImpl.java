@@ -28,7 +28,7 @@ public class AvatarOperateServiceImpl implements AvatarOperateService {
         try {
             return avatarOperateHandler.downloadAvatar(userKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("下载头像时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("下载头像时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -37,7 +37,7 @@ public class AvatarOperateServiceImpl implements AvatarOperateService {
         try {
             avatarOperateHandler.uploadAvatar(userKey, avatarUploadInfo);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("上传头像时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("上传头像时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -46,7 +46,7 @@ public class AvatarOperateServiceImpl implements AvatarOperateService {
         try {
             avatarOperateHandler.removeAvatar(userKey);
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("移除头像时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("移除头像时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

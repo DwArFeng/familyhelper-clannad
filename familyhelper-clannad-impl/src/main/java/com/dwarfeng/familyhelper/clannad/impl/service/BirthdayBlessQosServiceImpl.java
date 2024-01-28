@@ -33,7 +33,7 @@ public class BirthdayBlessQosServiceImpl implements BirthdayBlessQosService {
         try {
             return birthdayBlessHandler.isOnline();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断生日祝福处理器是否上线时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("判断生日祝福处理器是否上线时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -42,7 +42,7 @@ public class BirthdayBlessQosServiceImpl implements BirthdayBlessQosService {
         try {
             birthdayBlessHandler.online();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("上线生日祝福处理器时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("上线生日祝福处理器时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -51,7 +51,7 @@ public class BirthdayBlessQosServiceImpl implements BirthdayBlessQosService {
         try {
             birthdayBlessHandler.offline();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("下线生日祝福处理器时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("下线生日祝福处理器时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -60,7 +60,7 @@ public class BirthdayBlessQosServiceImpl implements BirthdayBlessQosService {
         try {
             return birthdayBlessHandler.isLockHolding();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断生日祝福处理器是否正在持有锁时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("判断生日祝福处理器是否正在持有锁时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -69,7 +69,7 @@ public class BirthdayBlessQosServiceImpl implements BirthdayBlessQosService {
         try {
             return birthdayBlessHandler.isStarted();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断生日祝福处理器是否启动时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("判断生日祝福处理器是否启动时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -78,7 +78,7 @@ public class BirthdayBlessQosServiceImpl implements BirthdayBlessQosService {
         try {
             birthdayBlessHandler.start();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("生日祝福处理器启动时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("生日祝福处理器启动时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -87,7 +87,7 @@ public class BirthdayBlessQosServiceImpl implements BirthdayBlessQosService {
         try {
             birthdayBlessHandler.stop();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("生日祝福处理器停止时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("生日祝福处理器停止时发生异常", LogLevel.WARN, e, sem);
         }
     }
 
@@ -96,7 +96,7 @@ public class BirthdayBlessQosServiceImpl implements BirthdayBlessQosService {
         try {
             return birthdayBlessHandler.isWorking();
         } catch (Exception e) {
-            throw ServiceExceptionHelper.logAndThrow("判断生日祝福处理器是否正在工作时发生异常", LogLevel.WARN, sem, e);
+            throw ServiceExceptionHelper.logParse("判断生日祝福处理器是否正在工作时发生异常", LogLevel.WARN, e, sem);
         }
     }
 }

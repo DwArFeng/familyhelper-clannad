@@ -8,13 +8,11 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
 import com.dwarfeng.familyhelper.clannad.stack.cache.*;
 import com.dwarfeng.familyhelper.clannad.stack.dao.*;
-import com.dwarfeng.sfds.api.integration.subgrade.SnowFlakeLongIdKeyFetcher;
-import com.dwarfeng.subgrade.impl.bean.key.ExceptionKeyFetcher;
+import com.dwarfeng.subgrade.impl.generation.ExceptionKeyGenerator;
 import com.dwarfeng.subgrade.impl.service.CustomBatchCrudService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyEntireLookupService;
 import com.dwarfeng.subgrade.impl.service.DaoOnlyPresetLookupService;
 import com.dwarfeng.subgrade.impl.service.GeneralBatchCrudService;
-import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.log.LogLevel;
@@ -26,6 +24,7 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfiguration {
 
     private final ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration;
+    private final GenerateConfiguration generateConfiguration;
 
     private final ProfileDao profileDao;
     private final ProfileCrudOperation profileCrudOperation;
@@ -59,19 +58,28 @@ public class ServiceConfiguration {
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
-            ProfileDao profileDao, ProfileCrudOperation profileCrudOperation,
+            GenerateConfiguration generateConfiguration,
+            ProfileDao profileDao,
+            ProfileCrudOperation profileCrudOperation,
             UserCrudOperation userCrudOperation,
             ProfileTypeIndicatorDao profileTypeIndicatorDao,
             ProfileTypeIndicatorCache profileTypeIndicatorCache,
-            PoprDao poprDao, PoprCache poprCache,
-            NicknameDao nicknameDao, NicknameCache nicknameCache,
+            PoprDao poprDao,
+            PoprCache poprCache,
+            NicknameDao nicknameDao,
+            NicknameCache nicknameCache,
             AvatarInfoCrudOperation avatarInfoCrudOperation,
-            NotificationDao notificationDao, NotificationCache notificationCache,
-            CertificateCrudOperation certificateCrudOperation, CertificateDao certificateDao,
-            CertificateFileInfoCrudOperation certificateFileInfoCrudOperation, CertificateFileInfoDao certificateFileInfoDao,
-            PoceDao poceDao, PoceCache poceCache
+            NotificationDao notificationDao,
+            NotificationCache notificationCache,
+            CertificateCrudOperation certificateCrudOperation,
+            CertificateDao certificateDao,
+            CertificateFileInfoCrudOperation certificateFileInfoCrudOperation,
+            CertificateFileInfoDao certificateFileInfoDao,
+            PoceDao poceDao,
+            PoceCache poceCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
+        this.generateConfiguration = generateConfiguration;
         this.profileDao = profileDao;
         this.profileCrudOperation = profileCrudOperation;
         this.userCrudOperation = userCrudOperation;
@@ -93,15 +101,10 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public KeyFetcher<LongIdKey> longIdKeyKeyFetcher() {
-        return new SnowFlakeLongIdKeyFetcher();
-    }
-
-    @Bean
     public CustomBatchCrudService<StringIdKey, Profile> profileBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
                 profileCrudOperation,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -120,7 +123,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<StringIdKey, User> userBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
                 userCrudOperation,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -132,7 +135,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 profileTypeIndicatorDao,
                 profileTypeIndicatorCache,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 profileTypeIndicatorTimeout
@@ -154,7 +157,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 poprDao,
                 poprCache,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 poprTimeout
@@ -184,7 +187,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 nicknameDao,
                 nicknameCache,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 nicknameTimeout
@@ -204,7 +207,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<StringIdKey, AvatarInfo> avatarInfoBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
                 avatarInfoCrudOperation,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -215,7 +218,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 notificationDao,
                 notificationCache,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 notificationTimeout
@@ -244,7 +247,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<LongIdKey, Certificate> certificateBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
                 certificateCrudOperation,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -272,7 +275,7 @@ public class ServiceConfiguration {
     public CustomBatchCrudService<LongIdKey, CertificateFileInfo> certificateFileInfoBatchCustomCrudService() {
         return new CustomBatchCrudService<>(
                 certificateFileInfoCrudOperation,
-                longIdKeyKeyFetcher(),
+                generateConfiguration.snowflakeLongIdKeyGenerator(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN
         );
@@ -301,7 +304,7 @@ public class ServiceConfiguration {
         return new GeneralBatchCrudService<>(
                 poceDao,
                 poceCache,
-                new ExceptionKeyFetcher<>(),
+                new ExceptionKeyGenerator<>(),
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 poceTimeout

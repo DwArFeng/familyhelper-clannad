@@ -7,10 +7,11 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.entity.CertificateFileInfo;
 import com.dwarfeng.familyhelper.clannad.stack.handler.CertificateFileOperateHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.CertificateFileInfoMaintainService;
 import com.dwarfeng.ftp.handler.FtpHandler;
-import com.dwarfeng.subgrade.stack.bean.key.KeyFetcher;
+import com.dwarfeng.subgrade.sdk.exception.HandlerExceptionHelper;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
+import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -21,19 +22,19 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
     private final CertificateFileInfoMaintainService certificateFileInfoMaintainService;
     private final FtpHandler ftpHandler;
 
-    private final KeyFetcher<LongIdKey> keyFetcher;
+    private final KeyGenerator<LongIdKey> keyGenerator;
 
     private final OperateHandlerValidator operateHandlerValidator;
 
     public CertificateFileOperateHandlerImpl(
             CertificateFileInfoMaintainService certificateFileInfoMaintainService,
             FtpHandler ftpHandler,
-            KeyFetcher<LongIdKey> keyFetcher,
+            KeyGenerator<LongIdKey> keyGenerator,
             OperateHandlerValidator operateHandlerValidator
     ) {
         this.certificateFileInfoMaintainService = certificateFileInfoMaintainService;
         this.ftpHandler = ftpHandler;
-        this.keyFetcher = keyFetcher;
+        this.keyGenerator = keyGenerator;
         this.operateHandlerValidator = operateHandlerValidator;
     }
 
@@ -53,16 +54,14 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
             );
 
             // 4. 下载证件文件。
-            byte[] content = ftpHandler.getFileContent(
+            byte[] content = ftpHandler.retrieveFile(
                     new String[]{FtpConstants.PATH_CERTIFICATE_FILE}, getFileName(certificateFileKey)
             );
 
             // 6. 拼接 CertificateFile 并返回。
             return new CertificateFile(certificateFileInfo.getOriginName(), content);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -80,7 +79,7 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
             operateHandlerValidator.makeSureUserModifyPermittedForCertificate(userKey, certificateKey);
 
             // 4. 分配主键。
-            LongIdKey certificateFileKey = keyFetcher.fetchKey();
+            LongIdKey certificateFileKey = keyGenerator.generate();
 
             // 5. 证件文件内容并存储（覆盖）。
             byte[] content = certificateFileUploadInfo.getContent();
@@ -97,10 +96,8 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
             certificateFileInfo.setUploadDate(currentDate);
             certificateFileInfo.setRemark("通过 familyhelper-clannad 服务上传/更新证件文件");
             certificateFileInfoMaintainService.insertOrUpdate(certificateFileInfo);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
@@ -124,10 +121,8 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
 
             // 5. 如果存在 CertificateFileInfo 实体，则删除。
             certificateFileInfoMaintainService.deleteIfExists(certificateFileKey);
-        } catch (HandlerException e) {
-            throw e;
         } catch (Exception e) {
-            throw new HandlerException(e);
+            throw HandlerExceptionHelper.parse(e);
         }
     }
 
