@@ -70,8 +70,8 @@ public class AvatarInfoCrudOperation implements BatchCrudOperation<StringIdKey, 
     @Override
     public void delete(StringIdKey key) throws Exception {
         // 删除用户有关的头像文件。
-        if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_AVATAR}, key.getStringId())) {
-            ftpHandler.deleteFile(new String[]{FtpConstants.PATH_AVATAR}, key.getStringId());
+        if (ftpHandler.existsFile(FtpConstants.PATH_AVATAR, key.getStringId())) {
+            ftpHandler.deleteFile(FtpConstants.PATH_AVATAR, key.getStringId());
         }
 
         // 删除账本实体自身。

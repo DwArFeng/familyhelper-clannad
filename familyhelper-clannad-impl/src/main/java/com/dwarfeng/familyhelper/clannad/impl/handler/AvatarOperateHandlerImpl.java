@@ -45,7 +45,7 @@ public class AvatarOperateHandlerImpl implements AvatarOperateHandler {
             AvatarInfo avatarInfo = avatarInfoMaintainService.get(userKey);
 
             // 4. 下载头像。
-            byte[] content = ftpHandler.retrieveFile(new String[]{FtpConstants.PATH_AVATAR}, userKey.getStringId());
+            byte[] content = ftpHandler.retrieveFile(FtpConstants.PATH_AVATAR, userKey.getStringId());
 
             // 5. 拼接 Avatar 并返回。
             return new Avatar(avatarInfo.getOriginName(), content);
@@ -62,7 +62,7 @@ public class AvatarOperateHandlerImpl implements AvatarOperateHandler {
 
             // 2. 获取头像内容并存储（覆盖）。
             byte[] content = avatarUploadInfo.getContent();
-            ftpHandler.storeFile(new String[]{FtpConstants.PATH_AVATAR}, userKey.getStringId(), content);
+            ftpHandler.storeFile(FtpConstants.PATH_AVATAR, userKey.getStringId(), content);
 
             // 3. 构造 AvatarInfo 实体，插入或更新。
             AvatarInfo avatarInfo = new AvatarInfo(
@@ -82,8 +82,8 @@ public class AvatarOperateHandlerImpl implements AvatarOperateHandler {
             operateHandlerValidator.makeSureUserExists(userKey);
 
             // 2. 如果存在 Avatar 文件，则删除。
-            if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_AVATAR}, userKey.getStringId())) {
-                ftpHandler.deleteFile(new String[]{FtpConstants.PATH_AVATAR}, userKey.getStringId());
+            if (ftpHandler.existsFile(FtpConstants.PATH_AVATAR, userKey.getStringId())) {
+                ftpHandler.deleteFile(FtpConstants.PATH_AVATAR, userKey.getStringId());
             }
 
             // 3. 如果存在 AvatarInfo 实体，则删除。

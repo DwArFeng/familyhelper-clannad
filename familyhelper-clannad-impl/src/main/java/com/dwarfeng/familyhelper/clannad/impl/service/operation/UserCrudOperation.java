@@ -140,8 +140,8 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         }
 
         // 删除用户有关的头像文件。
-        if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_AVATAR}, key.getStringId())) {
-            ftpHandler.deleteFile(new String[]{FtpConstants.PATH_AVATAR}, key.getStringId());
+        if (ftpHandler.existsFile(FtpConstants.PATH_AVATAR, key.getStringId())) {
+            ftpHandler.deleteFile(FtpConstants.PATH_AVATAR, key.getStringId());
         }
 
         // 删除与用户相关的头像信息。

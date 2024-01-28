@@ -55,7 +55,7 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
 
             // 4. 下载证件文件。
             byte[] content = ftpHandler.retrieveFile(
-                    new String[]{FtpConstants.PATH_CERTIFICATE_FILE}, getFileName(certificateFileKey)
+                    FtpConstants.PATH_CERTIFICATE_FILE, getFileName(certificateFileKey)
             );
 
             // 6. 拼接 CertificateFile 并返回。
@@ -83,7 +83,7 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
 
             // 5. 证件文件内容并存储（覆盖）。
             byte[] content = certificateFileUploadInfo.getContent();
-            ftpHandler.storeFile(new String[]{FtpConstants.PATH_CERTIFICATE_FILE}, getFileName(certificateFileKey), content);
+            ftpHandler.storeFile(FtpConstants.PATH_CERTIFICATE_FILE, getFileName(certificateFileKey), content);
 
             // 6. 根据 certificateFileUploadInfo 构造 CertificateFileInfo，插入或更新。
             Date currentDate = new Date();
@@ -115,8 +115,8 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
             operateHandlerValidator.makeSureUserModifyPermittedForCertificate(userKey, certificateFileInfo.getCertificateKey());
 
             // 4. 如果存在 CertificateFile 文件，则删除。
-            if (ftpHandler.existsFile(new String[]{FtpConstants.PATH_CERTIFICATE_FILE}, getFileName(certificateFileKey))) {
-                ftpHandler.deleteFile(new String[]{FtpConstants.PATH_CERTIFICATE_FILE}, getFileName(certificateFileKey));
+            if (ftpHandler.existsFile(FtpConstants.PATH_CERTIFICATE_FILE, getFileName(certificateFileKey))) {
+                ftpHandler.deleteFile(FtpConstants.PATH_CERTIFICATE_FILE, getFileName(certificateFileKey));
             }
 
             // 5. 如果存在 CertificateFileInfo 实体，则删除。

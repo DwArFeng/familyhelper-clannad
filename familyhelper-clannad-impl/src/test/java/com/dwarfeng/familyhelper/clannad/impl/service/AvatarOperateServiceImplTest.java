@@ -89,7 +89,7 @@ public class AvatarOperateServiceImplTest {
 
             // 移除头像，头像文件和头像信息应该一并移除。
             avatarOperateService.removeAvatar(USER_KEY);
-            assertFalse(ftpHandler.existsFile(new String[]{FtpConstants.PATH_AVATAR}, USER_KEY.getStringId()));
+            assertFalse(ftpHandler.existsFile(FtpConstants.PATH_AVATAR, USER_KEY.getStringId()));
             assertFalse(avatarInfoMaintainService.exists(USER_KEY));
         } finally {
             userMaintainService.deleteIfExists(user.getKey());

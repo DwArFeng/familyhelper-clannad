@@ -8,11 +8,12 @@ package com.dwarfeng.familyhelper.clannad.impl.util;
  */
 public final class FtpConstants {
 
-    public static final String PATH_AVATAR = "familyhelper-clannad/avatar";
+    public static final String[] PATH_AVATAR = new String[]{"familyhelper-clannad", "avatar"};
+
     /**
      * @since 1.2.3
      */
-    public static final String PATH_CERTIFICATE_FILE = "familyhelper-clannad/certificate-file";
+    public static final String[] PATH_CERTIFICATE_FILE = new String[]{"familyhelper-clannad", "certificate-file"};
 
     private FtpConstants() {
         throw new IllegalStateException("禁止实例化");
