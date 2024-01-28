@@ -2,6 +2,7 @@ package com.dwarfeng.familyhelper.clannad.impl.service;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateFile;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateFileUploadInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateThumbnail;
 import com.dwarfeng.familyhelper.clannad.stack.handler.CertificateFileOperateHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.CertificateFileOperateService;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionHelper;
@@ -34,6 +35,16 @@ public class CertificateFileOperateServiceImpl implements CertificateFileOperate
             return certificateFileOperateHandler.downloadCertificateFile(userKey, certificateFileKey);
         } catch (Exception e) {
             throw ServiceExceptionHelper.logParse("下载证件文件时发生异常", LogLevel.WARN, e, sem);
+        }
+    }
+
+    @Override
+    public CertificateThumbnail downloadCertificateThumbnail(StringIdKey userKey, LongIdKey certificateFileKey)
+            throws ServiceException {
+        try {
+            return certificateFileOperateHandler.downloadCertificateThumbnail(userKey, certificateFileKey);
+        } catch (Exception e) {
+            throw ServiceExceptionHelper.logParse("下载证件缩略图时发生异常", LogLevel.WARN, e, sem);
         }
     }
 

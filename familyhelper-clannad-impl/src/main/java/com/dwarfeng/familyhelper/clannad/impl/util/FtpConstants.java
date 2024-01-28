@@ -15,6 +15,13 @@ public final class FtpConstants {
      */
     public static final String[] PATH_CERTIFICATE_FILE = new String[]{"familyhelper-clannad", "certificate-file"};
 
+    /**
+     * @since 1.4.0
+     */
+    public static final String[] PATH_CERTIFICATE_THUMBNAIL = new String[]{
+            "familyhelper-clannad", "certificate-thumbnail"
+    };
+
     private FtpConstants() {
         throw new IllegalStateException("禁止实例化");
     }

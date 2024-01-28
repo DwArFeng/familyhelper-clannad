@@ -58,6 +58,7 @@
         <dwarfeng-ftp.version>1.1.13.a</dwarfeng-ftp.version>
         <spring-terminator.version>1.0.12.a</spring-terminator.version>
         <spring-telqos.version>1.1.8.a</spring-telqos.version>
+        <thumbnailator.version>0.4.20</thumbnailator.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -440,6 +441,12 @@
                 <groupId>com.dwarfeng</groupId>
                 <artifactId>spring-telqos-api</artifactId>
                 <version>${spring-telqos.version}</version>
+            </dependency>
+            <!-- Thumbnailator 缩略图组件 -->
+            <dependency>
+                <groupId>net.coobird</groupId>
+                <artifactId>thumbnailator</artifactId>
+                <version>${thumbnailator.version}</version>
             </dependency>
             <!-- 程序自身组件 -->
             <dependency>

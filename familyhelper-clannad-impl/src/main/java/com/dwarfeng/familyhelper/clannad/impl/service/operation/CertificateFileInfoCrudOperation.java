@@ -65,12 +65,16 @@ public class CertificateFileInfoCrudOperation implements BatchCrudOperation<Long
         certificateFileInfoDao.update(certificateFileInfo);
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public void delete(LongIdKey key) throws Exception {
         // 如果存在证书文件，则删除证书文件。
         if (ftpHandler.existsFile(FtpConstants.PATH_CERTIFICATE_FILE, getFileName(key))) {
             ftpHandler.deleteFile(FtpConstants.PATH_CERTIFICATE_FILE, getFileName(key));
+        }
+
+        // 如果存在证书缩略图，则删除证书缩略图。
+        if (ftpHandler.existsFile(FtpConstants.PATH_CERTIFICATE_THUMBNAIL, getFileName(key))) {
+            ftpHandler.deleteFile(FtpConstants.PATH_CERTIFICATE_THUMBNAIL, getFileName(key));
         }
 
         // 删除证书文件信息实体自身。

@@ -207,6 +207,11 @@
             <groupId>com.dwarfeng</groupId>
             <artifactId>spring-telqos-core</artifactId>
         </dependency>
+        <!-- Thumbnailator 缩略图组件 -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+        </dependency>
         <!-- 程序自身模块 -->
         <dependency>
             <groupId>com.dwarfeng</groupId>

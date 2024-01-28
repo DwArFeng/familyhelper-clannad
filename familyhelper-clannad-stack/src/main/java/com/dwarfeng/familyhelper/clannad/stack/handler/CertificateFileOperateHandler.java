@@ -2,6 +2,7 @@ package com.dwarfeng.familyhelper.clannad.stack.handler;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateFile;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateFileUploadInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateThumbnail;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
@@ -24,6 +25,18 @@ public interface CertificateFileOperateHandler extends Handler {
      * @throws HandlerException 处理器异常。
      */
     CertificateFile downloadCertificateFile(StringIdKey userKey, LongIdKey certificateFileKey) throws HandlerException;
+
+    /**
+     * 下载证件缩略图。
+     *
+     * @param userKey            执行用户主键。
+     * @param certificateFileKey 证件文件主键。
+     * @return 证件缩略图。
+     * @throws HandlerException 处理器异常。
+     * @since 1.4.0
+     */
+    CertificateThumbnail downloadCertificateThumbnail(StringIdKey userKey, LongIdKey certificateFileKey)
+            throws HandlerException;
 
     /**
      * 上传证件文件。

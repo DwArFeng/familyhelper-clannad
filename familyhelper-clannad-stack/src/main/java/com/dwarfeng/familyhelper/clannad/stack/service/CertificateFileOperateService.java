@@ -2,6 +2,7 @@ package com.dwarfeng.familyhelper.clannad.stack.service;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateFile;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateFileUploadInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateThumbnail;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.ServiceException;
@@ -24,6 +25,18 @@ public interface CertificateFileOperateService extends Service {
      * @throws ServiceException 服务异常。
      */
     CertificateFile downloadCertificateFile(StringIdKey userKey, LongIdKey certificateFileKey) throws ServiceException;
+
+    /**
+     * 下载证件缩略图。
+     *
+     * @param userKey            执行用户主键。
+     * @param certificateFileKey 证件文件主键。
+     * @return 证件缩略图。
+     * @throws ServiceException 服务异常。
+     * @since 1.4.0
+     */
+    CertificateThumbnail downloadCertificateThumbnail(StringIdKey userKey, LongIdKey certificateFileKey)
+            throws ServiceException;
 
     /**
      * 上传证件文件。
