@@ -65,7 +65,6 @@ public class PocePresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void childForCertificatePermissionLevelEquals(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             if (Objects.isNull(objects[0])) {
@@ -83,7 +82,6 @@ public class PocePresetCriteriaMaker implements PresetCriteriaMaker {
         }
     }
 
-    @SuppressWarnings("DuplicatedCode")
     private void childForUserPermissionLevelEquals(DetachedCriteria detachedCriteria, Object[] objects) {
         try {
             if (Objects.isNull(objects[0])) {

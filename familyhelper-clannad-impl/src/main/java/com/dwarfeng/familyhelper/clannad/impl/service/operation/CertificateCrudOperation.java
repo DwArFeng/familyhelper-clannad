@@ -80,7 +80,6 @@ public class CertificateCrudOperation implements BatchCrudOperation<LongIdKey, C
         certificateDao.update(certificate);
     }
 
-    @SuppressWarnings("DuplicatedCode")
     @Override
     public void delete(LongIdKey key) throws Exception {
         // 删除与证书相关的证书文件信息。

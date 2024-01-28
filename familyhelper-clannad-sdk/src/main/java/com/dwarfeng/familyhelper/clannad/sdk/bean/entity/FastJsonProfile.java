@@ -305,6 +305,7 @@ public class FastJsonProfile implements Dto {
         this.remark = remark;
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @Override
     public String toString() {
         return "FastJsonProfile{" +

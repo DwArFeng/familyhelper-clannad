@@ -141,17 +141,7 @@ public class CertificateOperateHandlerImpl implements CertificateOperateHandler 
             operateHandlerValidator.makeSureUserModifyPermittedForCertificate(ownerUserKey, certificateKey);
 
             // 6. 通过入口信息组合权限实体，并进行插入或更新操作。
-            String permissionLabel;
-            switch (permissionLevel) {
-                case Constants.PERMISSION_LEVEL_GUEST:
-                    permissionLabel = "目标";
-                    break;
-                case Constants.PERMISSION_LEVEL_OWNER:
-                    permissionLabel = "所有者";
-                    break;
-                default:
-                    permissionLabel = "（未知）";
-            }
+            String permissionLabel = parsePermissionLabel(permissionLevel);
             Poce poce = new Poce(
                     new PoceKey(certificateKey.getLongId(), targetUserKey.getStringId()),
                     permissionLevel,
@@ -192,5 +182,20 @@ public class CertificateOperateHandlerImpl implements CertificateOperateHandler 
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         }
+    }
+
+    private String parsePermissionLabel(int permissionLevel) {
+        String permissionLabel;
+        switch (permissionLevel) {
+            case Constants.PERMISSION_LEVEL_GUEST:
+                permissionLabel = "目标";
+                break;
+            case Constants.PERMISSION_LEVEL_OWNER:
+                permissionLabel = "所有者";
+                break;
+            default:
+                permissionLabel = "（未知）";
+        }
+        return permissionLabel;
     }
 }
