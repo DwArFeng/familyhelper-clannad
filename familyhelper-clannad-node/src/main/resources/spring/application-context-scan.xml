@@ -16,7 +16,11 @@
     <!--扫描cache的实现包。 -->
     <context:component-scan base-package="com.dwarfeng.familyhelper.clannad.impl.cache"/>
     <!--扫描handler的实现包。 -->
-    <context:component-scan base-package="com.dwarfeng.familyhelper.clannad.impl.handler"/>
+    <context:component-scan base-package="com.dwarfeng.familyhelper.clannad.impl.handler">
+        <context:exclude-filter
+                type="regex" expression="^com\.dwarfeng\.familyhelper\.clannad\.impl\.handler\.pusher\..*$"
+        />
+    </context:component-scan>
     <!--扫描配置类所在的包。 -->
     <context:component-scan base-package="com.dwarfeng.familyhelper.clannad.node.configuration"/>
     <!--扫描启动器有关的 handler 所在的包。 -->
