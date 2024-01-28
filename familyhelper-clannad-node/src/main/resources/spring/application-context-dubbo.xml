@@ -5,7 +5,8 @@
         xmlns="http://www.springframework.org/schema/beans"
         xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd"
+        http://dubbo.apache.org/schema/dubbo
+        http://dubbo.apache.org/schema/dubbo/dubbo.xsd"
 >
 
     <dubbo:application name="familyhelper-clannad-node">
@@ -16,41 +17,76 @@
     <dubbo:registry address="${dubbo.registry.zookeeper.address}" timeout="${dubbo.registry.zookeeper.timeout}"/>
 
     <!-- dubbo协议 -->
-    <dubbo:protocol name="dubbo" port="${dubbo.protocol.dubbo.port}" host="${dubbo.protocol.dubbo.host}"
-                    dispatcher="message" threadpool="fixed" threads="100"/>
+    <dubbo:protocol
+            name="dubbo" port="${dubbo.protocol.dubbo.port}" host="${dubbo.protocol.dubbo.host}"
+            dispatcher="message" threadpool="fixed" threads="100"
+    />
 
     <!-- 向注册中心注册暴露服务地址,注册服务 -->
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.PoprMaintainService"
-                   ref="poprMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.ProfileMaintainService"
-                   ref="profileMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.ProfileOperateService"
-                   ref="profileOperateServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.ProfileTypeIndicatorMaintainService"
-                   ref="profileTypeIndicatorMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.UserMaintainService"
-                   ref="userMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.NicknameMaintainService"
-                   ref="nicknameMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.AvatarInfoMaintainService"
-                   ref="avatarInfoMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.AvatarOperateService"
-                   ref="avatarOperateServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.NotificationMaintainService"
-                   ref="notificationMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.NotificationOperateService"
-                   ref="notificationOperateServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateMaintainService"
-                   ref="certificateMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateOperateService"
-                   ref="certificateOperateServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateFileInfoMaintainService"
-                   ref="certificateFileInfoMaintainServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateFileOperateService"
-                   ref="certificateFileOperateServiceImpl"/>
-    <dubbo:service interface="com.dwarfeng.familyhelper.clannad.stack.service.PoceMaintainService"
-                   ref="poceMaintainServiceImpl"/>
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.PoprMaintainService"
+            ref="poprMaintainServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.ProfileMaintainService"
+            ref="profileMaintainServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.ProfileOperateService"
+            ref="profileOperateServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.ProfileTypeIndicatorMaintainService"
+            ref="profileTypeIndicatorMaintainServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.UserMaintainService"
+            ref="userMaintainServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.NicknameMaintainService"
+            ref="nicknameMaintainServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.AvatarInfoMaintainService"
+            ref="avatarInfoMaintainServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.AvatarOperateService"
+            ref="avatarOperateServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.NotificationMaintainService"
+            ref="notificationMaintainServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.NotificationOperateService"
+            ref="notificationOperateServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateMaintainService"
+            ref="certificateMaintainServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateOperateService"
+            ref="certificateOperateServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateFileInfoMaintainService"
+            ref="certificateFileInfoMaintainServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.CertificateFileOperateService"
+            ref="certificateFileOperateServiceImpl"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.PoceMaintainService"
+            ref="poceMaintainServiceImpl"
+    />
 
     <!-- 向注册中心注册暴露服务地址,注册消费者服务 -->
-    <dubbo:reference id="snowflakeGenerateService" interface="com.dwarfeng.sfds.stack.service.GenerateService"/>
+    <dubbo:reference
+            id="snowflakeGenerateService"
+            interface="com.dwarfeng.sfds.stack.service.GenerateService"
+    />
 </beans>
