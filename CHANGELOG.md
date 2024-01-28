@@ -49,6 +49,9 @@
 
 #### Bug修复
 
+- 修复配置文件中的错误。
+  - `opt/opt-pusher.xml` 中 `context:include-filter` 元素的 `expression` 属性值错误。
+
 - 修复程序启动时所有的推送器均会被加载的问题。
 
 #### 功能移除

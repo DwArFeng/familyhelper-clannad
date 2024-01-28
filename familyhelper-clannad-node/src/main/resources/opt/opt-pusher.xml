@@ -18,21 +18,21 @@
         <!-- 加载 DrainPusher -->
         <!--
         <context:include-filter
-                type="assignable" expression="com.dwarfeng.familyhelper.finance.impl.handler.pusher.DrainPusher"
+                type="assignable" expression="com.dwarfeng.familyhelper.clannad.impl.handler.pusher.DrainPusher"
         />
         -->
 
         <!-- 加载 LogPusher -->
         <!--
         <context:include-filter
-                type="assignable" expression="com.dwarfeng.familyhelper.finance.impl.handler.pusher.LogPusher"
+                type="assignable" expression="com.dwarfeng.familyhelper.clannad.impl.handler.pusher.LogPusher"
         />
         -->
 
         <!-- 加载 MultiPusher -->
         <!--
         <context:include-filter
-                type="assignable" expression="com.dwarfeng.familyhelper.finance.impl.handler.pusher.MultiPusher"
+                type="assignable" expression="com.dwarfeng.familyhelper.clannad.impl.handler.pusher.MultiPusher"
         />
         -->
     </context:component-scan>
