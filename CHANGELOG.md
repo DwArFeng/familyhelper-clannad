@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 增加预设的运维指令。
+  - com.dwarfeng.springtelqos.api.integration.log4j2.Log4j2Command。
+
 - 依赖升级。
   - 升级 `subgrade` 依赖版本为 `1.5.2.a` 以应用其新功能。
   - 升级 `spring-telqos` 依赖版本为 `1.1.9.a` 以应用其新功能。
