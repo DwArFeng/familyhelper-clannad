@@ -25,6 +25,10 @@
 
 #### Bug修复
 
+- 修复项目中部分依赖的异常代码偏移未能正确设置的 bug。
+  - 修复 `subgrade` 依赖的异常代码偏移未能正确设置的 bug。
+  - 修复 `snowflake` 依赖的异常代码偏移未能正确设置的 bug。
+
 - 补全部分 bean 类中缺失的方法。
   - com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateFile。
 
