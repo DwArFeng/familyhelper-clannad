@@ -14,7 +14,8 @@
 
 #### Bug修复
 
-- (无)
+- 补全部分 bean 类中缺失的方法。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateFile。
 
 #### 功能移除
 

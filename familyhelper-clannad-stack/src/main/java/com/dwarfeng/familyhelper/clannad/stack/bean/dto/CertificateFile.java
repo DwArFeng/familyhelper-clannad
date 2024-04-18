@@ -12,10 +12,13 @@ import java.util.Arrays;
  */
 public class CertificateFile implements Dto {
 
-    private static final long serialVersionUID = 1759030122242360421L;
+    private static final long serialVersionUID = -6192317032505619556L;
 
     private String originName;
     private byte[] content;
+
+    public CertificateFile() {
+    }
 
     public CertificateFile(String originName, byte[] content) {
         this.originName = originName;
