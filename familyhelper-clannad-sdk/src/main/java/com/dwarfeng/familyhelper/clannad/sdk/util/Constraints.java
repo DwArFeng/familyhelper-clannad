@@ -14,7 +14,7 @@ public final class Constraints {
     public static final int LENGTH_NAME = 20;
 
     /**
-     * MOTD的长度约束。
+     * MOTD 的长度约束。
      */
     public static final int LENGTH_MOTD = 200;
 

@@ -29,6 +29,7 @@ public class BirthdayBlessCommand extends CliCommand {
             COMMAND_OPTION_STATUS
     };
 
+    @SuppressWarnings("SpellCheckingInspection")
     private static final String IDENTITY = "birbless";
     private static final String DESCRIPTION = "生日祝福处服务操作/查看";
 
