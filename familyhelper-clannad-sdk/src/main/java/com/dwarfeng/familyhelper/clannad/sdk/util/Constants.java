@@ -11,6 +11,8 @@ public final class Constants {
     public static final int PERMISSION_LEVEL_OWNER = 0;
     public static final int PERMISSION_LEVEL_GUEST = 1;
 
+    public static final int IO_TRANS_BUFFER_SIZE = 4096;
+
     private Constants() {
         throw new IllegalStateException("禁止实例化");
     }

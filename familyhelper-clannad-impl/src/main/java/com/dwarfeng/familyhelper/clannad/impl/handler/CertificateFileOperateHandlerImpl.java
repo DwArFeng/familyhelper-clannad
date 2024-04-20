@@ -2,9 +2,8 @@ package com.dwarfeng.familyhelper.clannad.impl.handler;
 
 import com.dwarfeng.dutil.basic.io.IOUtil;
 import com.dwarfeng.familyhelper.clannad.impl.util.FtpConstants;
-import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateFile;
-import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateFileUploadInfo;
-import com.dwarfeng.familyhelper.clannad.stack.bean.dto.CertificateThumbnail;
+import com.dwarfeng.familyhelper.clannad.sdk.util.Constants;
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.CertificateFileInfo;
 import com.dwarfeng.familyhelper.clannad.stack.handler.CertificateFileOperateHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.CertificateFileInfoMaintainService;
@@ -88,6 +87,36 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
     }
 
     @Override
+    public CertificateFileStream downloadCertificateFileStream(StringIdKey userKey, LongIdKey certificateFileKey)
+            throws HandlerException {
+        try {
+            // 确认用户存在。
+            operateHandlerValidator.makeSureUserExists(userKey);
+
+            // 确认证件文件存在。
+            operateHandlerValidator.makeSureCertificateFileExists(certificateFileKey);
+
+            // 获取证件文件对应的证件，并确认用户有权限操作证件。
+            CertificateFileInfo certificateFileInfo = certificateFileInfoMaintainService.get(certificateFileKey);
+            operateHandlerValidator.makeSureUserInspectPermittedForCertificate(
+                    userKey, certificateFileInfo.getCertificateKey()
+            );
+
+            // 下载证件文件流。
+            InputStream content = ftpHandler.openInputStream(
+                    FtpConstants.PATH_CERTIFICATE_FILE, getFileName(certificateFileKey)
+            );
+
+            // 拼接 CertificateFileStream 并返回。
+            return new CertificateFileStream(
+                    certificateFileInfo.getOriginName(), certificateFileInfo.getLength(), content
+            );
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        }
+    }
+
+    @Override
     public CertificateThumbnail downloadCertificateThumbnail(StringIdKey userKey, LongIdKey certificateFileKey)
             throws HandlerException {
         try {
@@ -127,14 +156,14 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
 
     @SuppressWarnings("ExtractMethodRecommender")
     @Override
-    public void uploadCertificateFile(StringIdKey userKey, CertificateFileUploadInfo certificateFileUploadInfo)
+    public void uploadCertificateFile(StringIdKey userKey, CertificateFileUploadInfo uploadInfo)
             throws HandlerException {
         try {
             // 确认用户存在。
             operateHandlerValidator.makeSureUserExists(userKey);
 
             // 确认证件文件所属的证件存在。
-            LongIdKey certificateKey = certificateFileUploadInfo.getCertificateKey();
+            LongIdKey certificateKey = uploadInfo.getCertificateKey();
             operateHandlerValidator.makeSureCertificateExists(certificateKey);
 
             // 确认用户有权限操作证件。
@@ -144,7 +173,7 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
             LongIdKey certificateFileKey = keyGenerator.generate();
 
             // 证件文件内容并存储（覆盖）。
-            byte[] content = certificateFileUploadInfo.getContent();
+            byte[] content = uploadInfo.getContent();
             ftpHandler.storeFile(FtpConstants.PATH_CERTIFICATE_FILE, getFileName(certificateFileKey), content);
 
             // 生成缩略图并存储（覆盖）。
@@ -156,8 +185,53 @@ public class CertificateFileOperateHandlerImpl implements CertificateFileOperate
             CertificateFileInfo certificateFileInfo = new CertificateFileInfo();
             certificateFileInfo.setKey(certificateFileKey);
             certificateFileInfo.setCertificateKey(certificateKey);
-            certificateFileInfo.setOriginName(certificateFileUploadInfo.getOriginName());
-            certificateFileInfo.setLength(certificateFileUploadInfo.getContent().length);
+            certificateFileInfo.setOriginName(uploadInfo.getOriginName());
+            certificateFileInfo.setLength(uploadInfo.getContent().length);
+            certificateFileInfo.setUploadDate(currentDate);
+            certificateFileInfo.setRemark("通过 familyhelper-clannad 服务上传/更新证件文件");
+            certificateFileInfoMaintainService.insertOrUpdate(certificateFileInfo);
+        } catch (Exception e) {
+            throw HandlerExceptionHelper.parse(e);
+        }
+    }
+
+    @SuppressWarnings("ExtractMethodRecommender")
+    @Override
+    public void uploadCertificateFileStream(StringIdKey userKey, CertificateFileStreamUploadInfo uploadInfo)
+            throws HandlerException {
+        try {
+            // 确认用户存在。
+            operateHandlerValidator.makeSureUserExists(userKey);
+
+            // 确认证件文件所属的证件存在。
+            LongIdKey certificateKey = uploadInfo.getCertificateKey();
+            operateHandlerValidator.makeSureCertificateExists(certificateKey);
+
+            // 确认用户有权限操作证件。
+            operateHandlerValidator.makeSureUserModifyPermittedForCertificate(userKey, certificateKey);
+
+            // 分配主键。
+            LongIdKey certificateFileKey = keyGenerator.generate();
+
+            // 证件文件内容并存储（覆盖）。
+            InputStream cin = uploadInfo.getContent();
+            try (OutputStream fout = ftpHandler.openOutputStream(
+                    FtpConstants.PATH_CERTIFICATE_FILE, getFileName(certificateFileKey)
+            )) {
+                IOUtil.trans(cin, fout, Constants.IO_TRANS_BUFFER_SIZE);
+            }
+
+            // 生成缩略图并存储（覆盖）。
+            createCertificateThumbnail(getFileName(certificateFileKey));
+
+            // 根据 certificateFileStreamUploadInfo 构造 CertificateFileInfo，插入或更新。
+            Date currentDate = new Date();
+            // 映射属性。
+            CertificateFileInfo certificateFileInfo = new CertificateFileInfo();
+            certificateFileInfo.setKey(certificateFileKey);
+            certificateFileInfo.setCertificateKey(certificateKey);
+            certificateFileInfo.setOriginName(uploadInfo.getOriginName());
+            certificateFileInfo.setLength(uploadInfo.getLength());
             certificateFileInfo.setUploadDate(currentDate);
             certificateFileInfo.setRemark("通过 familyhelper-clannad 服务上传/更新证件文件");
             certificateFileInfoMaintainService.insertOrUpdate(certificateFileInfo);
