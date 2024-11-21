@@ -125,8 +125,7 @@ public class ProfileTypeIndicatorMaintainServiceImpl implements ProfileTypeIndic
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<ProfileTypeIndicatorKey> batchInsert(@SkipRecord List<ProfileTypeIndicator> elements)
-            throws ServiceException {
+    public List<ProfileTypeIndicatorKey> batchInsert(@SkipRecord List<ProfileTypeIndicator> elements) throws ServiceException {
         return crudService.batchInsert(elements);
     }
 
@@ -148,18 +147,25 @@ public class ProfileTypeIndicatorMaintainServiceImpl implements ProfileTypeIndic
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<ProfileTypeIndicator> batchGetIfExists(@SkipRecord List<ProfileTypeIndicatorKey> keys)
-            throws ServiceException {
+    public List<ProfileTypeIndicator> batchGetIfExists(@SkipRecord List<ProfileTypeIndicatorKey> keys) throws ServiceException {
         return crudService.batchGetIfExists(keys);
+    }
+
+    @Deprecated
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
+    public List<ProfileTypeIndicatorKey> batchInsertIfExists(@SkipRecord List<ProfileTypeIndicator> elements) throws ServiceException {
+        return crudService.batchInsertIfExists(elements);
     }
 
     @Override
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<ProfileTypeIndicatorKey> batchInsertIfExists(@SkipRecord List<ProfileTypeIndicator> elements)
-            throws ServiceException {
-        return crudService.batchInsertIfExists(elements);
+    public List<ProfileTypeIndicatorKey> batchInsertIfNotExists(@SkipRecord List<ProfileTypeIndicator> elements) throws ServiceException {
+        return crudService.batchInsertIfNotExists(elements);
     }
 
     @Override
@@ -180,8 +186,7 @@ public class ProfileTypeIndicatorMaintainServiceImpl implements ProfileTypeIndic
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public List<ProfileTypeIndicatorKey> batchInsertOrUpdate(@SkipRecord List<ProfileTypeIndicator> elements)
-            throws ServiceException {
+    public List<ProfileTypeIndicatorKey> batchInsertOrUpdate(@SkipRecord List<ProfileTypeIndicator> elements) throws ServiceException {
         return crudService.batchInsertOrUpdate(elements);
     }
 
@@ -197,8 +202,39 @@ public class ProfileTypeIndicatorMaintainServiceImpl implements ProfileTypeIndic
     @BehaviorAnalyse
     @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public PagedData<ProfileTypeIndicator> lookup(String preset, Object[] objs, PagingInfo pagingInfo)
-            throws ServiceException {
+    public PagedData<ProfileTypeIndicator> lookup(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
         return presetLookupService.lookup(preset, objs, pagingInfo);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public List<ProfileTypeIndicator> lookupAsList(String preset, Object[] objs) throws ServiceException {
+        return presetLookupService.lookupAsList(preset, objs);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public List<ProfileTypeIndicator> lookupAsList(String preset, Object[] objs, PagingInfo pagingInfo) throws ServiceException {
+        return presetLookupService.lookupAsList(preset, objs, pagingInfo);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public ProfileTypeIndicator lookupFirst(String preset, Object[] objs) throws ServiceException {
+        return presetLookupService.lookupFirst(preset, objs);
+    }
+
+    @Override
+    @BehaviorAnalyse
+    @SkipRecord
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
+    public int lookupCount(String preset, Object[] objs) throws ServiceException {
+        return presetLookupService.lookupCount(preset, objs);
     }
 }
