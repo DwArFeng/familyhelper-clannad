@@ -14,8 +14,8 @@ import java.util.Set;
 @Table(name = "tbl_user")
 public class HibernateUser implements Bean {
 
-    private static final long serialVersionUID = -825337727274424381L;
-
+    private static final long serialVersionUID = -8517488458083357021L;
+    
     // -----------------------------------------------------------主键-----------------------------------------------------------
     @Id
     @Column(name = "id", nullable = false, unique = true, length = Constraints.LENGTH_USER)
@@ -47,6 +47,18 @@ public class HibernateUser implements Bean {
 
     @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernatePoce.class, mappedBy = "user")
     private Set<HibernatePoce> poces = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateMessage.class, mappedBy = "sendUser")
+    private Set<HibernateMessage> sendMessages = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateMessage.class, mappedBy = "receiveUser")
+    private Set<HibernateMessage> receiveMessages = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateMessageAuthorization.class, mappedBy = "receiveUser")
+    private Set<HibernateMessageAuthorization> receivedMessageAuthorizations = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.MERGE, targetEntity = HibernateMessageAuthorization.class, mappedBy = "authorizedSendUser")
+    private Set<HibernateMessageAuthorization> authorizedSendMessageAuthorizations = new HashSet<>();
 
     public HibernateUser() {
     }
@@ -131,6 +143,40 @@ public class HibernateUser implements Bean {
 
     public void setPoces(Set<HibernatePoce> poces) {
         this.poces = poces;
+    }
+
+    public Set<HibernateMessage> getSendMessages() {
+        return sendMessages;
+    }
+
+    public void setSendMessages(Set<HibernateMessage> sendMessages) {
+        this.sendMessages = sendMessages;
+    }
+
+    public Set<HibernateMessage> getReceiveMessages() {
+        return receiveMessages;
+    }
+
+    public void setReceiveMessages(Set<HibernateMessage> receiveMessages) {
+        this.receiveMessages = receiveMessages;
+    }
+
+    public Set<HibernateMessageAuthorization> getReceivedMessageAuthorizations() {
+        return receivedMessageAuthorizations;
+    }
+
+    public void setReceivedMessageAuthorizations(Set<HibernateMessageAuthorization> receivedMessageAuthorizations) {
+        this.receivedMessageAuthorizations = receivedMessageAuthorizations;
+    }
+
+    public Set<HibernateMessageAuthorization> getAuthorizedSendMessageAuthorizations() {
+        return authorizedSendMessageAuthorizations;
+    }
+
+    public void setAuthorizedSendMessageAuthorizations(
+            Set<HibernateMessageAuthorization> authorizedSendMessageAuthorizations
+    ) {
+        this.authorizedSendMessageAuthorizations = authorizedSendMessageAuthorizations;
     }
 
     @Override

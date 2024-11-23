@@ -4,6 +4,12 @@
 
 #### 功能构建
 
+- 新增实体。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Message。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.MessageBodyInfo。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.MessageAttachmentInfo。
+  - com.dwarfeng.familyhelper.clannad.stack.bean.entity.MessageAuthorization。
+
 - 优化 `node` 模块部分服务启停脚本的注释。
   - binres/familyhelper-start.bat。
   - binres/familyhelper-start.sh。

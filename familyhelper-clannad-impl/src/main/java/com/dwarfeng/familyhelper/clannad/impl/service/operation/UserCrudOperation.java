@@ -2,15 +2,13 @@ package com.dwarfeng.familyhelper.clannad.impl.service.operation;
 
 import com.dwarfeng.familyhelper.clannad.impl.util.FtpConstants;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.MessageAuthorizationKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
 import com.dwarfeng.familyhelper.clannad.stack.cache.*;
 import com.dwarfeng.familyhelper.clannad.stack.dao.*;
-import com.dwarfeng.familyhelper.clannad.stack.service.NicknameMaintainService;
-import com.dwarfeng.familyhelper.clannad.stack.service.NotificationMaintainService;
-import com.dwarfeng.familyhelper.clannad.stack.service.PoceMaintainService;
-import com.dwarfeng.familyhelper.clannad.stack.service.PoprMaintainService;
+import com.dwarfeng.familyhelper.clannad.stack.service.*;
 import com.dwarfeng.ftp.handler.FtpHandler;
 import com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes;
 import com.dwarfeng.subgrade.sdk.service.custom.operation.BatchCrudOperation;
@@ -47,19 +45,36 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
     private final PoceDao poceDao;
     private final PoceCache poceCache;
 
+    private final MessageCrudOperation messageCrudOperation;
+    private final MessageDao messageDao;
+
+    private final MessageAuthorizationDao messageAuthorizationDao;
+    private final MessageAuthorizationCache messageAuthorizationCache;
+
     private final FtpHandler ftpHandler;
 
     @Value("${cache.timeout.entity.user}")
     private long userTimeout;
 
     public UserCrudOperation(
-            UserDao userDao, UserCache userCache,
-            PoprDao poprDao, PoprCache poprCache,
-            NicknameDao nicknameDao, NicknameCache nicknameCache,
-            ProfileDao profileDao, ProfileCache profileCache,
-            AvatarInfoDao avatarInfoDao, AvatarInfoCache avatarInfoCache,
-            NotificationDao notificationDao, NotificationCache notificationCache,
-            PoceDao poceDao, PoceCache poceCache,
+            UserDao userDao,
+            UserCache userCache,
+            PoprDao poprDao,
+            PoprCache poprCache,
+            NicknameDao nicknameDao,
+            NicknameCache nicknameCache,
+            ProfileDao profileDao,
+            ProfileCache profileCache,
+            AvatarInfoDao avatarInfoDao,
+            AvatarInfoCache avatarInfoCache,
+            NotificationDao notificationDao,
+            NotificationCache notificationCache,
+            PoceDao poceDao,
+            PoceCache poceCache,
+            MessageCrudOperation messageCrudOperation,
+            MessageDao messageDao,
+            MessageAuthorizationDao messageAuthorizationDao,
+            MessageAuthorizationCache messageAuthorizationCache,
             FtpHandler ftpHandler
     ) {
         this.userDao = userDao;
@@ -76,6 +91,10 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
         this.notificationCache = notificationCache;
         this.poceDao = poceDao;
         this.poceCache = poceCache;
+        this.messageCrudOperation = messageCrudOperation;
+        this.messageDao = messageDao;
+        this.messageAuthorizationDao = messageAuthorizationDao;
+        this.messageAuthorizationCache = messageAuthorizationCache;
         this.ftpHandler = ftpHandler;
     }
 
@@ -162,6 +181,28 @@ public class UserCrudOperation implements BatchCrudOperation<StringIdKey, User> 
                 .stream().map(Poce::getKey).collect(Collectors.toList());
         poceCache.batchDelete(poceKeys);
         poceDao.batchDelete(poceKeys);
+
+        // 删除与用户相关的留言。
+        List<LongIdKey> sendMessageKeys = messageDao.lookup(
+                MessageMaintainService.CHILD_FOR_SEND_USER, new Object[]{key}
+        ).stream().map(Message::getKey).collect(Collectors.toList());
+        messageCrudOperation.batchDelete(sendMessageKeys);
+        List<LongIdKey> receiveMessageKeys = messageDao.lookup(
+                MessageMaintainService.CHILD_FOR_RECEIVE_USER, new Object[]{key}
+        ).stream().map(Message::getKey).collect(Collectors.toList());
+        messageCrudOperation.batchDelete(receiveMessageKeys);
+
+        // 删除与用户相关的留言授权。
+        List<MessageAuthorizationKey> receiveMessageAuthorizationKeys = messageAuthorizationDao.lookup(
+                MessageAuthorizationMaintainService.CHILD_FOR_RECEIVE_USER, new Object[]{key}
+        ).stream().map(MessageAuthorization::getKey).collect(Collectors.toList());
+        messageAuthorizationCache.batchDelete(receiveMessageAuthorizationKeys);
+        messageAuthorizationDao.batchDelete(receiveMessageAuthorizationKeys);
+        List<MessageAuthorizationKey> authorizedSendMessageAuthorizationKeys = messageAuthorizationDao.lookup(
+                MessageAuthorizationMaintainService.CHILD_FOR_AUTHORIZED_SEND_USER, new Object[]{key}
+        ).stream().map(MessageAuthorization::getKey).collect(Collectors.toList());
+        messageAuthorizationCache.batchDelete(authorizedSendMessageAuthorizationKeys);
+        messageAuthorizationDao.batchDelete(authorizedSendMessageAuthorizationKeys);
 
         // 删除账本实体自身。
         userCache.delete(key);

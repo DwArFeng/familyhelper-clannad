@@ -1,15 +1,9 @@
 package com.dwarfeng.familyhelper.clannad.sdk.bean;
 
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonNicknameKey;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonPoceKey;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonPoprKey;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.key.FastJsonProfileTypeIndicatorKey;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.*;
 import com.dwarfeng.subgrade.sdk.bean.key.FastJsonLongIdKey;
 import com.dwarfeng.subgrade.sdk.bean.key.FastJsonStringIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
@@ -46,15 +40,22 @@ public interface FastJsonMapper {
     @InheritInverseConfiguration
     PoceKey poceKeyFromFastJson(FastJsonPoceKey fastJsonPoceKey);
 
-    FastJsonPoce poceToFastJson(Poce poce);
-
-    @InheritInverseConfiguration
-    Poce poceFromFastJson(FastJsonPoce fastJsonPoce);
-
     FastJsonPoprKey poprKeyToFastJson(PoprKey poprKey);
 
     @InheritInverseConfiguration
     PoprKey poprKeyFromFastJson(FastJsonPoprKey fastJsonPoprKey);
+
+    FastJsonMessageAuthorizationKey messageAuthorizationKeyToFastJson(MessageAuthorizationKey messageAuthorizationKey);
+
+    @InheritInverseConfiguration
+    MessageAuthorizationKey messageAuthorizationKeyFromFastJson(
+            FastJsonMessageAuthorizationKey fastJsonMessageAuthorizationKey
+    );
+
+    FastJsonPoce poceToFastJson(Poce poce);
+
+    @InheritInverseConfiguration
+    Poce poceFromFastJson(FastJsonPoce fastJsonPoce);
 
     FastJsonPopr poprToFastJson(Popr popr);
 
@@ -109,4 +110,26 @@ public interface FastJsonMapper {
 
     @InheritInverseConfiguration
     User userFromFastJson(FastJsonUser fastJsonUser);
+
+    FastJsonMessage messageToFastJson(Message message);
+
+    @InheritInverseConfiguration
+    Message messageFromFastJson(FastJsonMessage fastJsonMessage);
+
+    FastJsonMessageBodyInfo messageBodyInfoToFastJson(MessageBodyInfo messageBodyInfo);
+
+    @InheritInverseConfiguration
+    MessageBodyInfo messageBodyInfoFromFastJson(FastJsonMessageBodyInfo fastJsonMessageBodyInfo);
+
+    FastJsonMessageAttachmentInfo messageAttachmentInfoToFastJson(MessageAttachmentInfo messageAttachmentInfo);
+
+    @InheritInverseConfiguration
+    MessageAttachmentInfo messageAttachmentInfoFromFastJson(
+            FastJsonMessageAttachmentInfo fastJsonMessageAttachmentInfo
+    );
+
+    FastJsonMessageAuthorization messageAuthorizationToFastJson(MessageAuthorization messageAuthorization);
+
+    @InheritInverseConfiguration
+    MessageAuthorization messageAuthorizationFromFastJson(FastJsonMessageAuthorization fastJsonMessageAuthorization);
 }

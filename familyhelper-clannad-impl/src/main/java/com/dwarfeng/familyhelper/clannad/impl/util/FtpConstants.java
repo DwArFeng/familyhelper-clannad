@@ -22,6 +22,16 @@ public final class FtpConstants {
             "familyhelper-clannad", "certificate-thumbnail"
     };
 
+    /**
+     * @since 1.5.0
+     */
+    public static final String[] PATH_MESSAGE_ATTACHMENT = new String[]{"familyhelper-clannad", "message-attachment"};
+
+    /**
+     * @since 1.5.0
+     */
+    public static final String[] PATH_MESSAGE_BODY = new String[]{"familyhelper-clannad", "message-body"};
+
     private FtpConstants() {
         throw new IllegalStateException("禁止实例化");
     }

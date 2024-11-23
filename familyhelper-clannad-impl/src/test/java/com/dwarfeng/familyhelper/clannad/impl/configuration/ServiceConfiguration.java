@@ -2,10 +2,7 @@ package com.dwarfeng.familyhelper.clannad.impl.configuration;
 
 import com.dwarfeng.familyhelper.clannad.impl.service.operation.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.*;
 import com.dwarfeng.familyhelper.clannad.stack.cache.*;
 import com.dwarfeng.familyhelper.clannad.stack.dao.*;
 import com.dwarfeng.subgrade.impl.generation.ExceptionKeyGenerator;
@@ -44,6 +41,14 @@ public class ServiceConfiguration {
     private final CertificateFileInfoDao certificateFileInfoDao;
     private final PoceDao poceDao;
     private final PoceCache poceCache;
+    private final MessageCrudOperation messageCrudOperation;
+    private final MessageDao messageDao;
+    private final MessageBodyInfoCrudOperation messageBodyInfoCrudOperation;
+    private final MessageBodyInfoDao messageBodyInfoDao;
+    private final MessageAttachmentInfoCrudOperation messageAttachmentInfoCrudOperation;
+    private final MessageAttachmentInfoDao messageAttachmentInfoDao;
+    private final MessageAuthorizationDao messageAuthorizationDao;
+    private final MessageAuthorizationCache messageAuthorizationCache;
 
     @Value("${cache.timeout.entity.profile_type_indicator}")
     private long profileTypeIndicatorTimeout;
@@ -55,6 +60,8 @@ public class ServiceConfiguration {
     private long notificationTimeout;
     @Value("${cache.timeout.entity.poce}")
     private long poceTimeout;
+    @Value("${cache.timeout.entity.message_authorization}")
+    private long messageAuthorizationTimeout;
 
     public ServiceConfiguration(
             ServiceExceptionMapperConfiguration serviceExceptionMapperConfiguration,
@@ -76,7 +83,15 @@ public class ServiceConfiguration {
             CertificateFileInfoCrudOperation certificateFileInfoCrudOperation,
             CertificateFileInfoDao certificateFileInfoDao,
             PoceDao poceDao,
-            PoceCache poceCache
+            PoceCache poceCache,
+            MessageCrudOperation messageCrudOperation,
+            MessageDao messageDao,
+            MessageBodyInfoCrudOperation messageBodyInfoCrudOperation,
+            MessageBodyInfoDao messageBodyInfoDao,
+            MessageAttachmentInfoCrudOperation messageAttachmentInfoCrudOperation,
+            MessageAttachmentInfoDao messageAttachmentInfoDao,
+            MessageAuthorizationDao messageAuthorizationDao,
+            MessageAuthorizationCache messageAuthorizationCache
     ) {
         this.serviceExceptionMapperConfiguration = serviceExceptionMapperConfiguration;
         this.generateConfiguration = generateConfiguration;
@@ -98,6 +113,14 @@ public class ServiceConfiguration {
         this.certificateFileInfoDao = certificateFileInfoDao;
         this.poceDao = poceDao;
         this.poceCache = poceCache;
+        this.messageCrudOperation = messageCrudOperation;
+        this.messageDao = messageDao;
+        this.messageBodyInfoCrudOperation = messageBodyInfoCrudOperation;
+        this.messageBodyInfoDao = messageBodyInfoDao;
+        this.messageAttachmentInfoCrudOperation = messageAttachmentInfoCrudOperation;
+        this.messageAttachmentInfoDao = messageAttachmentInfoDao;
+        this.messageAuthorizationDao = messageAuthorizationDao;
+        this.messageAuthorizationCache = messageAuthorizationCache;
     }
 
     @Bean
@@ -326,6 +349,121 @@ public class ServiceConfiguration {
                 serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
                 LogLevel.WARN,
                 poceDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, Message> messageBatchCustomCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<Message> messageDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<Message> messageDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, MessageBodyInfo> messageBodyInfoBatchCustomCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageBodyInfoCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<MessageBodyInfo> messageBodyInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageBodyInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<MessageBodyInfo> messageBodyInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageBodyInfoDao
+        );
+    }
+
+    @Bean
+    public CustomBatchCrudService<LongIdKey, MessageAttachmentInfo> messageAttachmentInfoBatchCustomCrudService() {
+        return new CustomBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageAttachmentInfoCrudOperation,
+                generateConfiguration.snowflakeLongIdKeyGenerator()
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<MessageAttachmentInfo> messageAttachmentInfoDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageAttachmentInfoDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<MessageAttachmentInfo> messageAttachmentInfoDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageAttachmentInfoDao
+        );
+    }
+
+    @Bean
+    public GeneralBatchCrudService<MessageAuthorizationKey, MessageAuthorization>
+    messageAuthorizationBatchGeneralCrudService() {
+        return new GeneralBatchCrudService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageAuthorizationDao,
+                messageAuthorizationCache,
+                new ExceptionKeyGenerator<>(),
+                messageAuthorizationTimeout
+        );
+    }
+
+    @Bean
+    public DaoOnlyEntireLookupService<MessageAuthorization> messageAuthorizationDaoOnlyEntireLookupService() {
+        return new DaoOnlyEntireLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageAuthorizationDao
+        );
+    }
+
+    @Bean
+    public DaoOnlyPresetLookupService<MessageAuthorization> messageAuthorizationDaoOnlyPresetLookupService() {
+        return new DaoOnlyPresetLookupService<>(
+                serviceExceptionMapperConfiguration.mapServiceExceptionMapper(),
+                LogLevel.WARN,
+                messageAuthorizationDao
         );
     }
 }

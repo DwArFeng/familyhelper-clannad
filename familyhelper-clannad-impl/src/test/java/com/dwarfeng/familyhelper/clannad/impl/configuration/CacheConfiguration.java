@@ -2,15 +2,9 @@ package com.dwarfeng.familyhelper.clannad.impl.configuration;
 
 import com.dwarfeng.familyhelper.clannad.sdk.bean.FastJsonMapper;
 import com.dwarfeng.familyhelper.clannad.sdk.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.NicknameStringKeyFormatter;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.PoceStringKeyFormatter;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.PoprStringKeyFormatter;
-import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.ProfileTypeIndicatorStringKeyFormatter;
+import com.dwarfeng.familyhelper.clannad.sdk.bean.key.formatter.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.*;
 import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.redis.formatter.LongIdStringKeyFormatter;
@@ -47,6 +41,14 @@ public class CacheConfiguration {
     private String certificateFileInfoPrefix;
     @Value("${cache.prefix.entity.poce}")
     private String pocePrefix;
+    @Value("${cache.prefix.entity.message}")
+    private String messagePrefix;
+    @Value("${cache.prefix.entity.message_body_info}")
+    private String messageBodyInfoPrefix;
+    @Value("${cache.prefix.entity.message_attachment_info}")
+    private String messageAttachmentInfoPrefix;
+    @Value("${cache.prefix.entity.message_authorization}")
+    private String messageAuthorizationPrefix;
 
     public CacheConfiguration(RedisTemplate<String, ?> template) {
         this.template = template;
@@ -155,6 +157,55 @@ public class CacheConfiguration {
                 (RedisTemplate<String, FastJsonPoce>) template,
                 new PoceStringKeyFormatter(pocePrefix),
                 new MapStructBeanTransformer<>(Poce.class, FastJsonPoce.class, FastJsonMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, Message, FastJsonMessage> messageRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonMessage>) template,
+                new LongIdStringKeyFormatter(messagePrefix),
+                new MapStructBeanTransformer<>(Message.class, FastJsonMessage.class, FastJsonMapper.class)
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, MessageBodyInfo, FastJsonMessageBodyInfo>
+    messageBodyInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonMessageBodyInfo>) template,
+                new LongIdStringKeyFormatter(messageBodyInfoPrefix),
+                new MapStructBeanTransformer<>(
+                        MessageBodyInfo.class, FastJsonMessageBodyInfo.class, FastJsonMapper.class
+                )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<LongIdKey, MessageAttachmentInfo, FastJsonMessageAttachmentInfo>
+    messageAttachmentInfoRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonMessageAttachmentInfo>) template,
+                new LongIdStringKeyFormatter(messageAttachmentInfoPrefix),
+                new MapStructBeanTransformer<>(
+                        MessageAttachmentInfo.class, FastJsonMessageAttachmentInfo.class, FastJsonMapper.class
+                )
+        );
+    }
+
+    @Bean
+    @SuppressWarnings("unchecked")
+    public RedisBatchBaseCache<MessageAuthorizationKey, MessageAuthorization, FastJsonMessageAuthorization>
+    messageAuthorizationRedisBatchBaseCache() {
+        return new RedisBatchBaseCache<>(
+                (RedisTemplate<String, FastJsonMessageAuthorization>) template,
+                new MessageAuthorizationStringKeyFormatter(messageAuthorizationPrefix),
+                new MapStructBeanTransformer<>(
+                        MessageAuthorization.class, FastJsonMessageAuthorization.class, FastJsonMapper.class
+                )
         );
     }
 }

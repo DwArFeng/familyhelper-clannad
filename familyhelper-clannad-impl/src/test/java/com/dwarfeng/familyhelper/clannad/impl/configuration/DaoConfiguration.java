@@ -2,16 +2,10 @@ package com.dwarfeng.familyhelper.clannad.impl.configuration;
 
 import com.dwarfeng.familyhelper.clannad.impl.bean.HibernateMapper;
 import com.dwarfeng.familyhelper.clannad.impl.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateNicknameKey;
-import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernatePoceKey;
-import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernatePoprKey;
-import com.dwarfeng.familyhelper.clannad.impl.bean.key.HibernateProfileTypeIndicatorKey;
+import com.dwarfeng.familyhelper.clannad.impl.bean.key.*;
 import com.dwarfeng.familyhelper.clannad.impl.dao.preset.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.*;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.NicknameKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoprKey;
-import com.dwarfeng.familyhelper.clannad.stack.bean.key.ProfileTypeIndicatorKey;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.*;
 import com.dwarfeng.subgrade.impl.bean.MapStructBeanTransformer;
 import com.dwarfeng.subgrade.impl.dao.HibernateBatchBaseDao;
 import com.dwarfeng.subgrade.impl.dao.HibernateEntireLookupDao;
@@ -38,6 +32,10 @@ public class DaoConfiguration {
     private final CertificatePresetCriteriaMaker certificatePresetCriteriaMaker;
     private final CertificateFileInfoPresetCriteriaMaker certificateFileInfoPresetCriteriaMaker;
     private final PocePresetCriteriaMaker pocePresetCriteriaMaker;
+    private final MessagePresetCriteriaMaker messagePresetCriteriaMaker;
+    private final MessageBodyInfoPresetCriteriaMaker messageBodyInfoPresetCriteriaMaker;
+    private final MessageAttachmentInfoPresetCriteriaMaker messageAttachmentInfoPresetCriteriaMaker;
+    private final MessageAuthorizationPresetCriteriaMaker messageAuthorizationPresetCriteriaMaker;
 
     @Value("${hibernate.jdbc.batch_size}")
     private int batchSize;
@@ -50,7 +48,11 @@ public class DaoConfiguration {
             NotificationPresetCriteriaMaker notificationPresetCriteriaMaker,
             CertificatePresetCriteriaMaker certificatePresetCriteriaMaker,
             CertificateFileInfoPresetCriteriaMaker certificateFileInfoPresetCriteriaMaker,
-            PocePresetCriteriaMaker pocePresetCriteriaMaker
+            PocePresetCriteriaMaker pocePresetCriteriaMaker,
+            MessagePresetCriteriaMaker messagePresetCriteriaMaker,
+            MessageBodyInfoPresetCriteriaMaker messageBodyInfoPresetCriteriaMaker,
+            MessageAttachmentInfoPresetCriteriaMaker messageAttachmentInfoPresetCriteriaMaker,
+            MessageAuthorizationPresetCriteriaMaker messageAuthorizationPresetCriteriaMaker
     ) {
         this.template = template;
         this.profileTypeIndicatorPresetCriteriaMaker = profileTypeIndicatorPresetCriteriaMaker;
@@ -60,6 +62,10 @@ public class DaoConfiguration {
         this.certificatePresetCriteriaMaker = certificatePresetCriteriaMaker;
         this.certificateFileInfoPresetCriteriaMaker = certificateFileInfoPresetCriteriaMaker;
         this.pocePresetCriteriaMaker = pocePresetCriteriaMaker;
+        this.messagePresetCriteriaMaker = messagePresetCriteriaMaker;
+        this.messageBodyInfoPresetCriteriaMaker = messageBodyInfoPresetCriteriaMaker;
+        this.messageAttachmentInfoPresetCriteriaMaker = messageAttachmentInfoPresetCriteriaMaker;
+        this.messageAuthorizationPresetCriteriaMaker = messageAuthorizationPresetCriteriaMaker;
     }
 
     @Bean
@@ -327,6 +333,159 @@ public class DaoConfiguration {
                 new MapStructBeanTransformer<>(Poce.class, HibernatePoce.class, HibernateMapper.class),
                 HibernatePoce.class,
                 pocePresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, Message, HibernateMessage>
+    messageHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(Message.class, HibernateMessage.class, HibernateMapper.class),
+                HibernateMessage.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<Message, HibernateMessage> messageHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(Message.class, HibernateMessage.class, HibernateMapper.class),
+                HibernateMessage.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<Message, HibernateMessage> messageHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(Message.class, HibernateMessage.class, HibernateMapper.class),
+                HibernateMessage.class,
+                messagePresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, MessageBodyInfo, HibernateMessageBodyInfo>
+    messageBodyInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(
+                        MessageBodyInfo.class, HibernateMessageBodyInfo.class, HibernateMapper.class
+                ),
+                HibernateMessageBodyInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<MessageBodyInfo, HibernateMessageBodyInfo> messageBodyInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        MessageBodyInfo.class, HibernateMessageBodyInfo.class, HibernateMapper.class
+                ),
+                HibernateMessageBodyInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<MessageBodyInfo, HibernateMessageBodyInfo>
+    messageBodyInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        MessageBodyInfo.class, HibernateMessageBodyInfo.class, HibernateMapper.class
+                ),
+                HibernateMessageBodyInfo.class,
+                messageBodyInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<LongIdKey, HibernateLongIdKey, MessageAttachmentInfo, HibernateMessageAttachmentInfo>
+    messageAttachmentInfoHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(LongIdKey.class, HibernateLongIdKey.class, HibernateMapper.class),
+                new MapStructBeanTransformer<>(
+                        MessageAttachmentInfo.class, HibernateMessageAttachmentInfo.class, HibernateMapper.class
+                ),
+                HibernateMessageAttachmentInfo.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<MessageAttachmentInfo, HibernateMessageAttachmentInfo>
+    messageAttachmentInfoHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        MessageAttachmentInfo.class, HibernateMessageAttachmentInfo.class, HibernateMapper.class
+                ),
+                HibernateMessageAttachmentInfo.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<MessageAttachmentInfo, HibernateMessageAttachmentInfo>
+    messageAttachmentInfoHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        MessageAttachmentInfo.class, HibernateMessageAttachmentInfo.class, HibernateMapper.class
+                ),
+                HibernateMessageAttachmentInfo.class,
+                messageAttachmentInfoPresetCriteriaMaker
+        );
+    }
+
+    @Bean
+    public HibernateBatchBaseDao<MessageAuthorizationKey, HibernateMessageAuthorizationKey, MessageAuthorization,
+            HibernateMessageAuthorization> messageAuthorizationHibernateBatchBaseDao() {
+        return new HibernateBatchBaseDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        MessageAuthorizationKey.class, HibernateMessageAuthorizationKey.class, HibernateMapper.class
+                ),
+                new MapStructBeanTransformer<>(
+                        MessageAuthorization.class, HibernateMessageAuthorization.class, HibernateMapper.class
+                ),
+                HibernateMessageAuthorization.class,
+                new DefaultDeletionMod<>(),
+                batchSize
+        );
+    }
+
+    @Bean
+    public HibernateEntireLookupDao<MessageAuthorization, HibernateMessageAuthorization>
+    messageAuthorizationHibernateEntireLookupDao() {
+        return new HibernateEntireLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        MessageAuthorization.class, HibernateMessageAuthorization.class, HibernateMapper.class
+                ),
+                HibernateMessageAuthorization.class
+        );
+    }
+
+    @Bean
+    public HibernatePresetLookupDao<MessageAuthorization, HibernateMessageAuthorization>
+    messageAuthorizationHibernatePresetLookupDao() {
+        return new HibernatePresetLookupDao<>(
+                template,
+                new MapStructBeanTransformer<>(
+                        MessageAuthorization.class, HibernateMessageAuthorization.class, HibernateMapper.class
+                ),
+                HibernateMessageAuthorization.class,
+                messageAuthorizationPresetCriteriaMaker
         );
     }
 }
