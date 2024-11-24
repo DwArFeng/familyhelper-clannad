@@ -6,6 +6,7 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.key.MessageAuthorizationKey;
 import com.dwarfeng.familyhelper.clannad.stack.cache.MessageAuthorizationCache;
 import com.dwarfeng.subgrade.impl.cache.RedisBatchBaseCache;
 import com.dwarfeng.subgrade.sdk.interceptor.analyse.BehaviorAnalyse;
+import com.dwarfeng.subgrade.sdk.interceptor.analyse.SkipRecord;
 import com.dwarfeng.subgrade.stack.exception.CacheException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,35 +60,36 @@ public class MessageAuthorizationCacheImpl implements MessageAuthorizationCache 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean allExists(List<MessageAuthorizationKey> keys) throws CacheException {
+    public boolean allExists(@SkipRecord List<MessageAuthorizationKey> keys) throws CacheException {
         return batchBaseCache.allExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public boolean nonExists(List<MessageAuthorizationKey> keys) throws CacheException {
+    public boolean nonExists(@SkipRecord List<MessageAuthorizationKey> keys) throws CacheException {
         return batchBaseCache.nonExists(keys);
     }
 
     @Override
     @BehaviorAnalyse
+    @SkipRecord
     @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true, rollbackFor = Exception.class)
-    public List<MessageAuthorization> batchGet(List<MessageAuthorizationKey> keys) throws CacheException {
+    public List<MessageAuthorization> batchGet(@SkipRecord List<MessageAuthorizationKey> keys) throws CacheException {
         return batchBaseCache.batchGet(keys);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchPush(List<MessageAuthorization> entities, long timeout) throws CacheException {
+    public void batchPush(@SkipRecord List<MessageAuthorization> entities, long timeout) throws CacheException {
         batchBaseCache.batchPush(entities, timeout);
     }
 
     @Override
     @BehaviorAnalyse
     @Transactional(transactionManager = "hibernateTransactionManager", rollbackFor = Exception.class)
-    public void batchDelete(List<MessageAuthorizationKey> keys) throws CacheException {
+    public void batchDelete(@SkipRecord List<MessageAuthorizationKey> keys) throws CacheException {
         batchBaseCache.batchDelete(keys);
     }
 }

@@ -1,7 +1,10 @@
 package com.dwarfeng.familyhelper.clannad.impl.handler;
 
 import com.dwarfeng.familyhelper.clannad.sdk.util.Constants;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Message;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.MessageAuthorization;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Poce;
+import com.dwarfeng.familyhelper.clannad.stack.bean.key.MessageAuthorizationKey;
 import com.dwarfeng.familyhelper.clannad.stack.bean.key.PoceKey;
 import com.dwarfeng.familyhelper.clannad.stack.exception.*;
 import com.dwarfeng.familyhelper.clannad.stack.service.*;
@@ -12,6 +15,7 @@ import com.dwarfeng.subgrade.stack.exception.ServiceException;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * 操作处理器验证器。
@@ -32,6 +36,10 @@ public class OperateHandlerValidator {
     private final CertificateMaintainService certificateMaintainService;
     private final PoceMaintainService poceMaintainService;
     private final CertificateFileInfoMaintainService certificateFileInfoMaintainService;
+    private final MessageMaintainService messageMaintainService;
+    private final MessageAuthorizationMaintainService messageAuthorizationMaintainService;
+    private final MessageBodyInfoMaintainService messageBodyInfoMaintainService;
+    private final MessageAttachmentInfoMaintainService messageAttachmentInfoMaintainService;
 
     public OperateHandlerValidator(
             UserMaintainService userMaintainService,
@@ -40,7 +48,11 @@ public class OperateHandlerValidator {
             ProfileMaintainService profileMaintainService,
             CertificateMaintainService certificateMaintainService,
             PoceMaintainService poceMaintainService,
-            CertificateFileInfoMaintainService certificateFileInfoMaintainService
+            CertificateFileInfoMaintainService certificateFileInfoMaintainService,
+            MessageMaintainService messageMaintainService,
+            MessageAuthorizationMaintainService messageAuthorizationMaintainService,
+            MessageBodyInfoMaintainService messageBodyInfoMaintainService,
+            MessageAttachmentInfoMaintainService messageAttachmentInfoMaintainService
     ) {
         this.userMaintainService = userMaintainService;
         this.avatarInfoMaintainService = avatarInfoMaintainService;
@@ -49,6 +61,10 @@ public class OperateHandlerValidator {
         this.certificateMaintainService = certificateMaintainService;
         this.poceMaintainService = poceMaintainService;
         this.certificateFileInfoMaintainService = certificateFileInfoMaintainService;
+        this.messageMaintainService = messageMaintainService;
+        this.messageAuthorizationMaintainService = messageAuthorizationMaintainService;
+        this.messageBodyInfoMaintainService = messageBodyInfoMaintainService;
+        this.messageAttachmentInfoMaintainService = messageAttachmentInfoMaintainService;
     }
 
     public void makeSureUserExists(StringIdKey userKey) throws HandlerException {
@@ -162,6 +178,99 @@ public class OperateHandlerValidator {
         try {
             if (!certificateFileInfoMaintainService.exists(certificateFileKey)) {
                 throw new CertificateFileNotExistsException(certificateFileKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureMessageExists(LongIdKey messageKey) throws HandlerException {
+        try {
+            if (!messageMaintainService.exists(messageKey)) {
+                throw new MessageNotExistsException(messageKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureMessageAuthorizedToSend(StringIdKey sendUserKey, StringIdKey receiveUserKey)
+            throws HandlerException {
+        try {
+            if (Objects.isNull(sendUserKey) || Objects.isNull(receiveUserKey)) {
+                throw new UserNotExistsException(null);
+            }
+            MessageAuthorizationKey key = new MessageAuthorizationKey(
+                    receiveUserKey.getStringId(), sendUserKey.getStringId()
+            );
+            MessageAuthorization messageAuthorization = messageAuthorizationMaintainService.getIfExists(key);
+            if (Objects.isNull(messageAuthorization)) {
+                throw new MessageUnauthorizedToSendException(sendUserKey, receiveUserKey);
+            }
+            if (!messageAuthorization.isEnabled()) {
+                throw new MessageUnauthorizedToSendException(sendUserKey, receiveUserKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureUserMatch(StringIdKey actualUserKey, Set<StringIdKey> validUserKeys) throws HandlerException {
+        if (!validUserKeys.contains(actualUserKey)) {
+            throw new UserMismatchException(validUserKeys, actualUserKey);
+        }
+    }
+
+    public void makeSureMessageStatusMatch(LongIdKey messageKey, Set<Integer> validStatusSet) throws
+            HandlerException {
+        try {
+            Message message = messageMaintainService.getIfExists(messageKey);
+            if (Objects.isNull(message)) {
+                throw new MessageNotExistsException(messageKey);
+            }
+            int messageStatus = message.getStatus();
+            if (!validStatusSet.contains(messageStatus)) {
+                throw new MessageStatusMismatchException(validStatusSet, messageStatus);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureMessageBodyExists(LongIdKey messageBodyKey) throws HandlerException {
+        try {
+            if (!messageBodyInfoMaintainService.exists(messageBodyKey)) {
+                throw new MessageBodyNotExistsException(messageBodyKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureMessageAttachmentExists(LongIdKey messageAttachmentKey) throws HandlerException {
+        try {
+            if (!messageAttachmentInfoMaintainService.exists(messageAttachmentKey)) {
+                throw new MessageAttachmentNotExistsException(messageAttachmentKey);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureMessageAuthorizationExists(MessageAuthorizationKey key) throws Exception {
+        try {
+            if (!messageAuthorizationMaintainService.exists(key)) {
+                throw new MessageAuthorizationNotExistsException(key);
+            }
+        } catch (ServiceException e) {
+            throw new HandlerException(e);
+        }
+    }
+
+    public void makeSureMessageAuthorizationNotExists(MessageAuthorizationKey key) throws Exception {
+        try {
+            if (messageAuthorizationMaintainService.exists(key)) {
+                throw new MessageAuthorizationExistsException(key);
             }
         } catch (ServiceException e) {
             throw new HandlerException(e);

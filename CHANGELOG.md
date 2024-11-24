@@ -4,6 +4,12 @@
 
 #### 功能构建
 
+- 实现操作服务。
+  - com.dwarfeng.familyhelper.clannad.stack.service.MessageAttachmentOperateService。
+  - com.dwarfeng.familyhelper.clannad.stack.service.MessageBodyOperateService。
+  - com.dwarfeng.familyhelper.clannad.stack.service.MessageOperateService。
+  - com.dwarfeng.familyhelper.clannad.stack.service.MessageAuthorizationOperateService。
+
 - 新增实体。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.Message。
   - com.dwarfeng.familyhelper.clannad.stack.bean.entity.MessageBodyInfo。

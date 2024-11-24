@@ -111,8 +111,19 @@
             group="${dubbo.provider.group}"
     />
     <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.MessageOperateService"
+            ref="messageOperateServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
             interface="com.dwarfeng.familyhelper.clannad.stack.service.MessageBodyInfoMaintainService"
             ref="messageBodyInfoMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.MessageBodyOperateService"
+            ref="messageBodyOperateServiceImpl"
+            protocol="hessian"
             group="${dubbo.provider.group}"
     />
     <dubbo:service
@@ -121,8 +132,19 @@
             group="${dubbo.provider.group}"
     />
     <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.MessageAttachmentOperateService"
+            ref="messageAttachmentOperateServiceImpl"
+            protocol="hessian"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
             interface="com.dwarfeng.familyhelper.clannad.stack.service.MessageAuthorizationMaintainService"
             ref="messageAuthorizationMaintainServiceImpl"
+            group="${dubbo.provider.group}"
+    />
+    <dubbo:service
+            interface="com.dwarfeng.familyhelper.clannad.stack.service.MessageAuthorizationOperateService"
+            ref="messageAuthorizationOperateServiceImpl"
             group="${dubbo.provider.group}"
     />
 

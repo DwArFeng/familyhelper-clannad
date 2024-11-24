@@ -28,6 +28,22 @@ public final class ServiceExceptionCodes {
             new ServiceException.Code(offset(60), "invalid permission level");
     public static final ServiceException.Code USER_NOT_PERMITTED_FOR_CERTIFICATE =
             new ServiceException.Code(offset(70), "user not permitted for certificate");
+    public static final ServiceException.Code MESSAGE_ATTACHMENT_NOT_EXISTS =
+            new ServiceException.Code(offset(80), "message attachment not exists");
+    public static final ServiceException.Code MESSAGE_BODY_NOT_EXISTS =
+            new ServiceException.Code(offset(90), "message body not exists");
+    public static final ServiceException.Code MESSAGE_NOT_EXISTS =
+            new ServiceException.Code(offset(100), "message not exists");
+    public static final ServiceException.Code MESSAGE_STATUS_MISMATCH =
+            new ServiceException.Code(offset(110), "message status mismatch");
+    public static final ServiceException.Code MESSAGE_UNAUTHORIZED_TO_SEND =
+            new ServiceException.Code(offset(120), "message unauthorized to send");
+    public static final ServiceException.Code USER_MISMATCH =
+            new ServiceException.Code(offset(130), "user mismatch");
+    public static final ServiceException.Code MESSAGE_AUTHORIZATION_EXISTS =
+            new ServiceException.Code(offset(140), "message authorization exists");
+    public static final ServiceException.Code MESSAGE_AUTHORIZATION_NOT_EXISTS =
+            new ServiceException.Code(offset(150), "message authorization not exists");
 
     private static int offset(int i) {
         return EXCEPTION_CODE_OFFSET + i;
@@ -60,6 +76,14 @@ public final class ServiceExceptionCodes {
         CERTIFICATE_FILE_NOT_EXISTS.setCode(offset(50));
         INVALID_PERMISSION_LEVEL.setCode(offset(60));
         USER_NOT_PERMITTED_FOR_CERTIFICATE.setCode(offset(70));
+        MESSAGE_ATTACHMENT_NOT_EXISTS.setCode(offset(80));
+        MESSAGE_BODY_NOT_EXISTS.setCode(offset(90));
+        MESSAGE_NOT_EXISTS.setCode(offset(100));
+        MESSAGE_STATUS_MISMATCH.setCode(offset(110));
+        MESSAGE_UNAUTHORIZED_TO_SEND.setCode(offset(120));
+        USER_MISMATCH.setCode(offset(130));
+        MESSAGE_AUTHORIZATION_EXISTS.setCode(offset(140));
+        MESSAGE_AUTHORIZATION_NOT_EXISTS.setCode(offset(150));
     }
 
     private ServiceExceptionCodes() {

@@ -1,0 +1,88 @@
+package com.dwarfeng.familyhelper.clannad.sdk.bean.dto;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.dwarfeng.familyhelper.clannad.sdk.util.Constraints;
+import com.dwarfeng.familyhelper.clannad.stack.bean.dto.MessageCreateInfo;
+import com.dwarfeng.subgrade.sdk.bean.key.WebInputStringIdKey;
+import com.dwarfeng.subgrade.stack.bean.dto.Dto;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
+import java.util.Optional;
+
+/**
+ * WebInput 留言创建信息。
+ *
+ * @author DwArFeng
+ * @since 1.5.0
+ */
+public class WebInputMessageCreateInfo implements Dto {
+
+    private static final long serialVersionUID = -4884833329004598225L;
+
+    public static MessageCreateInfo toStackBean(WebInputMessageCreateInfo webInput) {
+        if (Objects.isNull(webInput)) {
+            return null;
+        } else {
+            return new MessageCreateInfo(
+                    Optional.ofNullable(webInput.getReceiveUserKey()).map(WebInputStringIdKey::toStackBean)
+                            .orElse(null),
+                    webInput.getSubject(),
+                    webInput.getRemark()
+            );
+        }
+    }
+
+    @JSONField(name = "receive_user_key")
+    @Valid
+    private WebInputStringIdKey receiveUserKey;
+
+    @JSONField(name = "subject")
+    @NotNull
+    @NotEmpty
+    @Length(max = Constraints.LENGTH_SUBJECT)
+    private String subject;
+
+    @JSONField(name = "remark")
+    @Length(max = Constraints.LENGTH_REMARK)
+    private String remark;
+
+    public WebInputMessageCreateInfo() {
+    }
+
+    public WebInputStringIdKey getReceiveUserKey() {
+        return receiveUserKey;
+    }
+
+    public void setReceiveUserKey(WebInputStringIdKey receiveUserKey) {
+        this.receiveUserKey = receiveUserKey;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    @Override
+    public String toString() {
+        return "WebInputMessageCreateInfo{" +
+                "receiveUserKey=" + receiveUserKey +
+                ", subject='" + subject + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
+}

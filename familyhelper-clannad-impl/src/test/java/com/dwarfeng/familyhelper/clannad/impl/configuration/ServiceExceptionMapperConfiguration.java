@@ -25,6 +25,14 @@ public class ServiceExceptionMapperConfiguration {
         destination.put(CertificateFileNotExistsException.class, ServiceExceptionCodes.CERTIFICATE_FILE_NOT_EXISTS);
         destination.put(InvalidPermissionLevelException.class, ServiceExceptionCodes.INVALID_PERMISSION_LEVEL);
         destination.put(UserNotPermittedForCertificateException.class, ServiceExceptionCodes.USER_NOT_PERMITTED_FOR_CERTIFICATE);
+        destination.put(MessageAttachmentNotExistsException.class, ServiceExceptionCodes.MESSAGE_ATTACHMENT_NOT_EXISTS);
+        destination.put(MessageBodyNotExistsException.class, ServiceExceptionCodes.MESSAGE_BODY_NOT_EXISTS);
+        destination.put(MessageNotExistsException.class, ServiceExceptionCodes.MESSAGE_NOT_EXISTS);
+        destination.put(MessageStatusMismatchException.class, ServiceExceptionCodes.MESSAGE_STATUS_MISMATCH);
+        destination.put(MessageUnauthorizedToSendException.class, ServiceExceptionCodes.MESSAGE_UNAUTHORIZED_TO_SEND);
+        destination.put(UserMismatchException.class, ServiceExceptionCodes.USER_MISMATCH);
+        destination.put(MessageAuthorizationExistsException.class, ServiceExceptionCodes.MESSAGE_AUTHORIZATION_EXISTS);
+        destination.put(MessageAuthorizationNotExistsException.class, ServiceExceptionCodes.MESSAGE_AUTHORIZATION_NOT_EXISTS);
         return new MapServiceExceptionMapper(destination, com.dwarfeng.subgrade.sdk.exception.ServiceExceptionCodes.UNDEFINED);
     }
 }
