@@ -1,6 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.impl.handler.pusher;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.BirthdayBlessInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Message;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +49,13 @@ public class LogPusher extends AbstractPusher {
         for (BirthdayBlessInfo birthdayBlessInfo : birthdayBlessInfos) {
             birthdayBlessHappened(birthdayBlessInfo);
         }
+    }
+
+    @Override
+    public void messageSent(Message message) throws HandlerException {
+        String title = "留言发送事件:";
+        String messageStr = Objects.toString(message);
+        logData(title, messageStr);
     }
 
     private void logData(String title, String message) throws HandlerException {

@@ -1,6 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.impl.handler.pusher;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.BirthdayBlessInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Message;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,6 +27,10 @@ public class DrainPusher extends AbstractPusher {
 
     @Override
     public void birthdayBlessHappened(List<BirthdayBlessInfo> birthdayBlessInfos) {
+    }
+
+    @Override
+    public void messageSent(Message message) {
     }
 
     @Override

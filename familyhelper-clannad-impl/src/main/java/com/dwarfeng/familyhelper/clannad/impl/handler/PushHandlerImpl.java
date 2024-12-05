@@ -1,6 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.impl.handler;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.BirthdayBlessInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Message;
 import com.dwarfeng.familyhelper.clannad.stack.handler.PushHandler;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,5 +40,10 @@ public class PushHandlerImpl implements PushHandler {
     @Override
     public void birthdayBlessHappened(List<BirthdayBlessInfo> birthdayBlessInfos) throws HandlerException {
         pusher.birthdayBlessHappened(birthdayBlessInfos);
+    }
+
+    @Override
+    public void messageSent(Message message) throws HandlerException {
+        pusher.messageSent(message);
     }
 }

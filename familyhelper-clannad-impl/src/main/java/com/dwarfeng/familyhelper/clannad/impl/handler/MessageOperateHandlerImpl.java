@@ -6,6 +6,7 @@ import com.dwarfeng.familyhelper.clannad.stack.bean.dto.*;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Message;
 import com.dwarfeng.familyhelper.clannad.stack.bean.entity.MessageBodyInfo;
 import com.dwarfeng.familyhelper.clannad.stack.handler.MessageOperateHandler;
+import com.dwarfeng.familyhelper.clannad.stack.handler.PushHandler;
 import com.dwarfeng.familyhelper.clannad.stack.service.MessageBodyInfoMaintainService;
 import com.dwarfeng.familyhelper.clannad.stack.service.MessageMaintainService;
 import com.dwarfeng.ftp.handler.FtpHandler;
@@ -14,12 +15,16 @@ import com.dwarfeng.subgrade.stack.bean.key.LongIdKey;
 import com.dwarfeng.subgrade.stack.bean.key.StringIdKey;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import com.dwarfeng.subgrade.stack.generation.KeyGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
 public class MessageOperateHandlerImpl implements MessageOperateHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageOperateHandlerImpl.class);
 
     private static final Set<Integer> VALID_MESSAGE_STATUS_SET_UPDATE;
     private static final Set<Integer> VALID_MESSAGE_STATUS_SET_REMOVE;
@@ -60,6 +65,7 @@ public class MessageOperateHandlerImpl implements MessageOperateHandler {
     private final MessageBodyInfoMaintainService messageBodyInfoMaintainService;
 
     private final FtpHandler ftpHandler;
+    private final PushHandler pushHandler;
 
     private final KeyGenerator<LongIdKey> keyGenerator;
 
@@ -69,12 +75,14 @@ public class MessageOperateHandlerImpl implements MessageOperateHandler {
             MessageMaintainService messageMaintainService,
             MessageBodyInfoMaintainService messageBodyInfoMaintainService,
             FtpHandler ftpHandler,
+            PushHandler pushHandler,
             KeyGenerator<LongIdKey> keyGenerator,
             OperateHandlerValidator operateHandlerValidator
     ) {
         this.messageMaintainService = messageMaintainService;
         this.messageBodyInfoMaintainService = messageBodyInfoMaintainService;
         this.ftpHandler = ftpHandler;
+        this.pushHandler = pushHandler;
         this.keyGenerator = keyGenerator;
         this.operateHandlerValidator = operateHandlerValidator;
     }
@@ -238,6 +246,13 @@ public class MessageOperateHandlerImpl implements MessageOperateHandler {
 
             // 调用维护服务更新消息。
             messageMaintainService.update(message);
+
+            // 推送消息。
+            try {
+                pushHandler.messageSent(message);
+            } catch (Exception e) {
+                LOGGER.warn("推送留言发送消息时发生异常, 异常信息如下: ", e);
+            }
         } catch (Exception e) {
             throw HandlerExceptionHelper.parse(e);
         }

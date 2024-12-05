@@ -1,6 +1,7 @@
 package com.dwarfeng.familyhelper.clannad.impl.handler.pusher;
 
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.BirthdayBlessInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Message;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 
 import java.util.List;
@@ -39,6 +40,11 @@ public abstract class PusherAdapter extends AbstractPusher {
     @SuppressWarnings("RedundantThrows")
     @Override
     public void birthdayBlessHappened(List<BirthdayBlessInfo> birthdayBlessInfos) throws HandlerException {
+    }
+
+    @SuppressWarnings("RedundantThrows")
+    @Override
+    public void messageSent(Message message) throws HandlerException {
     }
 
     @Override

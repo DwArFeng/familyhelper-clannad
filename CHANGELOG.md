@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 增加推送处理器的消息类型。
+  - PushHandler.messageSent。
+
 - 实现操作服务。
   - com.dwarfeng.familyhelper.clannad.stack.service.MessageAttachmentOperateService。
   - com.dwarfeng.familyhelper.clannad.stack.service.MessageBodyOperateService。

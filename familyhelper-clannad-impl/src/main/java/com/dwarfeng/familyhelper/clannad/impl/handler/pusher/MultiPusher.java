@@ -2,6 +2,7 @@ package com.dwarfeng.familyhelper.clannad.impl.handler.pusher;
 
 import com.dwarfeng.familyhelper.clannad.impl.handler.Pusher;
 import com.dwarfeng.familyhelper.clannad.stack.bean.dto.BirthdayBlessInfo;
+import com.dwarfeng.familyhelper.clannad.stack.bean.entity.Message;
 import com.dwarfeng.subgrade.stack.exception.HandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +64,17 @@ public class MultiPusher extends AbstractPusher {
         for (Pusher delegate : delegates) {
             try {
                 delegate.birthdayBlessHappened(birthdayBlessInfos);
+            } catch (Exception e) {
+                LOGGER.warn(EXCEPTION_MESSAGE, e);
+            }
+        }
+    }
+
+    @Override
+    public void messageSent(Message message) {
+        for (Pusher delegate : delegates) {
+            try {
+                delegate.messageSent(message);
             } catch (Exception e) {
                 LOGGER.warn(EXCEPTION_MESSAGE, e);
             }
