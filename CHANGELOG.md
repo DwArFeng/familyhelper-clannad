@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 为部分工具类中方法的入口参数增加 `@NotNull` 注解。
+  - com.dwarfeng.fdr.impl.service.telqos.CommandUtils。
+
 - 增加推送处理器的消息类型。
   - PushHandler.messageSent。
 
@@ -40,6 +43,9 @@
   - 升级 `spring-telqos` 依赖版本为 `1.1.11.b` 以规避漏洞。
 
 #### Bug修复
+
+- 修复 telqos 工具类中部分注解不正确的 bug。
+  - com.dwarfeng.fdr.impl.service.telqos.CommandUtils。
 
 - 补充 `application-context-*.xml` 文件中缺失的配置。
   - application-context-telqos.xml
