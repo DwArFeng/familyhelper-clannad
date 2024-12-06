@@ -41,6 +41,9 @@
 
 #### Bug修复
 
+- 补充 `application-context-*.xml` 文件中缺失的配置。
+  - application-context-telqos.xml
+
 - 修正 Hibernate 实体中的注解错误。
   - com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateCertificateFileInfo。
 
