@@ -41,7 +41,8 @@
 
 #### Bug修复
 
-- (无)
+- 修正 Hibernate 实体中的注解错误。
+  - com.dwarfeng.familyhelper.clannad.impl.bean.entity.HibernateCertificateFileInfo。
 
 #### 功能移除
 

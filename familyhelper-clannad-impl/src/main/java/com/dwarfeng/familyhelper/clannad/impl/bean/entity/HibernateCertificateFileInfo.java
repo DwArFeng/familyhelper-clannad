@@ -41,7 +41,7 @@ public class HibernateCertificateFileInfo implements Bean {
     // -----------------------------------------------------------多对一-----------------------------------------------------------
     @ManyToOne(targetEntity = HibernateCertificate.class)
     @JoinColumns({ //
-            @JoinColumn(name = "fund_change_id", referencedColumnName = "id", insertable = false, updatable = false), //
+            @JoinColumn(name = "certificate_id", referencedColumnName = "id", insertable = false, updatable = false), //
     })
     private HibernateCertificate certificate;
 
