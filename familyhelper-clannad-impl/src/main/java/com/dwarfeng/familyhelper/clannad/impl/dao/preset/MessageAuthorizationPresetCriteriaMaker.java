@@ -52,6 +52,7 @@ public class MessageAuthorizationPresetCriteriaMaker implements PresetCriteriaMa
                 StringIdKey stringIdKey = (StringIdKey) objs[0];
                 criteria.add(Restrictions.eqOrIsNull("authorizedSendUserId", stringIdKey.getStringId()));
             }
+            criteria.add(Restrictions.eq("enabled", true));
         } catch (Exception e) {
             throw new IllegalArgumentException("非法的参数:" + Arrays.toString(objs));
         }
@@ -65,6 +66,7 @@ public class MessageAuthorizationPresetCriteriaMaker implements PresetCriteriaMa
                 StringIdKey stringIdKey = (StringIdKey) objs[0];
                 criteria.add(Restrictions.eqOrIsNull("authorizedSendUserId", stringIdKey.getStringId()));
             }
+            criteria.add(Restrictions.eq("enabled", true));
             String pattern = (String) objs[1];
             criteria.add(Restrictions.like("receiveUserId", pattern, MatchMode.ANYWHERE));
         } catch (Exception e) {

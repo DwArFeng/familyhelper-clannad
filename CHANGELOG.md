@@ -8,7 +8,9 @@
 
 #### Bug修复
 
-- (无)
+- 修复预设查询中的错误。
+  - MessageAuthorizationMaintainService.CHILD_FOR_AUTHORIZED_SEND_USER。
+  - MessageAuthorizationMaintainService.CHILD_FOR_AUTHORIZED_SEND_USER_ID_LIKE。
 
 #### 功能移除
 
