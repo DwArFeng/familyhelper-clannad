@@ -32,7 +32,7 @@ public class WebInputCertificateUpdateInfo implements Dto {
         }
     }
 
-    @JSONField(name = "account_book_key")
+    @JSONField(name = "certificate_key")
     @Valid
     @NotNull
     private WebInputLongIdKey certificateKey;

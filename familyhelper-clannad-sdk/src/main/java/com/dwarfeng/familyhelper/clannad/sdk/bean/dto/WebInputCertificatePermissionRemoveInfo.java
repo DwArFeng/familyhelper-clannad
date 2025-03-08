@@ -30,7 +30,7 @@ public class WebInputCertificatePermissionRemoveInfo implements Dto {
         }
     }
 
-    @JSONField(name = "account_book_key")
+    @JSONField(name = "certificate_key")
     @Valid
     private WebInputLongIdKey certificateKey;
 

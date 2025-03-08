@@ -31,7 +31,7 @@ public class WebInputCertificatePermissionUpsertInfo implements Dto {
         }
     }
 
-    @JSONField(name = "account_book_key")
+    @JSONField(name = "certificate_key")
     @Valid
     private WebInputLongIdKey certificateKey;
 

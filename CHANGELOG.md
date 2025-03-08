@@ -8,7 +8,10 @@
 
 #### Bug修复
 
-- (无)
+- 修正 WebInput 实体中部分字段错误的注解。
+  - com.dwarfeng.familyhelper.clannad.sdk.bean.dto.WebInputCertificatePermissionRemoveInfo。
+  - com.dwarfeng.familyhelper.clannad.sdk.bean.dto.WebInputCertificatePermissionUpsertInfo。
+  - com.dwarfeng.familyhelper.clannad.sdk.bean.dto.WebInputCertificateUpdateInfo。
 
 #### 功能移除
 
